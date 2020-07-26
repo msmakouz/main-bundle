@@ -1,0 +1,45 @@
+doctrine:
+  orm:
+    auto_mapping: true
+    mappings:
+      Bundle:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Bundle/Entity'
+        prefix: Zentlix\MainBundle\Domain\Bundle\Entity
+      DataTable:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/DataTable/Entity'
+        prefix: Zentlix\MainBundle\Domain\DataTable\Entity
+      File:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/File/Entity'
+        prefix: Zentlix\MainBundle\Domain\File\Entity
+      Locale:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Locale/Entity'
+        prefix: Zentlix\MainBundle\Domain\Locale\Entity
+      Route:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Route/Entity'
+        prefix: Zentlix\MainBundle\Domain\Route\Entity
+      Setting:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Setting/Entity'
+        prefix: Zentlix\MainBundle\Domain\Setting\Entity
+      Site:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Site/Entity'
+        prefix: Zentlix\MainBundle\Domain\Site\Entity
+  dbal:
+    types:
+      meta: Zentlix\MainBundle\Infrastructure\Share\Doctrine\MetaType
+      uuid_binary: Ramsey\Uuid\Doctrine\UuidBinaryType
+    mapping_types:
+      uuid_binary: binary

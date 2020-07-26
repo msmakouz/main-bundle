@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false"/>
+        <service id="zentlix_main.file_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\FileController"
+                 public="true">
+            <argument type="service" id="zentlix_main.sites"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.index_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\IndexController"
+                 public="true">
+            <argument type="service" id="zentlix_main.sites"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.angular_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AngularController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.bundle_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.dashboard_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\DashboardController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.editor_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.admin_file_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\FileController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.admin_index_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\IndexController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.locale_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\LocaleController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.platform_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\PlatformController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.route_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\RouteController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+
+        <service id="zentlix_main.site_controller"
+                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController"
+                 public="true">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
+            <argument type="service" id="zentlix_main.bundles" />
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <tag name="controller.service_arguments"/>
+        </service>
+    </services>
+</container>

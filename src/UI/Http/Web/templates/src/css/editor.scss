@@ -1,0 +1,39 @@
+@import "variables";
+
+.zx-visual-editor {
+  float: right;
+  min-width: 220px;
+}
+.zx-visual-editor-block {
+  .visual-editor-actions-block {
+    position: relative;
+    right: 0;
+    display: none;
+  }
+  .visual-editor-content {
+    overflow: auto;
+  }
+  .visual-editor-actions {
+    position: absolute;
+    right: -1px;
+    top: -31px;
+    background: $panel-background-color;
+    font-family: $panel-font-family;
+    color: #fff;
+    border-radius: 3px 3px 0 0;
+    font-size: 13px;
+    font-weight: normal;
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+  }
+  i {
+    padding-right: 10px;
+  }
+  a {
+    padding: 0 11px;
+  }
+  a:hover {
+    color: #00b9eb!important;
+  }
+}

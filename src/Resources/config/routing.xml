@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="admin.index" path="/backend/dashboard">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.admin_index_controller::index</default>
+    </route>
+    <route id="admin.resolver" path="/backend">
+        <condition>not request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.angular_controller::resolve</default>
+    </route>
+    <route id="admin.state.load" path="/backend/state/load">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.angular_controller::state</default>
+    </route>
+    <route id="admin.routes.load" path="/backend/routes/all">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.angular_controller::routes</default>
+    </route>
+    <route id="admin.file.upload" path="/backend/file/upload">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.admin_file_controller::upload</default>
+    </route>
+    <route id="admin.platform.about" path="/backend/platform/about">
+        <condition>request.isXmlHttpRequest()</condition>
+        <option key="component">HtmlComponent</option>
+        <default key="_controller">zentlix_main.platform_controller::about</default>
+    </route>
+
+    <route id="admin.site.list" path="/backend/sites/list">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.site_controller::index</default>
+    </route>
+    <route id="admin.site.create" path="/backend/sites/create">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.site_controller::create</default>
+    </route>
+    <route id="admin.site.update" path="/backend/sites/{id}/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.site_controller::update</default>
+    </route>
+    <route id="admin.site.delete" path="/backend/sites/{id}/delete">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.site_controller::delete</default>
+    </route>
+
+    <route id="admin.locale.list" path="/backend/settings/locales/list">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.locale_controller::index</default>
+    </route>
+    <route id="admin.locale.update" path="/backend/settings/locales/{id}/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.locale_controller::update</default>
+    </route>
+
+    <route id="admin.bundle.list" path="/backend/settings/bundles/list">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.bundle_controller::index</default>
+    </route>
+    <route id="admin.bundle.update" path="/backend/settings/bundles/{id}/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.bundle_controller::changeSettings</default>
+    </route>
+
+    <route id="admin.routes.update" path="/backend/settings/routes/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.route_controller::update</default>
+    </route>
+
+    <route id="admin.editor.enable" path="/backend/editor/enable">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.editor_controller::enable</default>
+    </route>
+    <route id="admin.editor.disable" path="/backend/editor/disable">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.editor_controller::disable</default>
+    </route>
+    <route id="admin.editor.edit" path="/backend/editor/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.editor_controller::visualEdit</default>
+    </route>
+    <route id="admin.editor.fast_edit" path="/backend/editor/fast-edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.editor_controller::fastEdit</default>
+    </route>
+
+    <route id="admin.dashboard.widgets" path="/backend/dashboard/widgets">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.dashboard_controller::widgets</default>
+    </route>
+
+    <route id="file.upload" path="/file/upload">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.file_controller::upload</default>
+    </route>
+
+    <route id="index" path="/">
+        <default key="_controller">zentlix_main.index_controller::index</default>
+    </route>
+
+    <import resource="zentlix_main.routes_loader::loadRoutes" type="service"/>
+</routes>

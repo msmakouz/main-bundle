@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false"/>
+
+        <instanceof id="Zentlix\MainBundle\Application\Command\CommandHandlerInterface">
+            <tag name="messenger.message_handler" bus="messenger.bus.default"/>
+        </instanceof>
+        <instanceof id="Zentlix\MainBundle\Application\Query\QueryHandlerInterface">
+            <tag name="messenger.message_handler" bus="messenger.bus.default"/>
+        </instanceof>
+
+        <service id="zentlix_main.command_bus" class="Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus">
+            <argument type="service" id="Symfony\Component\Messenger\MessageBusInterface"/>
+        </service>
+        <service id="Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus" alias="zentlix_main.command_bus"/>
+
+        <service id="zentlix_main.query_bus" class="Zentlix\MainBundle\Infrastructure\Share\Bus\QueryBus">
+            <argument type="service" id="Symfony\Component\Messenger\MessageBusInterface"/>
+        </service>
+        <service id="Zentlix\MainBundle\Infrastructure\Share\Bus\QueryBus" alias="zentlix_main.query_bus"/>
+
+        <!-- Command bus -->
+        <service id="zentlix_main.upload_handler" class="Zentlix\MainBundle\Application\Command\File\UploadHandler">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.file_uploader"/>
+            <argument type="service" id="zentlix_main.file_unique_filename_specification"/>
+            <argument type="service" id="zentlix_main.file_unique_path_specification"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.locale_create_handler" class="Zentlix\MainBundle\Application\Command\Locale\CreateHandler">
+            <argument type="service" id="zentlix_main.locale_unique_code_specification"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.locale_json_handler" class="Zentlix\MainBundle\Application\Command\Locale\JsonHandler">
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.locale_update_command" class="Zentlix\MainBundle\Application\Command\Locale\UpdateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.route_update_handler" class="Zentlix\MainBundle\Application\Command\Route\UpdateHandler">
+            <argument type="service" id="zentlix_main.route_unique_urls_in_array_specification"/>
+            <argument type="service" id="zentlix_main.route_is_url_valid_specification"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Route\Repository\RouteRepository"/>
+            <argument type="service" id="zentlix_main.cache"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.default_setting_handler" class="Zentlix\MainBundle\Application\Command\Setting\DefaultSettingHandler">
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.setting_handler" class="Zentlix\MainBundle\Application\Command\Setting\SettingHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.locale_exist_locale_specification"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.site_create_handler" class="Zentlix\MainBundle\Application\Command\Site\CreateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.site_unique_url_specification"/>
+            <argument type="service" id="zentlix_main.locale_exist_locale_specification"/>
+            <argument type="service" id="zentlix_main.site_exist_template_specification"/>
+            <argument type="service" id="zentlix_main.site_exist_template_folder_specification"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <argument type="service" id="zentlix_main.bundles"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.site_delete_handler" class="Zentlix\MainBundle\Application\Command\Site\DeleteHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.site_not_single_specification"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.site_update_handler" class="Zentlix\MainBundle\Application\Command\Site\UpdateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.site_unique_url_specification"/>
+            <argument type="service" id="zentlix_main.locale_exist_locale_specification"/>
+            <argument type="service" id="zentlix_main.site_exist_template_specification"/>
+            <argument type="service" id="zentlix_main.site_exist_template_folder_specification"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.visual_editor_disable_handler" class="Zentlix\MainBundle\Application\Command\VisualEditor\DisableHandler">
+            <argument type="service" id="zentlix_main.visual_editor"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_main.visual_editor_enable_handler" class="Zentlix\MainBundle\Application\Command\VisualEditor\EnableHandler">
+            <argument type="service" id="zentlix_main.visual_editor"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <!-- Query bus -->
+        <service id="zentlix_main.bundle_data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Bundle\DataTableQueryHandler">
+            <argument type="service" id="zentlix_main.data_table_service"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.file_by_id_query_handler" class="Zentlix\MainBundle\Application\Query\File\FileByIdQueryHandler">
+            <argument type="service" id="Zentlix\MainBundle\Domain\File\Repository\FileRepository"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.locale_data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Locale\DataTableQueryHandler">
+            <argument type="service" id="zentlix_main.data_table_service"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.about_query_handler" class="Zentlix\MainBundle\Application\Query\Platform\AboutQueryHandler">
+            <argument type="service" id="doctrine.dbal.default_connection"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.route_build_query_handler" class="Zentlix\MainBundle\Application\Query\Route\BuildQueryHandler">
+            <argument type="service" id="zentlix_main.routes"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.site_data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Site\DataTableQueryHandler">
+            <argument type="service" id="zentlix_main.data_table_service"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.visual_editor_command_query_handler" class="Zentlix\MainBundle\Application\Query\VisualEditor\EditorCommandQueryHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.widgets_query_handler" class="Zentlix\MainBundle\Application\Query\Widget\WidgetsQueryHandler">
+            <argument type="service" id="zentlix_main.widgets"/>
+            <argument type="service" id="zentlix_user.admin_settings"/>
+        </service>
+
+        <service id="zentlix_main.build_query_handler" class="Zentlix\MainBundle\Application\Query\State\BuildQueryHandler">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="security.helper"/>
+            <argument type="service" id="router" />
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="service" id="Zentlix\UserBundle\Domain\Admin\Repository\NotificationRepository"/>
+            <argument type="service" id="zentlix_main.sidebar"/>
+            <argument type="service" id="zentlix_user.admin_settings"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="Zentlix\MainBundle\Application\Query\State\BuildQueryHandler" alias="zentlix_main.build_query_handler"/>
+    </services>
+</container>

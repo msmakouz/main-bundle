@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="zentlix_main.create_locale_command" class="Zentlix\MainBundle\UI\Cli\Command\CreateLocaleCommand">
+            <argument id="zentlix_main.command_bus" type="service"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="zentlix_main.create_site_command" class="Zentlix\MainBundle\UI\Cli\Command\CreateSiteCommand">
+            <argument id="zentlix_main.command_bus" type="service"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="zentlix_main.create_template_command" class="Zentlix\MainBundle\UI\Cli\Command\CreateTemplateCommand">
+            <argument id="zentlix_main.command_bus" type="service"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="zentlix_main.delete_files_command" class="Zentlix\MainBundle\UI\Cli\Command\DeleteFilesCommand">
+            <argument id="zentlix_main.files" type="service"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="zentlix_main.generate_json_localisation_file_command" class="Zentlix\MainBundle\UI\Cli\Command\GenerateJsonLocalisationFileCommand">
+            <argument id="zentlix_main.command_bus" type="service"/>
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>

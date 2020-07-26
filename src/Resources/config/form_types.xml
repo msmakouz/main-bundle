@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="zentlix_main.locale.update_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Locale\UpdateForm">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="translator"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="zentlix_main.route.update_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Route\UpdateForm">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="zentlix_main.setting.default_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Setting\DefaultForm">
+            <tag name="form.type"/>
+        </service>
+        <service id="zentlix_main.setting.form" class="Zentlix\MainBundle\UI\Http\Web\Form\Setting\Form">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="zentlix_main.site.create_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Site\CreateForm">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="zentlix_main.site.update_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Site\UpdateForm">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <tag name="form.type"/>
+        </service>
+
+        <service id="zentlix_main.form_type.route_type" class="Zentlix\MainBundle\UI\Http\Web\FormType\RouteType">
+            <argument type="service" id="translator"/>
+            <tag name="form.type"/>
+        </service>
+    </services>
+</container>

@@ -1,0 +1,42 @@
+{
+  "name": "Zentlix Main Bundle",
+  "version": "1.0.0",
+  "description": "Zentlix Main bundle template",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">= 12",
+    "npm": ">= 6"
+  },
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "axios": "^0.19.2",
+    "micromodal": "^0.4.2",
+    "simple-line-icons": "^2.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-typescript": "^7.9.0",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "css-loader": "^3.4.2",
+    "file-loader": "^6.0.0",
+    "less": "^3.11.1",
+    "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "path": "^0.12.7",
+    "sass-loader": "^8.0.2",
+    "terser-webpack-plugin": "^2.3.5",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "browserslist": "> 0.25%, not dead"
+}

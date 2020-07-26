@@ -1,0 +1,63 @@
+<link href="{{ '/zentlix/main-bundle/assets/dist/admin.css' }}" rel="stylesheet">
+<script src="{{ '/zentlix/main-bundle/assets/dist/admin.bundle.js' }}"></script>
+<div class="zx-admin-panel">
+    <div role="navigation">
+        <ul>
+            <li>
+                <a href="{{ path('admin.resolver') }}"><i class="nav-icon icon-speedometer"></i> {{ 'zentlix_main.control_panel' | trans }}</a>
+            </li>
+            <li class="zx-sub-items">
+                <a href="#"><i class="nav-icon icon-plus"></i> {{ 'zentlix_main.add' | trans }}</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ path('admin.user.create') | replace({'/backend/': "/backend/#/"})}}">{{ 'user.user.adm_panel_add' | trans }}</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="zx-visual-editor">
+        <div class="toggle-group">
+            <input type="checkbox" name="zx-visual-editor" id="on-off-switch" {% if(isEnabledEditor) %} checked="" {% endif %} tabindex="1">
+            <label for="on-off-switch">
+                <span class="aural">{{ 'zentlix_main.editor' | trans }}</span> {{ 'zentlix_main.visual_editor' | trans }}
+            </label>
+            <div class="onoffswitch" aria-hidden="true">
+                <div class="onoffswitch-label">
+                    <div class="onoffswitch-inner"></div>
+                    <div class="onoffswitch-switch"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="micromodal micromodal-slide" id="admin-modal" aria-hidden="true">
+        <div class="micromodal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="micromodal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header class="micromodal__header">
+                    <h2 class="micromodal__title admin-panel-modal-title"></h2>
+                    <button class="micromodal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <main class="micromodal__content admin-panel-modal-content"></main>
+                <footer class="micromodal__footer">
+                    <button class="micromodal__btn micromodal__btn-primary micromodal-submit">{{ 'zentlix_main.save' | trans }}</button>
+                    <button class="micromodal__btn" data-micromodal-close aria-label="Close this dialog window">{{ 'zentlix_main.cancel' | trans }}</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div class="micromodal micromodal-slide" id="admin-modal-error" aria-hidden="true">
+        <div class="micromodal__overlay" tabindex="-1" data-micromodal-close>
+            <div class="micromodal__container" role="dialog" aria-modal="true" aria-labelledby="modal-2-title">
+                <header class="micromodal__header">
+                    <h2 class="micromodal__title">{{ 'zentlix_main.error' | trans }}</h2>
+                    <button class="micromodal__close" aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <main class="micromodal__content admin-panel-error-content"><div class="alert alert-warning" role="alert"></div>
+                </main>
+                <footer class="micromodal__footer">
+                    <button class="micromodal__btn micromodal__btn-primary micromodal-submit" data-micromodal-close>{{ 'zentlix_main.close' | trans }}</button>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
