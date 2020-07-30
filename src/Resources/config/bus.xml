@@ -41,6 +41,7 @@
         <service id="zentlix_main.locale_json_handler" class="Zentlix\MainBundle\Application\Command\Locale\JsonHandler">
             <argument type="service" id="translator"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="string">%kernel.project_dir%</argument>
             <tag name="messenger.message_handler"/>
         </service>
         <service id="zentlix_main.locale_update_command" class="Zentlix\MainBundle\Application\Command\Locale\UpdateHandler">
@@ -109,6 +110,15 @@
             <argument type="service" id="zentlix_main.visual_editor"/>
             <argument type="service" id="event_dispatcher"/>
             <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_main.bundle.install_handler" class="Zentlix\MainBundle\Application\Command\Bundle\InstallHandler">
+            <argument type="service" id="zentlix_main.bundle_unique_class_specification"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface"/>
+            <argument type="service" id="zentlix_main.bundles"/>
         </service>
 
         <!-- Query bus -->

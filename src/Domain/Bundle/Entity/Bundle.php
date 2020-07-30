@@ -68,13 +68,13 @@ class Bundle
     {
         $this->routes = new ArrayCollection();
 
-        $this->title = $command->title;
-        $this->class = $command->getClass();
-        $this->description = $command->description;
-        $this->version = $command->version;
+        $this->title = $command->getBundle()->getTitle();
+        $this->class = get_class($command->getBundle());
+        $this->description = $command->getBundle()->getDescription();
+        $this->version = $command->getBundle()->getVersion();
+        $this->system_bundle = $command->getBundle()->isSystem();
         $this->updated_at = $command->updated_at;
         $this->installed_at = $command->installed_at;
-        $this->system_bundle = $command->system;
     }
 
     public function getId(): int

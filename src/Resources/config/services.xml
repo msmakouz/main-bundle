@@ -10,9 +10,7 @@
     </parameters>
 
     <services>
-        <defaults autowire="false" autoconfigure="false" public="false">
-            <bind key="$projectDir">%kernel.project_dir%</bind>
-        </defaults>
+        <defaults autowire="false" autoconfigure="false" public="false"/>
 
         <service id="zentlix_main.sidebar" class="Zentlix\MainBundle\Domain\AdminSidebar\Service\Sidebar">
             <argument type="service" id="router" />
@@ -36,8 +34,8 @@
         <service id="Zentlix\MainBundle\Domain\File\Service\Files" alias="zentlix_main.files"/>
 
         <service id="zentlix_main.bundles" class="Zentlix\MainBundle\Domain\Bundle\Service\Bundles">
-            <argument type="service" id="service_container"/>
-            <argument type="string" id="$projectDir"/>
+            <argument type="tagged_iterator" tag="zentlix_bundle"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Bundle\Service\Bundles" alias="zentlix_main.bundles"/>
 
@@ -111,6 +109,16 @@
         <service id="Zentlix\MainBundle\EventSubscriber\MainSubscriber">
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <tag name="kernel.event_subscriber"/>
+        </service>
+        <service id="Zentlix\MainBundle\EventSubscriber\InstallBundleSubscriber">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="translator"/>
+            <argument type="string">%kernel.default_locale%</argument>
+            <tag name="kernel.event_subscriber"/>
+        </service>
+
+        <service id="zentlix_main.main_bundle" class="Zentlix\MainBundle\MainBundle">
+            <tag name="zentlix_bundle"/>
         </service>
     </services>
 </container>

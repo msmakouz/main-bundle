@@ -25,9 +25,9 @@ use Zentlix\MainBundle\UI\Http\Web\Form\Site\UpdateForm;
 
 class SiteController extends ResourceController
 {
-    public static $createSuccessMessage = 'zentlix.main.site.create.success';
-    public static $updateSuccessMessage = 'zentlix.main.site.update.success';
-    public static $deleteSuccessMessage = 'zentlix.main.site.delete.success';
+    public static $createSuccessMessage = 'zentlix_main.site.create.success';
+    public static $updateSuccessMessage = 'zentlix_main.site.update.success';
+    public static $deleteSuccessMessage = 'zentlix_main.site.delete.success';
     public static $redirectAfterAction  = 'admin.site.list';
 
     public function index(Request $request): Response

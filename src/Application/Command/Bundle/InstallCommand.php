@@ -12,45 +12,23 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Command\Bundle;
 
-use Symfony\Component\Validator\Constraints;
 use Zentlix\MainBundle\ZentlixBundleInterface;
-use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 
 class InstallCommand
 {
-    public string $title;
-    /** @Constraints\NotBlank() */
-    private string $class;
-    public string $description;
-    public string $version;
-    public bool $system = false;
     public \DateTimeImmutable $updated_at;
     public \DateTimeImmutable $installed_at;
-    private Bundles $bundles;
+    private ZentlixBundleInterface $bundle;
 
-    public function __construct(Bundles $bundles)
+    public function __construct(ZentlixBundleInterface $bundle)
     {
         $this->updated_at = new \DateTimeImmutable();
         $this->installed_at = new \DateTimeImmutable();
-        $this->bundles = $bundles;
+        $this->bundle = $bundle;
     }
 
-    public function setBundle(ZentlixBundleInterface $bundle): void
+    public function getBundle(): ZentlixBundleInterface
     {
-        $this->title = $bundle->getTitle();
-        $this->description = $bundle->getDescription();
-        $this->version = $bundle->getVersion();
-    }
-
-    public function setClass(string $class): void
-    {
-        $this->class = $class;
-
-        $this->setBundle($this->bundles->getByClass($class));
-    }
-
-    public function getClass(): ?string
-    {
-        return $this->class;
+        return $this->bundle;
     }
 }

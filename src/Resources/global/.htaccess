@@ -1,0 +1,74 @@
+<IfModule mod_rewrite.c>
+
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    ##
+    ## ZENTLIX CORE
+    ##
+
+    ##
+    ## You may need to uncomment the following line for some hosting environments,
+    ## if you have installed to a subdirectory, enter the name here also.
+    ##
+    # RewriteBase /
+
+    ##
+    ## Uncomment following lines to force HTTPS.
+    ##
+    # RewriteCond %{HTTPS} off
+    # RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+
+    ##
+    ## Black listed folders
+    ##
+    RewriteRule ^bin/.* index.php [L,NC]
+    RewriteRule ^config/.* index.php [L,NC]
+    RewriteRule ^tests/.* index.php [L,NC]
+    RewriteRule ^var/.* index.php [L,NC]
+    RewriteRule ^vendor/.* index.php [L,NC]
+    RewriteCond %{REQUEST_URI} !^/templates/
+    RewriteRule ^src/.* index.php [L,NC]
+
+    ##
+    ## White listed folders
+    ##
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} !/templates/.*
+    RewriteCond %{REQUEST_FILENAME} !/zentlix/.*
+    RewriteRule !^(index.php|install.php) index.php [L,NC]
+
+    ##
+    ## Block all PHP files, except index
+    ##
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_FILENAME} \.php$
+    RewriteRule !^(index.php|install.php) index.php [L,NC]
+
+    ##
+    ## Block all config files
+    ##
+    <files ~ "\.(ini|yaml|sql|env)$">
+        Order Deny,Allow
+        Deny From All
+    </files>
+
+    ##
+    ## Standard routes
+    ##
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    ##
+    ## END ZENTLIX CORE
+    ##
+
+</IfModule>

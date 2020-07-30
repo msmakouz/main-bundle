@@ -20,7 +20,7 @@ use Zentlix\MainBundle\UI\Http\Web\Form\Route\UpdateForm;
 
 class RouteController extends ResourceController
 {
-    public static $updateSuccessMessage = 'zentlix.main.route.update.success';
+    public static $updateSuccessMessage = 'zentlix_main.route.update.success';
 
     public function update(Request $request, SiteRepository $siteRepository): Response
     {

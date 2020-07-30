@@ -1,4 +1,4 @@
-import 'simple-line-icons/scss/simple-line-icons.scss';
+import 'simple-line-icons/dist/styles/simple-line-icons.scss';
 import './css/switch.less';
 import './css/modal.scss';
 import './css/editor.scss';

@@ -18,17 +18,32 @@ trait ZentlixBundleTrait
 {
     public function getVersion(): string
     {
-        // TODO: Implement getVersion() method.
+        $composerJson = $this->parseComposerJson();
+
+        return $composerJson['version'];
     }
 
-    public function install(): void
+    public function getBundleName(): string
     {
-        // TODO: Implement install() method.
+        $composerJson = $this->parseComposerJson();
+
+        return $composerJson['name'];
     }
 
-    public function uninstall(): void
+    private function parseComposerJson(): array
     {
-        // TODO: Implement uninstall() method.
+        $reflector = new \ReflectionClass(static::class);
+        $composerJson = \dirname($reflector->getFileName(), 2) . DIRECTORY_SEPARATOR . 'composer.json';
+
+        if ($data = file_get_contents($composerJson)) {
+            $package = json_decode($data, true);
+
+            if (0 < $errorCode = json_last_error()) {
+                throw new \Exception(sprintf('Error parsing composer.json: %s', $composerJson));
+            }
+        }
+
+        return $package;
     }
 
     // OVERRIDES IN BUNDLE MAIN FILE
@@ -48,6 +63,11 @@ trait ZentlixBundleTrait
         return [];
     }
 
+    public function installMailerEvents(): array
+    {
+        return [];
+    }
+
     public function installFrontendRoutesForSite(Site $site)
     {
 
@@ -61,5 +81,10 @@ trait ZentlixBundleTrait
     public function getSettingsForm(): ?string
     {
         return null;
+    }
+
+    public function isSystem(): bool
+    {
+        return false;
     }
 }

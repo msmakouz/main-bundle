@@ -32,4 +32,9 @@ class DataTableRepository extends ServiceEntityRepository
     {
         return $this->findOneBy(['datatable' => $dataTable, 'user' => $userId]);
     }
+
+    public function findByUserId(int $userId)
+    {
+        return $this->findBy(['user' => $userId]);
+    }
 }

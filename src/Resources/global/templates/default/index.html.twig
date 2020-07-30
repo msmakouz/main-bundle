@@ -1,0 +1,64 @@
+{% extends 'default/layouts/base.html.twig' %}
+
+{% block body %}
+    <style>
+        .container {
+            max-width: 1140px;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            color: #23282c;
+            text-align: center;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            border-left-color: transparent;
+            padding: .375rem .75rem;
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+            font-size: .875rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+            text-decoration: none;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #20a8d8;
+            border-color: #20a8d8;
+        }
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #1b8eb7;
+            border-color: #1985ac;
+        }
+    </style>
+    {{ adminPanelWidget() }}
+    <div class="container">
+        <div class="row">
+            <h4>{{ 'zentlix_main.install_success' | trans  }}</h4>
+        </div>
+        <div class="row">
+            <a href="{{ path('admin.login') }}" class="btn btn-primary">{{ 'zentlix_main.admin_panel' | trans  }}</a>
+        </div>
+    </div>
+{% endblock %}

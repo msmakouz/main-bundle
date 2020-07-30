@@ -12,39 +12,33 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\DataTable\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Omines\DataTablesBundle\DependencyInjection\Instantiator;
 use Omines\DataTablesBundle\Column\AbstractColumn;
 use Omines\DataTablesBundle\DataTable as BaseDataTable;
 use Omines\DataTablesBundle\Exception\InvalidStateException;
 use Zentlix\MainBundle\Domain\DataTable\Column\TextColumn;
-use Zentlix\MainBundle\Domain\DataTable\Entity\DataTable as DataTableEntity;
-use Zentlix\UserBundle\Domain\User\Entity\User;
+use Zentlix\MainBundle\Domain\DataTable\Entity\DataTable as DataTableConfig;
 
 class DataTable extends BaseDataTable
 {
-    private EntityManagerInterface $entityManager;
-    private TokenStorageInterface $tokenStorage;
     protected string $createUrl;
     protected string $title;
     protected array $token = [];
     protected ?string $createBtnLabel = null;
     protected $method = Request::METHOD_GET;
+    protected DataTableConfig $config;
 
-    public function __construct(EventDispatcherInterface $eventDispatcher,
-                                array $options,
-                                Instantiator $instantiator,
-                                EntityManagerInterface $entityManager,
-                                TokenStorageInterface $tokenStorage)
+    public function __construct(EventDispatcherInterface $eventDispatcher, array $options, Instantiator $instantiator)
     {
-        $this->entityManager = $entityManager;
-        $this->tokenStorage = $tokenStorage;
-
         parent::__construct($eventDispatcher, $options, $instantiator);
+    }
+
+    public function setDatabaseConfig(DataTableConfig $config)
+    {
+        $this->config = $config;
     }
 
     public function setTitle(string $title): self
@@ -124,7 +118,6 @@ class DataTable extends BaseDataTable
 
     protected function getInitialResponse(): array
     {
-        $config = $this->getConfig();
         return array_merge($this->getOptions(), [
             'columns' => array_map(
                 fn (AbstractColumn $column) =>
@@ -132,7 +125,7 @@ class DataTable extends BaseDataTable
                     'data' => $column->getName(),
                     'orderable' => $column->isOrderable(),
                     'searchable' => $column->isSearchable(),
-                    'visible' => $config->isVisible($column->getName()),
+                    'visible' => $this->config->isVisible($column->getName()),
                     'className' => $column->getClassName(),
                     'title' => $column->getLabel(),
                     'translate' => $column instanceof TextColumn ? $column->isNeedTranslate() : false
@@ -146,30 +139,5 @@ class DataTable extends BaseDataTable
         $this->setMethod(Request::METHOD_GET);
 
         return parent::handleRequest($request);
-    }
-
-    private function getConfig(): DataTableEntity
-    {
-        $dataTableRepository = $this->entityManager->getRepository(DataTableEntity::class);
-        $config = $dataTableRepository->getConfig($this->name, $this->tokenStorage->getToken()->getUser()->getId());
-
-        if(!$config instanceof DataTableEntity) {
-            $config = $this->createConfig();
-        }
-
-        return $config;
-    }
-
-    private function createConfig(): DataTableEntity
-    {
-        $visible = array_diff(array_map(fn (AbstractColumn $column) => $column->isVisible() ? $column->getName() : null, $this->getColumns()), [null]);
-        $userRepository = $this->entityManager->getRepository(User::class);
-
-        $config = new DataTableEntity($this->name, ['visible' => $visible], $userRepository->get($this->tokenStorage->getToken()->getUser()->getId()));
-
-        $this->entityManager->persist($config);
-        $this->entityManager->flush();
-
-        return $config;
     }
 }

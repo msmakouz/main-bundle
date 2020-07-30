@@ -18,7 +18,7 @@ use Zentlix\MainBundle\Domain\Route;
 use Zentlix\MainBundle\UI\Http\Web\Form\Setting\Form;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class MainBundle extends Bundle
+class MainBundle extends Bundle implements ZentlixBundleInterface
 {
     use ZentlixBundleTrait;
 
@@ -45,8 +45,6 @@ class MainBundle extends Bundle
             Application\Command\Site\UpdateCommand::class         => 'zentlix_main.site.update.process',
             Application\Command\Site\DeleteCommand::class         => 'zentlix_main.site.delete.process',
             Application\Query\Bundle\DataTableQuery::class        => 'zentlix_main.bundle.view',
-            Application\Command\Bundle\InstallCommand::class      => 'zentlix_main.bundle.install',
-            Application\Command\Bundle\DeactivateCommand::class   => 'zentlix_main.bundle.uninstall',
             Application\Command\VisualEditor\EnableCommand::class => 'zentlix_main.visual_editor'
         ];
     }
@@ -59,5 +57,10 @@ class MainBundle extends Bundle
     public function getSettingsForm(): string
     {
         return Form::class;
+    }
+
+    public function isSystem(): bool
+    {
+        return true;
     }
 }

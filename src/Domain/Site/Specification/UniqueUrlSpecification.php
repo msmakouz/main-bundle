@@ -19,8 +19,8 @@ use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
 
 final class UniqueUrlSpecification extends AbstractSpecification
 {
-    private $siteRepository;
-    private $translator;
+    private SiteRepository $siteRepository;
+    private TranslatorInterface $translator;
 
     public function __construct(SiteRepository $siteRepository, TranslatorInterface $translator)
     {

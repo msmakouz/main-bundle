@@ -19,8 +19,8 @@ use Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository;
 
 final class ExistTemplateSpecification extends AbstractSpecification
 {
-    private $translator;
-    private $templateRepository;
+    private TranslatorInterface $translator;
+    private TemplateRepository $templateRepository;
 
     public function __construct(TranslatorInterface $translator, TemplateRepository $templateRepository)
     {
@@ -38,7 +38,7 @@ final class ExistTemplateSpecification extends AbstractSpecification
         $template = $this->templateRepository->find($value);
 
         if(!$template) {
-            throw new NotFoundException(\sprintf($this->translator->trans('zentlix.main.site.template_not_exist'), $value));
+            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.site.template_not_exist'), $value));
         }
 
         return true;

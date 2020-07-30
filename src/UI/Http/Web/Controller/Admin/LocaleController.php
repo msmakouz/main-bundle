@@ -22,7 +22,7 @@ use Zentlix\MainBundle\UI\Http\Web\Form\Locale\UpdateForm;
 
 class LocaleController extends ResourceController
 {
-    public static $updateSuccessMessage = 'zentlix.main.locale.update.success';
+    public static $updateSuccessMessage = 'zentlix_main.locale.update.success';
     public static $redirectAfterAction  = 'admin.locale.list';
 
     public function index(Request $request): Response

@@ -17,11 +17,13 @@ use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 
 final class ExistTemplateFolderSpecification extends AbstractSpecification
 {
-    private $translator;
+    private TranslatorInterface $translator;
+    private string $projectDir;
 
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(TranslatorInterface $translator, string $projectDir)
     {
         $this->translator = $translator;
+        $this->projectDir = $projectDir;
     }
 
     public function isExist($template): bool
@@ -31,8 +33,8 @@ final class ExistTemplateFolderSpecification extends AbstractSpecification
 
     public function isSatisfiedBy($value): bool
     {
-        if(\is_dir(\dirname(__DIR__, 7) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $value) === false) {
-            throw new \DomainException(\sprintf($this->translator->trans('main.template_folder_not_exist'), $value));
+        if(\is_dir($this->projectDir . '/templates/' . $value) === false) {
+            throw new \DomainException(\sprintf($this->translator->trans('zentlix_main.template_folder_not_exist'), $value));
         }
 
         return true;

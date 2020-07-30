@@ -82,6 +82,7 @@
         <service id="zentlix_main.site_exist_template_file_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFileSpecification">
             <argument type="service" id="translator"/>
+            <argument type="string">%kernel.project_dir%</argument>
         </service>
         <service id="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFileSpecification"
                  alias="zentlix_main.site_exist_template_file_specification"/>
@@ -89,6 +90,7 @@
         <service id="zentlix_main.site_exist_template_folder_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification">
             <argument type="service" id="translator"/>
+            <argument type="string">%kernel.project_dir%</argument>
         </service>
         <service id="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification"
                  alias="zentlix_main.site_exist_template_folder_specification"/>

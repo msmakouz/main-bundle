@@ -2,6 +2,7 @@ zentlix_main:
   about_system:  "Про систему"
   access_denied: "У вас недостатньо прав для виконання даної операції."
   add:           "Додати"
+  admin_panel:   "Панель управління"
 
   bundle:
     already_exist:    "Додаток вже встановлено."
@@ -46,6 +47,7 @@ zentlix_main:
   delete_element_confirm: "Ви дійсно бажаєте видалити елемент?"
   description:            "Опис"
   dropzone_help:          "Перетягніть файл в цю область (Drag&Drop)"
+  install_success:        "Ваш сайт успішно встановлено."
   edit:                   "Редагувати"
   editor:                 "Редактор"
   email:                  "Email"

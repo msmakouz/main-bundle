@@ -23,7 +23,7 @@ use Zentlix\MainBundle\UI\Http\Web\Form\Setting\DefaultForm;
 
 class BundleController extends ResourceController
 {
-    static $updateSuccessMessage = 'zentlix.main.bundle.update.success';
+    static $updateSuccessMessage = 'zentlix_main.bundle.update.success';
 
     public function index(Request $request): Response
     {

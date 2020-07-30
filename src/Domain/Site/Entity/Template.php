@@ -41,7 +41,7 @@ class Template
 
     private $config;
 
-    public function __construct($title, $folder, $sort)
+    public function __construct($title, $folder, $sort = 1)
     {
         $this->title = $title;
         $this->folder = $folder;

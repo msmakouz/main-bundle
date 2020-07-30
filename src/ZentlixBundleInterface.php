@@ -12,16 +12,20 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle;
 
+use Zentlix\UserBundle\Domain\Mailer\Entity\Event;
+
 interface ZentlixBundleInterface {
 
     public function getTitle():string;
     public function getVersion(): string;
     public function getDescription(): string;
     public function getDeveloper(): array;
-    public function install(): void;
-    public function uninstall(): void;
     public function configureRights(): array;
     public function getSettingsClass(): ?string;
     public function getSettingsForm(): ?string;
     public function installFrontendRoutes(): array;
+    /** @return Event[] */
+    public function installMailerEvents(): array;
+    public function getBundleName(): string;
+    public function isSystem(): bool;
 }

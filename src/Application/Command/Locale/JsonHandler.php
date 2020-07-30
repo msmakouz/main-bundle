@@ -23,11 +23,11 @@ class JsonHandler implements CommandHandlerInterface
     private LocaleRepository $localeRepository;
     private string $jsonLangFolder;
 
-    public function __construct(TranslatorInterface $translator, LocaleRepository $localeRepository)
+    public function __construct(TranslatorInterface $translator, LocaleRepository $localeRepository, string $projectDir)
     {
         $this->translator = $translator;
         $this->localeRepository = $localeRepository;
-        $this->jsonLangFolder = dirname(__DIR__, 7) . '/public/zentlix/main-bundle/admin/dist/assets/i18n/';
+        $this->jsonLangFolder = $projectDir . '/public/zentlix/main-bundle/admin/dist/assets/i18n/';
     }
 
     public function __invoke(JsonCommand $command): void
