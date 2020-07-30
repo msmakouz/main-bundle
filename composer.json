@@ -20,7 +20,7 @@
     "gedmo/doctrine-extensions": "^2.4",
     "ramsey/uuid": "^4.0",
     "ramsey/uuid-doctrine": "^1.6",
-    "zentlix/user-bundle": "0.1.*"
+    "zentlix/user-bundle": "dev-master"
   },
   "require-dev": {
   },
