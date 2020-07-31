@@ -22,6 +22,11 @@ class MainBundle extends Bundle implements ZentlixBundleInterface
 {
     use ZentlixBundleTrait;
 
+    public function getVersion(): string
+    {
+        return '0.1.0';
+    }
+
     public function getTitle(): string
     {
         return 'zentlix_main.main_bundle';

@@ -16,13 +16,6 @@ use Zentlix\MainBundle\Domain\Site\Entity\Site;
 
 trait ZentlixBundleTrait
 {
-    public function getVersion(): string
-    {
-        $composerJson = $this->parseComposerJson();
-
-        return $composerJson['version'];
-    }
-
     public function getBundleName(): string
     {
         $composerJson = $this->parseComposerJson();
