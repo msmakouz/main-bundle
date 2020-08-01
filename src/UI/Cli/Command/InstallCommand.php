@@ -102,6 +102,10 @@ class InstallCommand extends ConsoleCommand {
                 $this->kernel->locateResource('@UserBundle/Resources/global/packages/security.yaml'),
                 $this->kernel->getProjectDir() . '/config/packages/security.yaml'
             );
+
+            // Clear cache after change configurations
+            $command = $this->getApplication()->find('cache:clear');
+            $command->run(new ArrayInput(['--no-warmup' => true]), $output);
         }
 
         $useHtaccess = $io->confirm('Use default .htaccess? Otherwise, you will have to configure web server yourself!');

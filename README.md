@@ -6,7 +6,7 @@ This bundle is part of Zentlix CMS. Currently in development, please do not use 
 ## Установка
 - Установить Symfony 4.4: 
 ```bash
-   composer create-project symfony/skeleton:^4.4.* my_project_name
+   composer create-project symfony/skeleton:^4.4 my_project_name
 ```
 - Установить MainBundle:
 ```bash
