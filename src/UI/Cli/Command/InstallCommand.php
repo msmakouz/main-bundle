@@ -8,6 +8,8 @@
  * needs please refer to https://docs.zentlix.io for more information.
  */
 
+declare(strict_types=1);
+
 namespace Zentlix\MainBundle\UI\Cli\Command;
 
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
@@ -16,28 +18,24 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand as InstallBundleCommand;
-use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
+use Zentlix\MainBundle\Domain\Bundle\Service\Installer;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
 class InstallCommand extends ConsoleCommand {
 
     private CommandBus $commandBus;
     private Bundles $bundles;
-    private Filesystem $filesystem;
-    private KernelInterface $kernel;
+    private Installer $installer;
 
-    public function __construct(CommandBus $commandBus, Bundles $bundles, Filesystem $filesystem, KernelInterface $kernel)
+    public function __construct(CommandBus $commandBus, Bundles $bundles, Installer $installer)
     {
         parent::__construct();
 
         $this->bundles = $bundles;
         $this->commandBus = $commandBus;
-        $this->filesystem = $filesystem;
-        $this->kernel = $kernel;
+        $this->installer = $installer;
     }
 
     protected function configure(): void
@@ -97,11 +95,7 @@ class InstallCommand extends ConsoleCommand {
 
         $useSecurity = $io->confirm('Use default security configuration? Otherwise, you will have to configure it yourself!');
         if($useSecurity) {
-            $this->filesystem->remove($this->kernel->getProjectDir() . '/config/packages/security.yaml');
-            $this->filesystem->copy(
-                $this->kernel->locateResource('@UserBundle/Resources/global/packages/security.yaml'),
-                $this->kernel->getProjectDir() . '/config/packages/security.yaml'
-            );
+            $this->installer->replaceSecurityConfig();
 
             // Clear cache after change configurations
             $command = $this->getApplication()->find('cache:clear');
@@ -110,10 +104,7 @@ class InstallCommand extends ConsoleCommand {
 
         $useHtaccess = $io->confirm('Use default .htaccess? Otherwise, you will have to configure web server yourself!');
         if($useHtaccess) {
-            $this->filesystem->copy(
-                $this->kernel->locateResource('@MainBundle/Resources/global/.htaccess'),
-                $this->kernel->getProjectDir() . '/public/.htaccess'
-            );
+            $this->installer->copyHtaccess();
         }
 
         $io->section('Creating site');

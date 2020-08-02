@@ -4,35 +4,35 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
         <service id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\DataTable\Repository\DataTableRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\File\Repository\FileRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Route\Repository\RouteRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Setting\Repository\SettingsRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository">
-            <argument type="service" id="Doctrine\Common\Persistence\ManagerRegistry"/>
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
     </services>

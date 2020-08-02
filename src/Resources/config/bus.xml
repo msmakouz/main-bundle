@@ -116,9 +116,7 @@
             <argument type="service" id="zentlix_main.bundle_unique_class_specification"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="filesystem"/>
-            <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface"/>
-            <argument type="service" id="zentlix_main.bundles"/>
+            <argument type="service" id="zentlix_main.installer"/>
         </service>
 
         <!-- Query bus -->

@@ -23,10 +23,12 @@ class Bundles
     /** @var ZentlixBundleInterface[] */
     private array $bundles = [];
     private EntityManagerInterface $entityManager;
+    private Installer $installer;
 
-    public function __construct(iterable $bundles, EntityManagerInterface $entityManager)
+    public function __construct(iterable $bundles, EntityManagerInterface $entityManager, Installer $installer)
     {
         $this->entityManager = $entityManager;
+        $this->installer = $installer;
 
         foreach ($bundles as $bundle) {
             $this->addBundle($bundle);
@@ -74,11 +76,9 @@ class Bundles
         $bundleRepository = $this->entityManager->getRepository(Bundle::class);
         $bundles = $bundleRepository->findAll();
 
-        /** @var Bundle $bundle */
         foreach ($bundles as $bundle) {
-            /** @var ZentlixBundleInterface $kernel */
             $kernel = $this->getByClass($bundle->getClass());
-            $kernel->installFrontendRoutesForSite($site);
+            $this->installer->installRoutesForSite($kernel->installFrontendRoutes(), $site, $bundle);
         }
     }
 

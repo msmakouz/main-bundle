@@ -73,6 +73,10 @@ class Template
         $config = Yaml::parseFile(dirname(__DIR__, 7) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->folder .
             DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'config.yaml');
 
+        if(!is_array($config)) {
+            return  $default;
+        }
+
         return ArrayHelper::get($config, $param, $default);
     }
 }

@@ -28,8 +28,7 @@
         <service id="zentlix_main.install_command" class="Zentlix\MainBundle\UI\Cli\Command\InstallCommand">
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.bundles"/>
-            <argument type="service" id="filesystem"/>
-            <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface"/>
+            <argument type="service" id="zentlix_main.installer"/>
             <tag name="console.command"/>
         </service>
     </services>

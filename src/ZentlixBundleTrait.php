@@ -61,11 +61,6 @@ trait ZentlixBundleTrait
         return [];
     }
 
-    public function installFrontendRoutesForSite(Site $site)
-    {
-
-    }
-
     public function getSettingsClass(): ?string
     {
         return null;
