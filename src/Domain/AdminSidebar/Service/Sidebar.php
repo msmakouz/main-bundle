@@ -63,6 +63,20 @@ class Sidebar implements SidebarInterface
         return $this->sidebar[$identifier];
     }
 
+    public function findMenuItem(string $identifier): ?MenuItemInterface
+    {
+        if(isset($this->sidebar[$identifier])) {
+            return $this->sidebar[$identifier];
+        }
+        $identifier = md5($identifier);
+
+        if(isset($this->sidebar[$identifier])) {
+            return $this->sidebar[$identifier];
+        }
+
+        return null;
+    }
+
     public function build(): array
     {
         $sidebar = $this->sidebar;

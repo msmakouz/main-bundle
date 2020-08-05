@@ -81,7 +81,9 @@ class CreateSiteCommand extends ConsoleCommand
         try {
             $this->commandBus->handle($command);
         } catch (\Exception $exception) {
-            $io->error($exception->getMessage()); exit;
+            $io->error($exception->getMessage());
+
+            return 1;
         }
 
         $io->success('Site was created!');

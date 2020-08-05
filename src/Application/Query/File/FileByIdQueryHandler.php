@@ -33,7 +33,7 @@ class FileByIdQueryHandler implements QueryHandlerInterface
         return [
             'id'        => $fileByIdQuery->getId(),
             'name'      => $file->getFilename(),
-            'path'      => $entity->getPath(),
+            'url'       => $entity->getPath(),
             'mime'      => $file->getMimeType(),
             'size'      => $file->getSize(),
             'extension' => $file->getExtension(),

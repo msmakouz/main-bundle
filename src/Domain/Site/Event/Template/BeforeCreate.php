@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Domain\Site\Event;
+namespace Zentlix\MainBundle\Domain\Site\Event\Template;
 
-use Zentlix\MainBundle\Domain\Shared\Event\AbstractDataTableBuilder;
+use Zentlix\MainBundle\Domain\Shared\Event\AbstractBeforeCreate;
 
-final class Table extends AbstractDataTableBuilder {}
+final class BeforeCreate extends AbstractBeforeCreate {}

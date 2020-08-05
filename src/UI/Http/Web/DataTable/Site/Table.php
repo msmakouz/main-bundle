@@ -16,7 +16,7 @@ use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Zentlix\MainBundle\Infrastructure\Share\DataTable\AbstractDataTableType;
-use Zentlix\MainBundle\Domain\Site\Event\Table as TableEvent;
+use Zentlix\MainBundle\Domain\Site\Event\Site\Table as TableEvent;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
 
 class Table extends AbstractDataTableType

@@ -23,7 +23,7 @@ class FileController extends AbstractAdminController
     {
         try {
             $files = $request->files->all();
-            $command = new UploadCommand(array_shift($files), $request->request->get('savePath'));
+            $command = new UploadCommand(array_shift($files), $request->request->get('savePath') ?? '');
             $this->exec($command);
 
             return $this->json($this->ask(new FileByIdQuery($command->id)));

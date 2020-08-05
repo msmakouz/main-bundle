@@ -98,33 +98,6 @@
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
         </service>
 
-        <!-- Listeners and Subscribers -->
-        <service id="Zentlix\MainBundle\EventListener\RequestTransformerListener">
-            <tag name="kernel.event_listener" event="kernel.request"/>
-        </service>
-        <service id="gedmo.listener.tree" class="Gedmo\Tree\TreeListener">
-            <tag name="doctrine.event_subscriber" connection="default"/>
-            <call method="setAnnotationReader">
-                <argument type="service" id="annotation_reader"/>
-            </call>
-        </service>
-        <service id="gedmo.listener.sluggable" class="Gedmo\Sluggable\SluggableListener">
-            <tag name="doctrine.event_subscriber" connection="default"/>
-            <call method="setAnnotationReader">
-                <argument type="service" id="annotation_reader"/>
-            </call>
-        </service>
-        <service id="Zentlix\MainBundle\EventSubscriber\MainSubscriber">
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
-            <tag name="kernel.event_subscriber"/>
-        </service>
-        <service id="Zentlix\MainBundle\EventSubscriber\InstallBundleSubscriber">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="translator"/>
-            <argument type="string">%kernel.default_locale%</argument>
-            <tag name="kernel.event_subscriber"/>
-        </service>
-
         <service id="zentlix_main.main_bundle" class="Zentlix\MainBundle\MainBundle">
             <tag name="zentlix_bundle"/>
         </service>

@@ -101,6 +101,12 @@
             <tag name="messenger.message_handler"/>
         </service>
 
+        <service id="zentlix_main.template_create_handler" class="Zentlix\MainBundle\Application\Command\Template\CreateHandler">
+            <argument type="service" id="zentlix_main.site_exist_template_folder_specification"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+
         <service id="zentlix_main.visual_editor_disable_handler" class="Zentlix\MainBundle\Application\Command\VisualEditor\DisableHandler">
             <argument type="service" id="zentlix_main.visual_editor"/>
             <argument type="service" id="event_dispatcher"/>

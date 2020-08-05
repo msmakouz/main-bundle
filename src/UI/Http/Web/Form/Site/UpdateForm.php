@@ -15,7 +15,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Form\Site;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zentlix\MainBundle\Application\Command\Site\UpdateCommand;
-use Zentlix\MainBundle\Domain\Site\Event\UpdateForm as UpdateFormEvent;
+use Zentlix\MainBundle\Domain\Site\Event\Site\UpdateForm as UpdateFormEvent;
 
 class UpdateForm extends Form
 {

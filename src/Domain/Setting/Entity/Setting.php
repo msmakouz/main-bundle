@@ -18,7 +18,7 @@ use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Setting\Repository\SettingsRepository")
- * @Mapping\Table(name="zx_main_bundle_settings")
+ * @Mapping\Table(name="zentlix_main_bundle_settings")
  */
 class Setting implements SettingInterface
 {

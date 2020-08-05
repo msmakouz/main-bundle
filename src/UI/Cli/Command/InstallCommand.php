@@ -46,15 +46,21 @@ class InstallCommand extends ConsoleCommand {
             ->addArgument('bundle', InputArgument::OPTIONAL, 'Bundle name, e.g. zentlix/shop-bundle');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $package = $input->getArgument('bundle');
         $io = new SymfonyStyle($input, $output);
 
-        if($package) {
-            $this->installSingleBundle($package, $io);
-        } else {
-            $this->installCMS($io, $output);
+        try {
+            if($package) {
+                $this->installSingleBundle($package, $io);
+            } else {
+                $this->installCMS($io, $output);
+            }
+        } catch (\Exception $exception) {
+            $io->error($exception->getMessage());
+
+            return 1;
         }
 
         $command = $this->getApplication()->find('zentlix_main:generate:json-localization-file');
@@ -64,6 +70,8 @@ class InstallCommand extends ConsoleCommand {
         $command->run(new ArrayInput([]), $output);
 
         $io->success(sprintf('%s successfully installed!', $package ? sprintf('Bundle %s', $package) : 'Zentlix CMS'));
+
+        return 0;
     }
 
     private function installSingleBundle(string $package, SymfonyStyle $io): void
@@ -72,11 +80,7 @@ class InstallCommand extends ConsoleCommand {
 
         $io->comment(sprintf('Installing <info>%s</info>', $bundle->getBundleName()));
 
-        try {
-            $this->commandBus->handle(new InstallBundleCommand($bundle));
-        } catch (\Exception $exception) {
-            $io->error($exception->getMessage());
-        }
+        $this->commandBus->handle(new InstallBundleCommand($bundle));
     }
 
     private function installCMS(SymfonyStyle $io, OutputInterface $output): void
@@ -85,12 +89,7 @@ class InstallCommand extends ConsoleCommand {
 
         foreach ($bundles as $bundle) {
             $io->comment(sprintf('Installing <info>%s</info>', $bundle->getBundleName()));
-
-            try {
-                $this->commandBus->handle(new InstallBundleCommand($bundle));
-            } catch (\Exception $exception) {
-                $io->error($exception->getMessage());
-            }
+            $this->commandBus->handle(new InstallBundleCommand($bundle));
         }
 
         $useSecurity = $io->confirm('Use default security configuration? Otherwise, you will have to configure it yourself!');

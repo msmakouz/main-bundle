@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Application\Command\Locale;
+namespace Zentlix\MainBundle\Application\Command\Template;
 
 use Symfony\Component\Validator\Constraints;
 use Zentlix\MainBundle\Application\Command\DynamicPropertyCommand;
-use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
+use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 
 class Command extends DynamicPropertyCommand implements CommandInterface
@@ -23,16 +23,16 @@ class Command extends DynamicPropertyCommand implements CommandInterface
     public ?string $title = null;
 
     /** @Constraints\NotBlank() */
-    public ?string $code = null;
+    public ?string $folder = null;
 
     /** @Constraints\NotBlank() */
     public int $sort = 1;
 
     public ?string $icon = null;
 
-    protected Locale $entity;
+    protected Template $entity;
 
-    public function getEntity(): Locale
+    public function getEntity(): Template
     {
         return $this->entity;
     }

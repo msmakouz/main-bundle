@@ -15,6 +15,7 @@ namespace Zentlix\MainBundle\UI\Cli\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 use Zentlix\MainBundle\Application\Command\Locale\JsonCommand;
 
@@ -38,10 +39,18 @@ class GenerateJsonLocalisationFileCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->commandBus->handle(new JsonCommand());
+        $io = new SymfonyStyle($input, $output);
 
-        $output->writeln('<info>Localisation files generated succesfully. </info>');
+        try {
+            $this->commandBus->handle(new JsonCommand());
+        } catch (\Exception $exception) {
+            $io->error($exception->getMessage());
 
-        return 1;
+            return 1;
+        }
+
+        $io->success('Localisation files generated successfully.');
+
+        return 0;
     }
 }

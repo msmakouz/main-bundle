@@ -18,7 +18,7 @@ use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\File\Repository\FileRepository")
- * @Mapping\Table(name="zx_files")
+ * @Mapping\Table(name="zentlix_main_files")
  */
 class File
 {

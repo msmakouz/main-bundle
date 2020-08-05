@@ -19,7 +19,7 @@ use Zentlix\MainBundle\Domain\Site\Entity\Site;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Route\Repository\RouteRepository")
- * @Mapping\Table(name="zx_routes")
+ * @Mapping\Table(name="zentlix_main_routes")
  */
 class Route implements Eventable
 {

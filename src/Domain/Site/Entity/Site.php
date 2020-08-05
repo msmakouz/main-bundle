@@ -24,7 +24,7 @@ use Zentlix\MainBundle\Domain\Route\Entity\Route;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository")
- * @Mapping\Table(name="zx_sites", uniqueConstraints={
+ * @Mapping\Table(name="zentlix_main_sites", uniqueConstraints={
  *     @Mapping\UniqueConstraint(columns={"url"})
  * })
  */

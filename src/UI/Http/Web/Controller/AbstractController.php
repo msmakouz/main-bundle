@@ -63,7 +63,6 @@ class AbstractController extends BaseController implements AbstractControllerInt
         return parent::render(
             $view,
             array_merge($parameters, [
-                'templatePath' => '/templates/' . $this->template->getFolder(),
                 'template' => $this->template->getFolder()
             ]),
             $response

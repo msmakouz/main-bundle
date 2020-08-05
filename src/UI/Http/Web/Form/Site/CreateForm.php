@@ -15,7 +15,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Form\Site;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
-use Zentlix\MainBundle\Domain\Site\Event\CreateForm as CreateFormEvent;
+use Zentlix\MainBundle\Domain\Site\Event\Site\CreateForm as CreateFormEvent;
 
 class CreateForm extends Form
 {

@@ -15,8 +15,8 @@ namespace Zentlix\MainBundle\UI\Cli\Command;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 use Zentlix\MainBundle\Application\Command\Locale\CreateCommand;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
@@ -40,30 +40,45 @@ class CreateLocaleCommand extends ConsoleCommand {
     }
 
     /** @throws \Exception */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $command = new CreateCommand();
 
         $command->title = $input->getArgument('title');
+        $command->code = (string) $io->ask('Locale code', null, function ($code) {
+            if (empty($code)) {
+                throw new \RuntimeException('Locale code cannot be empty.');
+            }
 
-        $helper = $this->getHelper('question');
+            return $code;
+        });
+        $command->sort = (int) $io->ask('Locale sort', 1, function ($sort) {
+            if ((int) $sort < 1) {
+                throw new \RuntimeException('Locale sort must be a positive int.');
+            }
 
-        $question = new Question('Locale code:');
-        $command->code = $helper->ask($input, $output, $question);
+            return $sort;
+        });
+        $command->icon = (string) $io->ask('Locale icon class');
 
-        $question = new Question('Locale sort:', 500);
-        $command->sort = (int) $helper->ask($input, $output, $question);
+        try {
+            $this->commandBus->handle($command);
+        } catch (\Exception $exception) {
+            $io->error($exception->getMessage());
 
-        $question = new Question('Locale icon class:');
-        $command->icon = $helper->ask($input, $output, $question);
+            return 1;
+        }
 
-        $this->commandBus->handle($command);
+        $io->success('Locale was created!');
+        $io->text([
+            "Title: $command->title",
+            "Code: $command->code",
+            "Sort: $command->sort",
+            "Icon class: $command->icon"
+        ]);
 
-        $output->writeln('<info>Locale was created: </info>');
-        $output->writeln('');
-        $output->writeln("Title: $command->title");
-        $output->writeln("Code: $command->code");
-        $output->writeln("Sort: $command->sort");
-        $output->writeln("Icon class: $command->icon");
+        return 0;
     }
 }

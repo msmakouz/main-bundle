@@ -15,8 +15,8 @@ namespace Zentlix\MainBundle\Application\Command\Site;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
-use Zentlix\MainBundle\Domain\Site\Event\BeforeDelete;
-use Zentlix\MainBundle\Domain\Site\Event\AfterDelete;
+use Zentlix\MainBundle\Domain\Site\Event\Site\BeforeDelete;
+use Zentlix\MainBundle\Domain\Site\Event\Site\AfterDelete;
 use Zentlix\MainBundle\Domain\Site\Specification\NotSingleSpecification;
 use Zentlix\MainBundle\Domain\Site\Service\Sites;
 
@@ -26,7 +26,9 @@ class DeleteHandler implements CommandHandlerInterface
     private EventDispatcherInterface $eventDispatcher;
     private NotSingleSpecification $notSingleSpecification;
 
-    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher, NotSingleSpecification $notSingleSpecification)
+    public function __construct(EntityManagerInterface $entityManager,
+                                EventDispatcherInterface $eventDispatcher,
+                                NotSingleSpecification $notSingleSpecification)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;

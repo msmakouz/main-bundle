@@ -17,22 +17,30 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 use Zentlix\MainBundle\Domain\Bundle\Event\AfterInstall;
-use Zentlix\MainBundle\Application\Command\Locale\CreateCommand;
-use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
+use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
+use Zentlix\MainBundle\Application\Command;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
-use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\MainBundle;
 
 class InstallBundleSubscriber implements EventSubscriberInterface
 {
     private EntityManagerInterface $entityManager;
+    private CommandBus $commandBus;
     private TranslatorInterface $translator;
+    private LocaleRepository $localeRepository;
     private string $defaultLocale;
 
-    public function __construct(EntityManagerInterface $entityManager, TranslatorInterface $translator, string $defaultLocale)
+    public function __construct(CommandBus $commandBus,
+                                TranslatorInterface $translator,
+                                EntityManagerInterface $entityManager,
+                                LocaleRepository $localeRepository,
+                                string $defaultLocale)
     {
         $this->entityManager = $entityManager;
+        $this->commandBus = $commandBus;
         $this->translator = $translator;
+        $this->localeRepository = $localeRepository;
         $this->defaultLocale = $defaultLocale;
     }
 
@@ -51,26 +59,28 @@ class InstallBundleSubscriber implements EventSubscriberInterface
         if($bundle->getClass() === MainBundle::class) {
             $locales = [];
 
-            $command = new CreateCommand();
+            $command = new Command\Locale\CreateCommand();
             $command->title = 'Русский';
             $command->code = 'ru';
             $command->icon = 'flag-icon-ru';
             $command->sort = 500;
-            $locales[$command->code] = new Locale($command);
 
-            $this->entityManager->persist($locales[$command->code]);
+            $this->commandBus->handle($command);
 
-            $command = new CreateCommand();
+            $command = new Command\Locale\CreateCommand();
             $command->title = 'Українська';
             $command->code = 'ua';
             $command->icon = 'flag-icon-ua';
             $command->sort = 500;
-            $locales[$command->code] = new Locale($command);
 
-            $this->entityManager->persist($locales[$command->code]);
-            $this->entityManager->persist(new Setting($locales[$this->defaultLocale]));
+            $this->commandBus->handle($command);
 
-            $this->entityManager->persist(new Template($this->translator->trans('zentlix_main.default_template'), 'default'));
+            $this->entityManager->persist(new Setting($this->localeRepository->getOneByCode($this->defaultLocale)));
+
+            $command = new Command\Template\CreateCommand();
+            $command->title = $this->translator->trans('zentlix_main.default_template');
+            $command->folder = 'default';
+            $this->commandBus->handle($command);
 
             $this->entityManager->flush();
         }

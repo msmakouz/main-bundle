@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Domain\Site\Event;
+namespace Zentlix\MainBundle\Domain\Site\Event\Site;
 
-use Zentlix\MainBundle\Domain\Shared\Event\AbstractAfterDelete;
+use Zentlix\MainBundle\Domain\Shared\Event\AbstractFormBuilder;
 
-final class AfterDelete extends AbstractAfterDelete {}
+final class CreateForm extends AbstractFormBuilder {}

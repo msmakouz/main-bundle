@@ -8,5 +8,10 @@
             <argument type="service" id="zentlix_main.visual_editor"/>
             <tag name="twig.extension"/>
         </service>
+
+        <service id="zentlix_main.twig_extension.asset" class="Zentlix\MainBundle\UI\Http\Web\Widget\Asset">
+            <argument type="service" id="zentlix_main.sites"/>
+            <tag name="twig.extension"/>
+        </service>
     </services>
 </container>

@@ -14,15 +14,17 @@ namespace Zentlix\MainBundle\Domain\Site\Entity;
 
 use Doctrine\ORM\Mapping;
 use Symfony\Component\Yaml\Yaml;
+use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Infrastructure\Share\Helper\ArrayHelper;
+use Zentlix\MainBundle\Application\Command\Template\CreateCommand;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository")
- * @Mapping\Table(name="zx_templates")
+ * @Mapping\Table(name="zentlix_main_templates")
  * })
  */
-class Template
+class Template implements Eventable
 {
     use SortTrait;
 
@@ -41,11 +43,11 @@ class Template
 
     private $config;
 
-    public function __construct($title, $folder, $sort = 1)
+    public function __construct(CreateCommand $command)
     {
-        $this->title = $title;
-        $this->folder = $folder;
-        $this->sort = $sort;
+        $this->title = $command->title;
+        $this->folder = $command->folder;
+        $this->sort = $command->sort;
     }
 
     public function getId(): ?int

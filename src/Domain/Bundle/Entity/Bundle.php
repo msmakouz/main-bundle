@@ -18,7 +18,7 @@ use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository")
- * @Mapping\Table(name="zx_bundles", uniqueConstraints={
+ * @Mapping\Table(name="zentlix_main_bundles", uniqueConstraints={
  *     @Mapping\UniqueConstraint(columns={"class"})
  * })
  */

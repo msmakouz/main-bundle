@@ -20,7 +20,7 @@ use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository")
- * @Mapping\Table(name="zx_locales", uniqueConstraints={
+ * @Mapping\Table(name="zentlix_main_locales", uniqueConstraints={
  *     @Mapping\UniqueConstraint(columns={"code"})
  * })
  */

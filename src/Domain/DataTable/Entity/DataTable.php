@@ -17,7 +17,7 @@ use Zentlix\UserBundle\Domain\User\Entity\User;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\DataTable\Repository\DataTableRepository")
- * @Mapping\Table(name="zx_datatables")
+ * @Mapping\Table(name="zentlix_main_datatables")
  */
 class DataTable
 {

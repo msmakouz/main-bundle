@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Domain\Site\Event;
+namespace Zentlix\MainBundle\Application\Command\Template;
 
-use Zentlix\MainBundle\Domain\Shared\Event\AbstractFormBuilder;
+use Zentlix\MainBundle\Application\Command\CreateCommandInterface;
 
-final class UpdateForm extends AbstractFormBuilder {}
+class CreateCommand extends Command implements CreateCommandInterface {}
