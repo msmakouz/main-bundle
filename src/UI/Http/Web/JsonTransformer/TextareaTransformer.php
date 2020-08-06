@@ -34,6 +34,9 @@ class TextareaTransformer extends AbstractTransformer
         if(!empty($formView->vars['specification'])) {
             $schema['specification'] = $formView->vars['specification'];
         }
+        if(!empty($formView->vars['help'])) {
+            $schema['help'] = $formView->vars['help'];
+        }
 
         return $schema;
     }
