@@ -45,7 +45,7 @@ class DataTableFactory extends BaseDataTableFactory
         $config = $this->config;
 
         return (new DataTable($this->eventDispatcher, array_merge($config['options'] ?? [], $options),
-            $this->instantiator, $this->entityManager, $this->tokenStorage))
+            $this->instantiator))
             ->setRenderer($this->renderer)
             ->setMethod($config['method'] ?? Request::METHOD_POST)
             ->setPersistState($config['persist_state'] ?? 'fragment')

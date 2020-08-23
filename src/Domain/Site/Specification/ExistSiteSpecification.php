@@ -28,24 +28,24 @@ final class ExistSiteSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $site): bool
+    public function isExist(int $siteId): bool
     {
-        return $this->isSatisfiedBy($site);
+        return $this->isSatisfiedBy($siteId);
     }
 
     public function isSatisfiedBy($value): bool
     {
         $site = $this->siteRepository->find($value);
 
-        if(!$site) {
+        if(is_null($site)) {
             throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.site.not_exist'), $value));
         }
 
         return true;
     }
 
-    public function __invoke(int $localeId)
+    public function __invoke(int $siteId)
     {
-        return $this->isExist($localeId);
+        return $this->isExist($siteId);
     }
 }

@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Domain\Route\Event;
+namespace Zentlix\MainBundle\Application\Query\AdminRoute;
 
-use Zentlix\MainBundle\Domain\Shared\Event\AbstractBeforeUpdate;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryInterface;
 
-final class BeforeUpdate extends AbstractBeforeUpdate {}
+class BuildQuery implements QueryInterface {}

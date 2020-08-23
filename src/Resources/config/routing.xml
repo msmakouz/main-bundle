@@ -65,11 +65,6 @@
         <default key="_controller">zentlix_main.bundle_controller::changeSettings</default>
     </route>
 
-    <route id="admin.routes.update" path="/backend/settings/routes/edit">
-        <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.route_controller::update</default>
-    </route>
-
     <route id="admin.editor.enable" path="/backend/editor/enable">
         <condition>request.isXmlHttpRequest()</condition>
         <default key="_controller">zentlix_main.editor_controller::enable</default>
@@ -100,6 +95,4 @@
     <route id="index" path="/">
         <default key="_controller">zentlix_main.index_controller::index</default>
     </route>
-
-    <import resource="zentlix_main.routes_loader::loadRoutes" type="service"/>
 </routes>

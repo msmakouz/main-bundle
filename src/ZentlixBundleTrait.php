@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle;
 
-use Zentlix\MainBundle\Domain\Site\Entity\Site;
-
 trait ZentlixBundleTrait
 {
     public function getBundleName(): string
@@ -44,14 +42,6 @@ trait ZentlixBundleTrait
      * @return array
      */
     public function configureRights(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function installFrontendRoutes(): array
     {
         return [];
     }

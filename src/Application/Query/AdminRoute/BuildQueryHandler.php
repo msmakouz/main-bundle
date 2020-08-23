@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Application\Query\Route;
+namespace Zentlix\MainBundle\Application\Query\AdminRoute;
 
 use Zentlix\MainBundle\Application\Query\QueryHandlerInterface;
-use Zentlix\MainBundle\Domain\Route\Service\Routes;
+use Zentlix\MainBundle\Domain\AdminRoute\Service\Routes;
 
 class BuildQueryHandler implements QueryHandlerInterface
 {

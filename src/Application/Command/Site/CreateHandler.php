@@ -15,7 +15,6 @@ namespace Zentlix\MainBundle\Application\Command\Site;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
-use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
 use Zentlix\MainBundle\Domain\Locale\Specification\ExistLocaleSpecification;
 use Zentlix\MainBundle\Domain\Site\Event\Site\BeforeCreate;
@@ -37,7 +36,6 @@ class CreateHandler implements CommandHandlerInterface
     private EventDispatcherInterface $eventDispatcher;
     private LocaleRepository $localeRepository;
     private TemplateRepository $templateRepository;
-    private Bundles $bundles;
 
     public function __construct(EntityManagerInterface $entityManager,
                                 EventDispatcherInterface $eventDispatcher,
@@ -46,8 +44,7 @@ class CreateHandler implements CommandHandlerInterface
                                 ExistTemplateSpecification $existTemplateSpecification,
                                 ExistTemplateFolderSpecification $existTemplateFolderSpecification,
                                 LocaleRepository $localeRepository,
-                                TemplateRepository $templateRepository,
-                                Bundles $bundles)
+                                TemplateRepository $templateRepository)
     {
         $this->uniqueUrlSpecification = $uniqueUrlSpecification;
         $this->existLocaleSpecification = $existLocaleSpecification;
@@ -57,7 +54,6 @@ class CreateHandler implements CommandHandlerInterface
         $this->eventDispatcher = $eventDispatcher;
         $this->localeRepository = $localeRepository;
         $this->templateRepository = $templateRepository;
-        $this->bundles = $bundles;
     }
 
     public function __invoke(CreateCommand $command): void
@@ -74,9 +70,6 @@ class CreateHandler implements CommandHandlerInterface
         $site = new Site($command);
 
         $this->entityManager->persist($site);
-
-        $this->bundles->installBundlesRouting($site);
-
         $this->entityManager->flush();
 
         Sites::clearCache();

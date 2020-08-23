@@ -17,9 +17,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
-use Zentlix\MainBundle\Domain\Route\Entity\Route;
-use Zentlix\MainBundle\Domain\Site\Entity\Site;
-use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
 use Zentlix\MainBundle\ZentlixBundleInterface;
 
 class Installer
@@ -27,17 +24,12 @@ class Installer
     private EntityManagerInterface $entityManager;
     private KernelInterface $kernel;
     private Filesystem $filesystem;
-    private SiteRepository $siteRepository;
 
-    public function __construct(KernelInterface $kernel,
-                                Filesystem $filesystem,
-                                EntityManagerInterface $entityManager,
-                                SiteRepository $siteRepository)
+    public function __construct(KernelInterface $kernel, Filesystem $filesystem, EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->kernel = $kernel;
         $this->filesystem = $filesystem;
-        $this->siteRepository = $siteRepository;
     }
 
     public function install(ZentlixBundleInterface $bundleClass, Bundle $bundleEntity): void
@@ -49,10 +41,6 @@ class Installer
         foreach ($bundleClass->installMailerEvents() as $mailerEvent) {
             $mailerEvent->setBundle($bundleEntity);
             $this->entityManager->persist($mailerEvent);
-        }
-
-        foreach ($this->siteRepository->findAll() as $site) {
-            $this->installRoutesForSite($bundleClass->installFrontendRoutes(), $site, $bundleEntity);
         }
     }
 
@@ -71,22 +59,6 @@ class Installer
             $this->kernel->locateResource('@MainBundle/Resources/global/.htaccess'),
             $this->kernel->getProjectDir() . '/public/.htaccess'
         );
-    }
-
-    /**
-     * @param Route[] $routes
-     * @param Site $site
-     */
-    public function installRoutesForSite(array $routes, Site $site, Bundle $bundle): void
-    {
-        foreach ($routes as $route) {
-            $route->setBundle($bundle);
-            $route->setSite($site);
-
-            $this->entityManager->persist($route);
-        }
-
-        $this->entityManager->flush();
     }
 
     private function copyRoutes($class): void

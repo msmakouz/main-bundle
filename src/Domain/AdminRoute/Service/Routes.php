@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Domain\Route\Service;
+namespace Zentlix\MainBundle\Domain\AdminRoute\Service;
 
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Route;

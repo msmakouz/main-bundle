@@ -12,12 +12,53 @@
     <services>
         <defaults autowire="false" autoconfigure="false" public="false"/>
 
+        <service id="zentlix_main.routes" class="Zentlix\MainBundle\Domain\AdminRoute\Service\Routes">
+            <argument type="service" id="router"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\AdminRoute\Service\Routes" alias="zentlix_main.routes"/>
+
         <service id="zentlix_main.sidebar" class="Zentlix\MainBundle\Domain\AdminSidebar\Service\Sidebar">
             <argument type="service" id="router" />
         </service>
         <service id="Zentlix\MainBundle\Domain\AdminSidebar\Service\SidebarInterface"
                  alias="Zentlix\MainBundle\Domain\AdminSidebar\Service\Sidebar"/>
         <service id="Zentlix\MainBundle\Domain\AdminSidebar\Service\Sidebar" alias="zentlix_main.sidebar"/>
+
+        <service id="zentlix_main.bundles" class="Zentlix\MainBundle\Domain\Bundle\Service\Bundles">
+            <argument type="tagged_iterator" tag="zentlix_bundle"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\Bundle\Service\Bundles" alias="zentlix_main.bundles"/>
+
+        <service id="zentlix_main.installer" class="Zentlix\MainBundle\Domain\Bundle\Service\Installer" public="true">
+            <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface"/>
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
+        <service id="zentlix_main.cache" class="Zentlix\MainBundle\Domain\Cache\Service\Cache">
+            <argument type="string">%kernel.cache_dir%</argument>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\Cache\Service\Cache" alias="zentlix_main.cache"/>
+
+        <service id="zentlix_main.widgets" class="Zentlix\MainBundle\Domain\Dashboard\Service\Widgets">
+            <argument type="tagged_iterator" tag="zentlix_main.admin_widget"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\Dashboard\Service\Widgets" alias="zentlix_main.widgets"/>
+
+        <service id="zentlix_main.data_table_factory" class="Zentlix\MainBundle\Domain\DataTable\Service\DataTableFactory">
+            <argument type="collection">%datatables.config%</argument>
+            <argument type="service" id="Omines\DataTablesBundle\Twig\TwigRenderer"/>
+            <argument type="service" id="Omines\DataTablesBundle\DependencyInjection\Instantiator"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="security.token_storage"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\DataTable\Service\DataTableFactory" alias="zentlix_main.data_table_factory"/>
+
+        <service id="zentlix_main.data_table_service" class="Zentlix\MainBundle\Domain\DataTable\Service\DataTableService">
+            <argument type="service" id="zentlix_main.data_table_factory"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\DataTable\Service\DataTableService" alias="zentlix_main.data_table_service"/>
 
         <service id="zentlix_main.file_uploader" class="Zentlix\MainBundle\Domain\File\Service\FileUploader">
             <argument type="string">%upload_path%</argument>
@@ -33,27 +74,10 @@
         </service>
         <service id="Zentlix\MainBundle\Domain\File\Service\Files" alias="zentlix_main.files"/>
 
-        <service id="zentlix_main.bundles" class="Zentlix\MainBundle\Domain\Bundle\Service\Bundles">
-            <argument type="tagged_iterator" tag="zentlix_bundle"/>
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="zentlix_main.installer"/>
+        <service id="zentlix_main.settings" class="Zentlix\MainBundle\Domain\Setting\Service\Settings">
+            <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
-        <service id="Zentlix\MainBundle\Domain\Bundle\Service\Bundles" alias="zentlix_main.bundles"/>
-
-        <service id="zentlix_main.data_table_service" class="Zentlix\MainBundle\Domain\DataTable\Service\DataTableService">
-            <argument type="service" id="zentlix_main.data_table_factory"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\DataTable\Service\DataTableService" alias="zentlix_main.data_table_service"/>
-
-        <service id="zentlix_main.data_table_factory" class="Zentlix\MainBundle\Domain\DataTable\Service\DataTableFactory">
-            <argument type="collection">%datatables.config%</argument>
-            <argument type="service" id="Omines\DataTablesBundle\Twig\TwigRenderer"/>
-            <argument type="service" id="Omines\DataTablesBundle\DependencyInjection\Instantiator"/>
-            <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="security.token_storage"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\DataTable\Service\DataTableFactory" alias="zentlix_main.data_table_factory"/>
+        <service id="Zentlix\MainBundle\Domain\Setting\Service\Settings" alias="zentlix_main.settings" />
 
         <service id="zentlix_main.sites" class="Zentlix\MainBundle\Domain\Site\Service\Sites">
             <argument type="service" id="service_container"/>
@@ -61,42 +85,10 @@
         </service>
         <service id="Zentlix\MainBundle\Domain\Site\Service\Sites" alias="zentlix_main.sites"/>
 
-        <service id="zentlix_main.cache" class="Zentlix\MainBundle\Domain\Cache\Service\Cache">
-            <argument type="service" id="service_container"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\Cache\Service\Cache" alias="zentlix_main.cache"/>
-
         <service id="zentlix_main.visual_editor" class="Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor">
             <argument type="service" id="session"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor" alias="zentlix_main.visual_editor"/>
-
-        <service id="zentlix_main.routes" class="Zentlix\MainBundle\Domain\Route\Service\Routes">
-            <argument type="service" id="router"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\Route\Service\Routes" alias="zentlix_main.routes"/>
-
-        <service id="zentlix_main.widgets" class="Zentlix\MainBundle\Domain\Dashboard\Service\Widgets">
-            <argument type="tagged_iterator" tag="zentlix_main.admin_widget"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\Dashboard\Service\Widgets" alias="zentlix_main.widgets"/>
-
-        <service id="zentlix_main.settings" class="Zentlix\MainBundle\Domain\Setting\Service\Settings">
-            <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
-        <service id="Zentlix\MainBundle\Domain\Setting\Service\Settings" alias="zentlix_main.settings" />
-
-        <service id="zentlix_main.routes_loader" class="Zentlix\MainBundle\Domain\Route\Service\ZentlixRoutesLoader" public="true">
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\Route\Service\ZentlixRoutesLoader" alias="zentlix_main.routes_loader" public="true"/>
-
-        <service id="zentlix_main.installer" class="Zentlix\MainBundle\Domain\Bundle\Service\Installer" public="true">
-            <argument type="service" id="Symfony\Component\HttpKernel\KernelInterface"/>
-            <argument type="service" id="filesystem"/>
-            <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
-        </service>
 
         <service id="zentlix_main.main_bundle" class="Zentlix\MainBundle\MainBundle">
             <tag name="zentlix_bundle"/>

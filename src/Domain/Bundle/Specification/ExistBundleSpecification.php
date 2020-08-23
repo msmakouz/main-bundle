@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Specification;
 
-use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
+use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
+use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 
-final class UniqueClassSpecification extends AbstractSpecification
+final class ExistBundleSpecification extends AbstractSpecification
 {
     private BundleRepository $bundleRepository;
     private TranslatorInterface $translator;
@@ -28,22 +28,24 @@ final class UniqueClassSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isUnique(string $class): bool
+    public function isExist(int $bundleId): bool
     {
-        return $this->isSatisfiedBy($class);
+        return $this->isSatisfiedBy($bundleId);
     }
 
     public function isSatisfiedBy($value): bool
     {
-        if($this->bundleRepository->findOneByClass($value) !== null) {
-            throw new NonUniqueResultException($this->translator->trans('zentlix_main.bundle.already_exist'));
+        $bundle = $this->bundleRepository->find($value);
+
+        if(is_null($bundle)) {
+            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.bundle.not_exist'), $value));
         }
 
         return true;
     }
 
-    public function __invoke(string $class)
+    public function __invoke(int $bundleId)
     {
-        return $this->isUnique($class);
+        return $this->isExist($bundleId);
     }
 }

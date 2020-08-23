@@ -26,9 +26,9 @@ final class ExistTemplateFolderSpecification extends AbstractSpecification
         $this->projectDir = $projectDir;
     }
 
-    public function isExist($template): bool
+    public function isExist(string $folder): bool
     {
-        return $this->isSatisfiedBy($template);
+        return $this->isSatisfiedBy($folder);
     }
 
     public function isSatisfiedBy($value): bool
@@ -40,8 +40,8 @@ final class ExistTemplateFolderSpecification extends AbstractSpecification
         return true;
     }
 
-    public function __invoke($template)
+    public function __invoke(string $folder)
     {
-        return $this->isExist($template);
+        return $this->isExist($folder);
     }
 }

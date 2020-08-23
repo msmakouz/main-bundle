@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping;
 use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand;
 
@@ -66,13 +65,13 @@ class Bundle
 
     public function __construct(InstallCommand $command)
     {
-        $this->routes = new ArrayCollection();
-
         $this->title = $command->getBundle()->getTitle();
         $this->class = get_class($command->getBundle());
         $this->description = $command->getBundle()->getDescription();
         $this->version = $command->getBundle()->getVersion();
         $this->system_bundle = $command->getBundle()->isSystem();
+        $this->settings_form = $command->getBundle()->getSettingsForm();
+        $this->settings_entity = $command->getBundle()->getSettingsClass();
         $this->updated_at = $command->updated_at;
         $this->installed_at = $command->installed_at;
     }
@@ -110,11 +109,6 @@ class Bundle
     public function getUpdatedAt(): \DateTimeImmutable
     {
         return $this->updated_at;
-    }
-
-    public function getRoutes()
-    {
-        return $this->routes;
     }
 
     public function isSystem(): bool

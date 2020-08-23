@@ -12,24 +12,15 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Zentlix\MainBundle\ZentlixBundleInterface;
-use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
-use Zentlix\MainBundle\Domain\Site\Entity\Site;
-use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 
 class Bundles
 {
     /** @var ZentlixBundleInterface[] */
     private array $bundles = [];
-    private EntityManagerInterface $entityManager;
-    private Installer $installer;
 
-    public function __construct(iterable $bundles, EntityManagerInterface $entityManager, Installer $installer)
+    public function __construct(iterable $bundles)
     {
-        $this->entityManager = $entityManager;
-        $this->installer = $installer;
-
         foreach ($bundles as $bundle) {
             $this->addBundle($bundle);
         }
@@ -68,18 +59,6 @@ class Bundles
     public function isBundle(string $class): bool
     {
         return isset($this->bundles[$class]);
-    }
-
-    public function installBundlesRouting(Site $site): void
-    {
-        /** @var BundleRepository $bundleRepository */
-        $bundleRepository = $this->entityManager->getRepository(Bundle::class);
-        $bundles = $bundleRepository->findAll();
-
-        foreach ($bundles as $bundle) {
-            $kernel = $this->getByClass($bundle->getClass());
-            $this->installer->installRoutesForSite($kernel->installFrontendRoutes(), $site, $bundle);
-        }
     }
 
     public static function getBundleNameFromNamespace(string $namespace): string

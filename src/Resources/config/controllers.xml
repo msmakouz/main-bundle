@@ -114,17 +114,6 @@
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.route_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\RouteController"
-                 public="true">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
-            <argument type="service" id="zentlix_main.bundles" />
-            <argument type="service" id="zentlix_main.command_bus"/>
-            <argument type="service" id="zentlix_main.query_bus"/>
-            <tag name="controller.service_arguments"/>
-        </service>
-
         <service id="zentlix_main.site_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController"
                  public="true">

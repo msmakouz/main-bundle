@@ -19,10 +19,6 @@
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Route\Repository\RouteRepository">
-            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
-            <tag name="doctrine.repository_service"/>
-        </service>
         <service id="Zentlix\MainBundle\Domain\Setting\Repository\SettingsRepository">
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>

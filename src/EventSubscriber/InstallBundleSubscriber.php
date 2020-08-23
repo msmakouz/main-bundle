@@ -57,8 +57,6 @@ class InstallBundleSubscriber implements EventSubscriberInterface
         $bundle = $afterInstall->getBundle();
 
         if($bundle->getClass() === MainBundle::class) {
-            $locales = [];
-
             $command = new Command\Locale\CreateCommand();
             $command->title = 'Русский';
             $command->code = 'ru';

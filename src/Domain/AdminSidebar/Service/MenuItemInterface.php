@@ -21,7 +21,7 @@ interface MenuItemInterface
     public function sort(int $sort): self;
     public function icon(string $icon): self;
     public function url(string $url): self;
-    public function generateUrl(string $routeName): self;
+    public function generateUrl(string $routeName, array $parameters = []): self;
     public function addChildren(string $name): self;
     public function getName(): ?string;
     public function getUrl(): ?string;

@@ -42,7 +42,7 @@ class Command extends DynamicPropertyCommand implements CommandInterface
      */
     public $template;
 
-    public ?int $sort = null;
+    public int $sort = 1;
     protected ?Site $entity = null;
 
     public function getEntity(): Site

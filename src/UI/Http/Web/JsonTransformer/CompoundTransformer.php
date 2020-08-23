@@ -81,6 +81,10 @@ class CompoundTransformer extends AbstractTransformer
             $schema['tree_group'] = $form->getConfig()->getOption('tree_group');
         }
 
+        if(!empty($form->getConfig()->getOption('link'))) {
+            $schema['link'] = $form->getConfig()->getOption('link');
+        }
+
         if (!empty($required)) {
             $schema['required'] = $required;
         }

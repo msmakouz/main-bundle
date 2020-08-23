@@ -14,7 +14,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Application\Query\State;
-use Zentlix\MainBundle\Application\Query\Route;
+use Zentlix\MainBundle\Application\Query\AdminRoute;
 
 class AngularController extends AbstractAdminController
 {
@@ -35,7 +35,7 @@ class AngularController extends AbstractAdminController
     public function routes(): Response
     {
         try {
-            return $this->json($this->ask(new Route\BuildQuery()));
+            return $this->json($this->ask(new AdminRoute\BuildQuery()));
         } catch (\Exception $e) {
             return $this->json($this->error($e->getMessage()));
         }

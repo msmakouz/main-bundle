@@ -43,10 +43,6 @@ class DeleteHandler implements CommandHandlerInterface
 
         $this->eventDispatcher->dispatch(new BeforeDelete($command));
 
-        foreach ($command->site->getRoutes() as $route) {
-            $this->entityManager->remove($route);
-        }
-
         $this->entityManager->remove($command->site);
         $this->entityManager->flush();
 

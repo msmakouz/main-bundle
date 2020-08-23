@@ -72,9 +72,9 @@ class MenuItem implements MenuItemInterface
         return $this;
     }
 
-    public function generateUrl(string $routeName): self
+    public function generateUrl(string $routeName, array $parameters = []): self
     {
-        $this->url = str_replace('/backend', '', $this->router->generate($routeName));
+        $this->url = str_replace('/backend', '', $this->router->generate($routeName, $parameters));
 
         return $this;
     }

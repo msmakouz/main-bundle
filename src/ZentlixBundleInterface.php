@@ -23,7 +23,6 @@ interface ZentlixBundleInterface {
     public function configureRights(): array;
     public function getSettingsClass(): ?string;
     public function getSettingsForm(): ?string;
-    public function installFrontendRoutes(): array;
     /** @return Event[] */
     public function installMailerEvents(): array;
     public function getBundleName(): string;

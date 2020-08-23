@@ -12,19 +12,17 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Cache\Service;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
-use Symfony\Component\Filesystem\Filesystem;
 
 class Cache
 {
     public const SITES = 'zentlix.sites';
-    private ?string $cacheDir = null;
+    protected ?string $cacheDir = null;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(string $cacheDir)
     {
-        $this->cacheDir = $container->getParameter('kernel.cache_dir');
+        $this->cacheDir = $cacheDir;
     }
 
     /**
@@ -68,22 +66,5 @@ class Cache
     {
         $cache = new FilesystemAdapter();
         $cache->delete($tag);
-    }
-
-    public function clearRoutes(): void
-    {
-        $fs = new Filesystem();
-        if($fs->exists($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlGenerator.php')) {
-            $fs->remove($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlGenerator.php');
-        }
-        if($fs->exists($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlGenerator.php.meta')) {
-            $fs->remove($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlGenerator.php.meta');
-        }
-        if($fs->exists($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlMatcher.php')) {
-            $fs->remove($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlMatcher.php');
-        }
-        if($fs->exists($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlMatcher.php.meta')) {
-            $fs->remove($this->cacheDir . DIRECTORY_SEPARATOR . 'UrlMatcher.php.meta');
-        }
     }
 }

@@ -14,7 +14,6 @@ namespace Zentlix\MainBundle;
 
 use Zentlix\MainBundle\Application;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
-use Zentlix\MainBundle\Domain\Route;
 use Zentlix\MainBundle\UI\Http\Web\Form\Setting\Form;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -24,7 +23,7 @@ class MainBundle extends Bundle implements ZentlixBundleInterface
 
     public function getVersion(): string
     {
-        return '0.2.1';
+        return '0.3.0';
     }
 
     public function getTitle(): string

@@ -13,14 +13,12 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Site\Entity;
 
 use Doctrine\ORM\Mapping;
-use Doctrine\Common\Collections\ArrayCollection;
 use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Site\UpdateCommand;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\MetaTrait;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
-use Zentlix\MainBundle\Domain\Route\Entity\Route;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository")
@@ -59,13 +57,8 @@ class Site implements Eventable
      */
     private $template;
 
-    /** @Mapping\OneToMany(targetEntity="Zentlix\MainBundle\Domain\Route\Entity\Route", mappedBy="site") */
-    private $routes;
-
     public function __construct(CreateCommand $command)
     {
-        $this->routes = new ArrayCollection();
-
         $this->setValuesFromCommands($command);
     }
 
@@ -107,29 +100,6 @@ class Site implements Eventable
     public function setLocale(Locale $locale): void
     {
         $this->locale = $locale;
-    }
-
-    public function getRoutes()
-    {
-        return $this->routes;
-    }
-
-    public function setRoutes(array $routes): void
-    {
-        $this->routes = new ArrayCollection($routes);
-    }
-
-    public function getBundleRoutes(int $bundleId): array
-    {
-        $routes = [];
-        foreach ($this->getRoutes()->getValues() as $route) {
-            /** @var $route Route */
-            if($route->getId() === $bundleId) {
-                $routes[] = $route;
-            }
-        }
-
-        return $routes;
     }
 
     public function isUrlEqual(string $url): bool

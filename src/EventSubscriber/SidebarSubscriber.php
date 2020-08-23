@@ -17,7 +17,7 @@ use Zentlix\MainBundle\Domain\AdminSidebar\Event\BeforeBuild;
 use Zentlix\MainBundle\Domain\AdminSidebar\Service\MenuItemInterface;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
 
-class MainSubscriber implements EventSubscriberInterface
+class SidebarSubscriber implements EventSubscriberInterface
 {
     private array $sites;
 
@@ -71,14 +71,9 @@ class MainSubscriber implements EventSubscriberInterface
             ->sort(120);
 
         $settings
-            ->addChildren('zentlix_main.route.routes')
-            ->generateUrl('admin.routes.update')
-            ->sort(130);
-
-        $settings
             ->addChildren('zentlix_main.localisation')
             ->generateUrl('admin.locale.list')
-            ->sort(140);
+            ->sort(130);
 
         $sidebar->addSectionTitle('zentlix_main.tools')->sort(220);
 

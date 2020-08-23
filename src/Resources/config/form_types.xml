@@ -9,11 +9,6 @@
             <tag name="form.type"/>
         </service>
 
-        <service id="zentlix_main.route.update_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Route\UpdateForm">
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
-            <tag name="form.type"/>
-        </service>
-
         <service id="zentlix_main.setting.default_form" class="Zentlix\MainBundle\UI\Http\Web\Form\Setting\DefaultForm">
             <tag name="form.type"/>
         </service>
@@ -37,11 +32,6 @@
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
-            <tag name="form.type"/>
-        </service>
-
-        <service id="zentlix_main.form_type.route_type" class="Zentlix\MainBundle\UI\Http\Web\FormType\RouteType">
-            <argument type="service" id="translator"/>
             <tag name="form.type"/>
         </service>
     </services>
