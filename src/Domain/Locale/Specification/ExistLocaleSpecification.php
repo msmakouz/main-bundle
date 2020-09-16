@@ -15,12 +15,12 @@ namespace Zentlix\MainBundle\Domain\Locale\Specification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
+use function is_null;
 
-final class ExistLocaleSpecification extends AbstractSpecification
+final class ExistLocaleSpecification
 {
-    private $localeRepository;
-    private $translator;
+    private LocaleRepository $localeRepository;
+    private TranslatorInterface $translator;
 
     public function __construct(LocaleRepository $localeRepository, TranslatorInterface $translator)
     {
@@ -28,24 +28,15 @@ final class ExistLocaleSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $localeId): bool
+    public function isExist(int $localeId): void
     {
-        return $this->isSatisfiedBy($localeId);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        $locale = $this->localeRepository->find($value);
-
-        if(!$locale) {
-            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.locale.not_exist'), $value));
+        if(is_null($this->localeRepository->find($localeId))) {
+            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.locale.not_exist'), $localeId));
         }
-
-        return true;
     }
 
-    public function __invoke(int $localeId)
+    public function __invoke(int $localeId): void
     {
-        return $this->isExist($localeId);
+        $this->isExist($localeId);
     }
 }

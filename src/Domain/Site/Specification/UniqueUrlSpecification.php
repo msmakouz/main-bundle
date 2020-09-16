@@ -14,10 +14,9 @@ namespace Zentlix\MainBundle\Domain\Site\Specification;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
 
-final class UniqueUrlSpecification extends AbstractSpecification
+final class UniqueUrlSpecification
 {
     private SiteRepository $siteRepository;
     private TranslatorInterface $translator;
@@ -28,22 +27,15 @@ final class UniqueUrlSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isUnique(string $url): bool
+    public function isUnique(string $url): void
     {
-        return $this->isSatisfiedBy($url);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if($this->siteRepository->hasByUrl($value)) {
-            throw new NonUniqueResultException(\sprintf($this->translator->trans('zentlix_main.site.already_exist'), $value));
+        if($this->siteRepository->hasByUrl($url)) {
+            throw new NonUniqueResultException(sprintf($this->translator->trans('zentlix_main.site.already_exist'), $url));
         }
-
-        return true;
     }
 
-    public function __invoke(string $url)
+    public function __invoke(string $url): void
     {
-        return $this->isUnique($url);
+        $this->isUnique($url);
     }
 }

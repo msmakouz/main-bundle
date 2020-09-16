@@ -13,10 +13,9 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Bundle\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 
-final class IsNotSystemSpecification extends AbstractSpecification
+final class IsNotSystemSpecification
 {
     private BundleRepository $bundleRepository;
     private TranslatorInterface $translator;
@@ -29,17 +28,10 @@ final class IsNotSystemSpecification extends AbstractSpecification
 
     public function isNotSystem(int $id): bool
     {
-        return $this->isSatisfiedBy($id);
+        return !$this->bundleRepository->get($id)->isSystem();
     }
 
-    public function isSatisfiedBy($value): bool
-    {
-        $module = $this->bundleRepository->get($value);
-
-        return !$module->isSystem();
-    }
-
-    public function __invoke(int $id)
+    public function __invoke(int $id): bool
     {
         return $this->isNotSystem($id);
     }

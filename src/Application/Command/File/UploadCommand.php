@@ -19,6 +19,8 @@ class UploadCommand implements CommandInterface
 {
     public string $savePath;
     public ?string $filename;
+    public ?string $alt = null;
+    public ?string $title = null;
     public $id;
     public UploadedFile $uploadedFile;
 

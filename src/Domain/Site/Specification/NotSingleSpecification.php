@@ -15,9 +15,8 @@ namespace Zentlix\MainBundle\Domain\Site\Specification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 
-final class NotSingleSpecification extends AbstractSpecification
+final class NotSingleSpecification
 {
     private SiteRepository $siteRepository;
     private TranslatorInterface $translator;
@@ -28,22 +27,15 @@ final class NotSingleSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isNotSingle(): bool
-    {
-        return $this->isSatisfiedBy('');
-    }
-
-    public function isSatisfiedBy($value): bool
+    public function isNotSingle(): void
     {
         if($this->siteRepository->isSingle()) {
             throw new NotFoundException($this->translator->trans('zentlix_main.site.is_single_site'));
         }
-
-        return true;
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
-        return $this->isNotSingle();
+        $this->isNotSingle();
     }
 }

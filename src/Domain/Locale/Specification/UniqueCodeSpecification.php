@@ -15,9 +15,9 @@ namespace Zentlix\MainBundle\Domain\Locale\Specification;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
+use function is_null;
 
-final class UniqueCodeSpecification extends AbstractSpecification
+final class UniqueCodeSpecification
 {
     private LocaleRepository $localeRepository;
     private TranslatorInterface $translator;
@@ -28,22 +28,15 @@ final class UniqueCodeSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isUnique(string $code): bool
+    public function isUnique(string $code): void
     {
-        return $this->isSatisfiedBy($code);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if($this->localeRepository->findOneBy(['code' => $value]) !== null) {
-            throw new NonUniqueResultException(sprintf($this->translator->trans('zentlix_main.locale.already_exist'), $value));
+        if(is_null($this->localeRepository->findOneByCode($code)) === false) {
+            throw new NonUniqueResultException(sprintf($this->translator->trans('zentlix_main.locale.already_exist'), $code));
         }
-
-        return true;
     }
 
-    public function __invoke(string $code)
+    public function __invoke(string $code): void
     {
-        return $this->isUnique($code);
+        $this->isUnique($code);
     }
 }

@@ -20,6 +20,8 @@ use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
 /**
  * @method File|null find($id, $lockMode = null, $lockVersion = null)
  * @method File|null findOneBy(array $criteria, array $orderBy = null)
+ * @method File      get($id, $lockMode = null, $lockVersion = null)
+ * @method File      getOneBy(array $criteria, array $orderBy = null)
  * @method File[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class FileRepository extends ServiceEntityRepository

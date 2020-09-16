@@ -25,6 +25,10 @@ abstract class AbstractDataTableHandler implements QueryHandlerInterface
 
     public function __invoke(AbstractDataTableQuery $dataTableQuery)
     {
-        return $this->dataTableService->createDataTableFromType($dataTableQuery->getTableType());
+        return $this->dataTableService->createDataTableFromType(
+            $dataTableQuery->getTableType(),
+            $dataTableQuery->getTypeOptions(),
+            $dataTableQuery->getOptions()
+        );
     }
 }

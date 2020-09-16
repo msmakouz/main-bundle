@@ -15,9 +15,9 @@ namespace Zentlix\MainBundle\Domain\Bundle\Specification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
+use function is_null;
 
-final class ExistBundleSpecification extends AbstractSpecification
+final class ExistBundleSpecification
 {
     private BundleRepository $bundleRepository;
     private TranslatorInterface $translator;
@@ -28,24 +28,15 @@ final class ExistBundleSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $bundleId): bool
+    public function isExist(int $bundleId): void
     {
-        return $this->isSatisfiedBy($bundleId);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        $bundle = $this->bundleRepository->find($value);
-
-        if(is_null($bundle)) {
-            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.bundle.not_exist'), $value));
+        if(is_null($this->bundleRepository->find($bundleId))) {
+            throw new NotFoundException(sprintf($this->translator->trans('zentlix_main.bundle.not_exist'), $bundleId));
         }
-
-        return true;
     }
 
-    public function __invoke(int $bundleId)
+    public function __invoke(int $bundleId): void
     {
-        return $this->isExist($bundleId);
+        $this->isExist($bundleId);
     }
 }

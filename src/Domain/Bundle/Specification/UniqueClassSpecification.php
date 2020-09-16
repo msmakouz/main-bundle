@@ -14,10 +14,10 @@ namespace Zentlix\MainBundle\Domain\Bundle\Specification;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
+use function is_null;
 
-final class UniqueClassSpecification extends AbstractSpecification
+final class UniqueClassSpecification
 {
     private BundleRepository $bundleRepository;
     private TranslatorInterface $translator;
@@ -28,22 +28,15 @@ final class UniqueClassSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isUnique(string $class): bool
+    public function isUnique(string $class): void
     {
-        return $this->isSatisfiedBy($class);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if($this->bundleRepository->findOneByClass($value) !== null) {
+        if(is_null($this->bundleRepository->findOneByClass($class)) === false) {
             throw new NonUniqueResultException($this->translator->trans('zentlix_main.bundle.already_exist'));
         }
-
-        return true;
     }
 
-    public function __invoke(string $class)
+    public function __invoke(string $class): void
     {
-        return $this->isUnique($class);
+        $this->isUnique($class);
     }
 }

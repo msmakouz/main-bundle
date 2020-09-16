@@ -15,9 +15,9 @@ namespace Zentlix\MainBundle\Domain\Site\Specification;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
+use function is_null;
 
-final class ExistSiteSpecification extends AbstractSpecification
+final class ExistSiteSpecification
 {
     private SiteRepository $siteRepository;
     private TranslatorInterface $translator;
@@ -28,24 +28,15 @@ final class ExistSiteSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $siteId): bool
+    public function isExist(int $siteId): void
     {
-        return $this->isSatisfiedBy($siteId);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        $site = $this->siteRepository->find($value);
-
-        if(is_null($site)) {
-            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.site.not_exist'), $value));
+        if(is_null($this->siteRepository->find($siteId))) {
+            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.site.not_exist'), $siteId));
         }
-
-        return true;
     }
 
-    public function __invoke(int $siteId)
+    public function __invoke(int $siteId): void
     {
-        return $this->isExist($siteId);
+        $this->isExist($siteId);
     }
 }

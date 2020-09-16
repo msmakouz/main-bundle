@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Site\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 
-final class ExistTemplateFileSpecification extends AbstractSpecification
+final class ExistTemplateFileSpecification
 {
     private TranslatorInterface $translator;
     private string $projectDir;
@@ -26,22 +25,15 @@ final class ExistTemplateFileSpecification extends AbstractSpecification
         $this->projectDir = $projectDir;
     }
 
-    public function isExist(string $file): bool
+    public function isExist(string $file): void
     {
-        return $this->isSatisfiedBy($file);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if(is_file($this->projectDir . '/templates/' . $value) === false) {
-            throw new \DomainException(sprintf($this->translator->trans('zentlix_main.template_file_not_exist'), $value));
+        if(is_file($this->projectDir . '/templates/' . $file) === false) {
+            throw new \DomainException(sprintf($this->translator->trans('zentlix_main.template_file_not_exist'), $file));
         }
-
-        return true;
     }
 
-    public function __invoke(string $file)
+    public function __invoke(string $file): void
     {
-        return $this->isExist($file);
+        $this->isExist($file);
     }
 }

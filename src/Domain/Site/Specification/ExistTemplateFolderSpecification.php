@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Site\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 
-final class ExistTemplateFolderSpecification extends AbstractSpecification
+final class ExistTemplateFolderSpecification
 {
     private TranslatorInterface $translator;
     private string $projectDir;
@@ -26,22 +25,15 @@ final class ExistTemplateFolderSpecification extends AbstractSpecification
         $this->projectDir = $projectDir;
     }
 
-    public function isExist(string $folder): bool
+    public function isExist(string $folder): void
     {
-        return $this->isSatisfiedBy($folder);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if(\is_dir($this->projectDir . '/templates/' . $value) === false) {
-            throw new \DomainException(\sprintf($this->translator->trans('zentlix_main.template_folder_not_exist'), $value));
+        if(is_dir($this->projectDir . '/templates/' . $folder) === false) {
+            throw new \DomainException(sprintf($this->translator->trans('zentlix_main.template_folder_not_exist'), $folder));
         }
-
-        return true;
     }
 
-    public function __invoke(string $folder)
+    public function __invoke(string $folder): void
     {
-        return $this->isExist($folder);
+        $this->isExist($folder);
     }
 }

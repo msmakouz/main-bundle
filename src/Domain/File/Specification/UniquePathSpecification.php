@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\File\Specification;
 
 use Zentlix\MainBundle\Domain\File\Repository\FileRepository;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 
-final class UniquePathSpecification extends AbstractSpecification
+final class UniquePathSpecification
 {
     private FileRepository $fileRepository;
 
@@ -26,19 +25,14 @@ final class UniquePathSpecification extends AbstractSpecification
 
     public function isUnique(string $path): bool
     {
-        return $this->isSatisfiedBy($path);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if($this->fileRepository->findOneByPath($value)) {
+        if($this->fileRepository->findOneByPath($path)) {
             return false;
         }
 
         return true;
     }
 
-    public function __invoke(string $path)
+    public function __invoke(string $path): bool
     {
         return $this->isUnique($path);
     }

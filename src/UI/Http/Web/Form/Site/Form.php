@@ -21,6 +21,7 @@ use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
 use Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository;
 use Zentlix\MainBundle\UI\Http\Web\FormType\AbstractForm;
+use Zentlix\MainBundle\UI\Http\Web\FormType\MetaType;
 use Zentlix\MainBundle\UI\Http\Web\Type;
 
 class Form extends AbstractForm
@@ -62,18 +63,7 @@ class Form extends AbstractForm
                 'choices'  => $this->templateRepository->assoc(),
                 'label' => 'zentlix_main.template'
             ])
-            ->add('meta_title', Type\TextType::class, [
-                'label' => 'zentlix_main.meta_title',
-                'required' => false
-            ])
-            ->add('meta_description', Type\TextType::class, [
-                'label' => 'zentlix_main.meta_description',
-                'required' => false
-            ])
-            ->add('meta_keywords', Type\TextType::class, [
-                'label' => 'zentlix_main.meta_keywords',
-                'required' => false
-            ])
+            ->add('meta', MetaType::class, ['inherit_data' => true])
             ->add('sort', Type\IntegerType::class, [
                 'label' => 'zentlix_main.sort',
                 'data' => $command instanceof CreateCommand ? $this->siteRepository->getMaxSort() + 1 : $command->sort,

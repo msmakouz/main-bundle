@@ -14,10 +14,10 @@ namespace Zentlix\MainBundle\Domain\Site\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository;
+use function is_null;
 
-final class ExistTemplateSpecification extends AbstractSpecification
+final class ExistTemplateSpecification
 {
     private TranslatorInterface $translator;
     private TemplateRepository $templateRepository;
@@ -28,24 +28,15 @@ final class ExistTemplateSpecification extends AbstractSpecification
         $this->templateRepository = $templateRepository;
     }
 
-    public function isExist($template): bool
+    public function isExist($template): void
     {
-        return $this->isSatisfiedBy($template);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        $template = $this->templateRepository->find($value);
-
-        if(!$template) {
-            throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.site.template_not_exist'), $value));
+        if(is_null($this->templateRepository->find($template))) {
+            throw new NotFoundException(sprintf($this->translator->trans('zentlix_main.site.template_not_exist'), $template));
         }
-
-        return true;
     }
 
-    public function __invoke($template)
+    public function __invoke($template): void
     {
-        return $this->isExist($template);
+        $this->isExist($template);
     }
 }

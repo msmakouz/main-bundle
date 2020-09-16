@@ -31,7 +31,7 @@ class FileUploader implements FileUploaderInterface
     {
         $file = $command->uploadedFile->move($this->uploadDirectory . DIRECTORY_SEPARATOR . $command->savePath, $command->filename);
 
-        $entity = new File($file->getPathname());
+        $entity = new File($file->getPathname(), $command->alt, $command->title);
 
         $this->entityManager->persist($entity);
         $this->entityManager->flush();

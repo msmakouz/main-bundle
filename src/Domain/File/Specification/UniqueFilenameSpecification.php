@@ -12,25 +12,18 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\File\Specification;
 
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
-
-final class UniqueFilenameSpecification extends AbstractSpecification
+final class UniqueFilenameSpecification
 {
     public function isUnique(string $filename, string $path): bool
     {
-        return $this->isSatisfiedBy([$filename, $path]);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if(file_exists($value[1] . $value[0])) {
+        if(file_exists($path . $filename)) {
             return false;
         }
 
         return true;
     }
 
-    public function __invoke(string $filename, string $path)
+    public function __invoke(string $filename, string $path): bool
     {
         return $this->isUnique($filename, $path);
     }

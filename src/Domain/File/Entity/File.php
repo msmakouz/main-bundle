@@ -83,4 +83,18 @@ class File
 
         return $this;
     }
+
+    public function setAlt(?string $alt = null): self
+    {
+        $this->alt = $alt;
+
+        return $this;
+    }
+
+    public function setTitle(?string $title = null): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
 }
