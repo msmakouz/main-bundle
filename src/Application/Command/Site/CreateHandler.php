@@ -14,7 +14,6 @@ namespace Zentlix\MainBundle\Application\Command\Site;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
 use Zentlix\MainBundle\Domain\Locale\Specification\ExistLocaleSpecification;
 use Zentlix\MainBundle\Domain\Site\Event\Site\BeforeCreate;
@@ -25,6 +24,7 @@ use Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository;
 use Zentlix\MainBundle\Domain\Site\Specification\UniqueUrlSpecification;
 use Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateSpecification;
 use Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class CreateHandler implements CommandHandlerInterface
 {

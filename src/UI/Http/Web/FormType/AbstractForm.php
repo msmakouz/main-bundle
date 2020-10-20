@@ -14,9 +14,4 @@ namespace Zentlix\MainBundle\UI\Http\Web\FormType;
 
 use Symfony\Component\Form\AbstractType;
 
-class AbstractForm extends AbstractType
-{
-    protected const SIMPLE_FORM = 'simple_form';
-    protected const FLEX_2_FORM = 'flex_2_form';
-    protected const TABS_FORM = 'tab_form';
-}
+class AbstractForm extends AbstractType {}

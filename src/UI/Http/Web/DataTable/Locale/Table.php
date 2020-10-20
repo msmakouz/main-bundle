@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\DataTable\Locale;
 
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Column\TwigColumn;
 use Omines\DataTablesBundle\DataTable;
 use Zentlix\MainBundle\Infrastructure\Share\DataTable\AbstractDataTableType;
 use Zentlix\MainBundle\Domain\Locale\Event\Table as TableEvent;
@@ -23,22 +24,20 @@ class Table extends AbstractDataTableType
 {
     public function configure(DataTable $dataTable, array $options)
     {
-        $dataTable->setName($this->router->generate('admin.locale.list'));
-        $dataTable->setTitle('zentlix_main.locale.locales');
+        $dataTable->setName('locales-datatable');
 
         $dataTable
             ->add('id', TextColumn::class, ['label' => 'ID', 'visible' => true,])
-            ->add('title', TextColumn::class,
+            ->add('title', TwigColumn::class,
                 [
-                    'render' => fn($value, Locale $context) =>
-                        sprintf('<a href="%s">%s</a>', $this->router->generate('admin.locale.update', ['id' => $context->getId()]), $value),
-                    'visible' => true,
-                    'label' => 'zentlix_main.title'
+                    'template' => '@MainBundle/admin/locales/datatable/title.html.twig',
+                    'visible'  => true,
+                    'label'    => 'zentlix_main.title'
                 ])
             ->add('code', TextColumn::class, ['label' => 'zentlix_main.code', 'visible' => true])
             ->add('sort', TextColumn::class, ['label' => 'zentlix_main.sort', 'visible' => true])
             ->addOrderBy($dataTable->getColumnByName('sort'), $dataTable::SORT_ASCENDING)
-            ->addOrderBy($dataTable->getColumnByName('id'), $dataTable::SORT_DESCENDING)
+            ->addOrderBy($dataTable->getColumnByName('title'), $dataTable::SORT_ASCENDING)
             ->createAdapter(ORMAdapter::class, ['entity' => Locale::class]);
 
         $this->eventDispatcher->dispatch(new TableEvent($dataTable));

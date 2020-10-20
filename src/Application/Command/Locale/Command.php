@@ -13,9 +13,9 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\Locale;
 
 use Symfony\Component\Validator\Constraints;
-use Zentlix\MainBundle\Application\Command\DynamicPropertyCommand;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\DynamicPropertyCommand;
 
 class Command extends DynamicPropertyCommand implements CommandInterface
 {

@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
 use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Site\UpdateCommand;
 use Zentlix\MainBundle\Application\Command\Site\DeleteCommand;
@@ -30,19 +29,21 @@ class SiteController extends ResourceController
     public static $deleteSuccessMessage = 'zentlix_main.site.delete.success';
     public static $redirectAfterAction  = 'admin.site.list';
 
-    public function index(Request $request): Response
+    public function index(): Response
     {
-        return $this->listResource(new DataTableQuery(Table::class), $request);
+        return $this->listResource(new DataTableQuery(Table::class),'@MainBundle/admin/sites/sites.html.twig');
     }
 
-    public function create(Request $request): Response
+    public function create(): Response
     {
-        return $this->createResource(new CreateCommand(), CreateForm::class, $request);
+        return $this->createResource(new CreateCommand(), CreateForm::class,'@MainBundle/admin/sites/create.html.twig');
     }
 
-    public function update(Site $site, Request $request): Response
+    public function update(Site $site): Response
     {
-        return $this->updateResource(new UpdateCommand($site), UpdateForm::class, $request);
+        return $this->updateResource(
+            new UpdateCommand($site),UpdateForm::class,'@MainBundle/admin/sites/update.html.twig', ['site' => $site]
+        );
     }
 
     public function delete(Site $site): Response

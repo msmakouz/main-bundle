@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class VisualEditor
 {
-    private $session;
+    private SessionInterface $session;
 
     public function __construct(SessionInterface $session)
     {

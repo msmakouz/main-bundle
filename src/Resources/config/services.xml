@@ -12,11 +12,6 @@
     <services>
         <defaults autowire="false" autoconfigure="false" public="false"/>
 
-        <service id="zentlix_main.routes" class="Zentlix\MainBundle\Domain\AdminRoute\Service\Routes">
-            <argument type="service" id="router"/>
-        </service>
-        <service id="Zentlix\MainBundle\Domain\AdminRoute\Service\Routes" alias="zentlix_main.routes"/>
-
         <service id="zentlix_main.sidebar" class="Zentlix\MainBundle\Domain\AdminSidebar\Service\Sidebar">
             <argument type="service" id="router" />
         </service>
@@ -80,7 +75,7 @@
         <service id="Zentlix\MainBundle\Domain\Setting\Service\Settings" alias="zentlix_main.settings" />
 
         <service id="zentlix_main.sites" class="Zentlix\MainBundle\Domain\Site\Service\Sites">
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="request_stack"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Site\Service\Sites" alias="zentlix_main.sites"/>

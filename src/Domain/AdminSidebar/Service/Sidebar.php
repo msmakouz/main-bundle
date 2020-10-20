@@ -37,7 +37,7 @@ class Sidebar implements SidebarInterface
             $identifier = md5($name . uniqid('', true));
         }
 
-        $this->sidebar[$identifier] = new MenuItem($identifier, $name, $this->router);
+        $this->sidebar[$identifier] = new MenuItem($name, $this->router);
 
         return $this->sidebar[$identifier];
     }

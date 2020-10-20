@@ -1,0 +1,4 @@
+<a href="{{ path('admin.bundle.update', {'id': row.id | trans }) }}" title="{{ 'zentlix_main.bundle.settings' | trans }}">
+    {{ row.getTitle() | trans }}<br>
+    <small>{{ row.getDescription() | trans }}</small>
+</a>

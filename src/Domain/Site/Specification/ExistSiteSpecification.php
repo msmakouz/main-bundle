@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Site\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 use function is_null;
 
 final class ExistSiteSpecification

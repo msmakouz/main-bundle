@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\Domain\Setting\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
+use function is_null;
 
 class Settings {
 

@@ -49,11 +49,6 @@ class UpdateForm extends AbstractForm
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class'     => UpdateCommand::class,
-            'label'          => 'zentlix_main.locale.update.process',
-            'form'           => self::SIMPLE_FORM,
-            'disable_delete' => true
-        ]);
+        $resolver->setDefaults(['data_class' => UpdateCommand::class]);
     }
 }

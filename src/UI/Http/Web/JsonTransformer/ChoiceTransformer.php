@@ -73,10 +73,6 @@ class ChoiceTransformer extends AbstractTransformer
             $schema['specification'] = $formView->vars['specification'];
         }
 
-        if(!empty($formView->vars['update'])) {
-            $schema['update'] = $formView->vars['update'];
-        }
-
         if($form->getErrors()->count()) {
             foreach ($form->getErrors() as $error) {
                 $schema['errors'][] = $error->getMessage();

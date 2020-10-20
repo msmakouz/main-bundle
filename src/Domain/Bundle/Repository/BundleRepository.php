@@ -15,7 +15,7 @@ namespace Zentlix\MainBundle\Domain\Bundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
-use Zentlix\MainBundle\Application\Query\NotFoundException;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
 
 /**
@@ -53,12 +53,12 @@ class BundleRepository extends ServiceEntityRepository
 
     public function getOneByClass(string $class): Bundle
     {
-        $module = $this->findOneByClass($class);
+        $bundle = $this->findOneByClass($class);
 
-        if(!$module) {
-            throw new NotFoundException('Module not found.');
+        if(!$bundle) {
+            throw new NotFoundException('Bundle not found.');
         }
 
-        return $module;
+        return $bundle;
     }
 }

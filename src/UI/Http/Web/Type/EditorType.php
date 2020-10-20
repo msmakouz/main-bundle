@@ -18,7 +18,7 @@ class EditorType extends TextareaType
 {
     public function getBlockPrefix()
     {
-        return 'editor';
+        return 'textarea';
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -26,5 +26,8 @@ class EditorType extends TextareaType
         parent::configureOptions($resolver);
 
         $resolver->setDefault('required', false);
+        $resolver->setDefault('attr', [
+            'class' => 'cke-editor'
+        ]);
     }
 }

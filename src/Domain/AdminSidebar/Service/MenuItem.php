@@ -17,7 +17,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class MenuItem implements MenuItemInterface
 {
     private UrlGeneratorInterface $router;
-    private string $identifier;
     private ?string $name = null;
     private ?string $icon = null;
     private ?string $url = null;
@@ -25,16 +24,15 @@ class MenuItem implements MenuItemInterface
     private array $children = [];
     private bool $title = false;
 
-    public function __construct(string $identifier, $name, UrlGeneratorInterface $router)
+    public function __construct($name, UrlGeneratorInterface $router)
     {
         $this->router = $router;
-        $this->identifier = $identifier;
         $this->name = $name;
     }
 
     public static function createTitle(string $title, int $sort, UrlGeneratorInterface $router): self
     {
-        $self = new self(md5($title), $title, $router);
+        $self = new self($title, $router);
 
         return $self->sort($sort)->setTitle(true);
     }
@@ -74,7 +72,7 @@ class MenuItem implements MenuItemInterface
 
     public function generateUrl(string $routeName, array $parameters = []): self
     {
-        $this->url = str_replace('/backend', '', $this->router->generate($routeName, $parameters));
+        $this->url = $this->router->generate($routeName, $parameters);
 
         return $this;
     }
@@ -86,7 +84,7 @@ class MenuItem implements MenuItemInterface
             $identifier = md5($name . uniqid('', true));
         }
 
-        $this->children[$identifier] = new MenuItem($identifier, $name, $this->router);
+        $this->children[$identifier] = new MenuItem($name, $this->router);
 
         return $this->children[$identifier];
     }

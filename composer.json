@@ -20,7 +20,7 @@
     "gedmo/doctrine-extensions": "^2.4",
     "ramsey/uuid": "^4.0",
     "ramsey/uuid-doctrine": "^1.6",
-    "zentlix/user-bundle": "dev-master"
+    "zentlix/user-bundle": "^1.0"
   },
   "require-dev": {
   },
@@ -40,7 +40,6 @@
   "scripts": {
     "test" : "./vendor/bin/simple-phpunit"
   },
-  "minimum-stability": "dev",
   "extra": {
     "symfony": {
       "allow-contrib": false,

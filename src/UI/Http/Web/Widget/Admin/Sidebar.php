@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Zentlix to newer
+ * versions in the future. If you wish to customize Zentlix for your
+ * needs please refer to https://docs.zentlix.io for more information.
+ */
+
+declare(strict_types=1);
+
+namespace Zentlix\MainBundle\UI\Http\Web\Widget\Admin;
+
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Twig\Environment;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+use Zentlix\MainBundle\Domain\AdminSidebar\Event\AfterBuild;
+use Zentlix\MainBundle\Domain\AdminSidebar\Event\BeforeBuild;
+use Zentlix\MainBundle\Domain\AdminSidebar\Service\SidebarInterface;
+
+class Sidebar extends AbstractExtension
+{
+    private SidebarInterface $sidebar;
+    private EventDispatcherInterface $eventDispatcher;
+
+    public function __construct(SidebarInterface $sidebar, EventDispatcherInterface $eventDispatcher)
+    {
+        $this->sidebar = $sidebar;
+        $this->eventDispatcher = $eventDispatcher;
+    }
+
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('admin_sidebar_widget', [$this, 'buildSidebar'], ['needs_environment' => true, 'is_safe' => ['html']]),
+        ];
+    }
+
+    public function buildSidebar(Environment $twig)
+    {
+        $this->eventDispatcher->dispatch(new BeforeBuild($this->sidebar));
+        $this->eventDispatcher->dispatch(new AfterBuild($this->sidebar));
+
+        return $twig->render('@MainBundle/admin/widgets/sidebar.html.twig', ['items' => $this->sidebar->build()]);
+    }
+}

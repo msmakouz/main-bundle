@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Dashboard\Service;
 
-use Zentlix\MainBundle\Domain\Dashboard\WidgetInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Dashboard\Widget\WidgetInterface;
 
 class Widgets
 {

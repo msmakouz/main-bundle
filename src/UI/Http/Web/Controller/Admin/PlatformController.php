@@ -19,15 +19,8 @@ class PlatformController extends AbstractAdminController
 {
     public function about(): Response
     {
-        try {
-            return $this->json([
-                'html' => $this->renderView('@MainBundle/platform/about_system.html.twig', [
-                    'platform' => $this->ask(new AboutQuery())
-                ]),
-                'title' => 'zentlix_main.about_system'
-            ]);
-        } catch (\Exception $e) {
-            return $this->json($this->error($e->getMessage()));
-        }
+        return $this->render('@MainBundle/admin/platform/about_system.html.twig', [
+            'platform' => $this->ask(new AboutQuery())
+        ]);
     }
 }

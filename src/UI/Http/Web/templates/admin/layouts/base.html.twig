@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="{% block description %}{{ 'zentlix_main.zentlix_cms' | trans }}{% endblock %}">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="apple-touch-icon" sizes="57x57" href="{{ admin_asset('assets/favicon/apple-icon-57x57.png') }}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{{ admin_asset('assets/favicon/apple-icon-60x60.png') }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ admin_asset('assets/favicon/apple-icon-72x72.png') }}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{ admin_asset('assets/favicon/apple-icon-76x76.png') }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ admin_asset('assets/favicon/apple-icon-114x114.png') }}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{ admin_asset('assets/favicon/apple-icon-120x120.png') }}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{{ admin_asset('assets/favicon/apple-icon-144x144.png') }}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{ admin_asset('assets/favicon/apple-icon-152x152.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ admin_asset('assets/favicon/apple-icon-180x180.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ admin_asset('assets/favicon/android-icon-192x192.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ admin_asset('assets/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ admin_asset('assets/favicon/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ admin_asset('assets/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ admin_asset('assets/favicon/manifest.json') }}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="{{ admin_asset('assets/favicon/ms-icon-144x144.png') }}">
+    <meta name="theme-color" content="#ffffff">
+    <link href="{{ admin_asset('vendors/@coreui/chartjs/css/coreui-chartjs.css') }}" rel="stylesheet">
+    <link href="{{ admin_asset('vendors/datatable/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ admin_asset('vendors/flags/css/flag-icon.css') }}" rel="stylesheet">
+    <link href="{{ admin_asset('vendors/toastr/toastr.min.css') }}" rel="stylesheet">
+    <link href="{{ admin_asset('vendors/@coreui/icons/css/free.min.css') }}" rel="stylesheet">
+    {% block header_scripts %}{% endblock %}
+    <script src="{{ admin_asset('vendors/jquery/jquery.min.js') }}"></script>
+    <link href="{{ admin_asset('css/style.css') }}" rel="stylesheet">
+</head>
+<body class="c-app">
+{{ admin_sidebar_widget() }}
+<div class="c-wrapper c-fixed-components">
+    <header class="c-header c-header-light c-header-fixed c-header-with-subheader">
+        <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+            <svg class="c-icon c-icon-lg">
+                <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-menu') }}"></use>
+            </svg>
+        </button>
+        <a class="c-header-brand d-lg-none" href="#">
+            <img src="{{ admin_asset('assets/img/logo-dark.png') }}" width="118" height="20" alt="Zentlix"/>
+        </a>
+        <button class="c-header-toggler c-class-toggler mfs-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
+            <svg class="c-icon c-icon-lg">
+                <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-menu') }}"></use>
+            </svg>
+        </button>
+        <ul class="c-header-nav d-md-down-none">
+            <li class="c-header-nav-item px-3">
+                <a class="c-header-nav-link" href="{{ path('admin.site.list') }}">{{ 'zentlix_main.site.sites' | trans }}</a>
+            </li>
+            <li class="c-header-nav-item px-3">
+                <a class="c-header-nav-link" href="{{ path('admin.user.list') }}">{{ 'zentlix_user.user.users' | trans }}</a>
+            </li>
+        </ul>
+        <ul class="c-header-nav ml-auto mr-4">
+            {{ admin_notifications_widget() }}
+            {{ admin_locales_widget() }}
+            <li class="c-header-nav-item dropdown">
+                <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <div class="c-avatar">
+                        <img class="c-avatar-img" src="{{ admin_asset('assets/img/avatars/6.jpg') }}" alt="{{ app.user.getEmail().getValue() }}">
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right pt-0">
+                    <div class="dropdown-header bg-light py-2">
+                        <strong>{{ 'zentlix_user.account' | trans }}</strong>
+                    </div>
+                    <a class="dropdown-item" href="{{ path('admin.user.update', {'id': app.user.id}) }}">
+                        <svg class="c-icon mr-2">
+                            <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-user') }}"></use>
+                        </svg>
+                        {{ 'zentlix_user.profile' | trans }}
+                    </a>
+                    <a class="dropdown-item" href="{{ path('admin.journal.list') }}">
+                        <svg class="c-icon mr-2">
+                            <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-shield-alt') }}"></use>
+                        </svg>
+                        {{ 'zentlix_user.authorization.journal' | trans }}
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ path('app_logout') }}">
+                        <svg class="c-icon mr-2">
+                            <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-account-logout') }}"></use>
+                        </svg>
+                        {{ 'zentlix_user.logout' | trans }}
+                    </a>
+                </div>
+            </li>
+        </ul>
+        <div class="c-subheader justify-content-between px-3">
+            <ol class="breadcrumb border-0 m-0">
+                {% block breadcrumbs %}{% endblock %}
+            </ol>
+            <div class="c-subheader-nav d-md-down-none mfe-2">
+                <a class="c-subheader-nav-link" href="{{ path('admin.index') }}">
+                    <svg class="c-icon">
+                        <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-graph') }}"></use>
+                    </svg> &nbsp;{{ 'zentlix_main.control_panel' | trans }}
+                </a>
+                <a class="c-subheader-nav-link" href="{{ path('admin.widgets.update') }}">
+                    <svg class="c-icon">
+                        <use xlink:href="{{ admin_asset('vendors/@coreui/icons/svg/free.svg#cil-settings') }}"></use>
+                    </svg> &nbsp;{{ 'zentlix_main.settings' | trans }}
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="c-body">
+        <main class="c-main">
+            <div class="container-fluid">
+                <div class="fade-in">
+                    {% for message in app.flashes('success') %}
+                        <script>
+                            $(document).ready(function () {
+                                toastr.success('{{ message }}');
+                            });
+                        </script>
+                    {% endfor %}
+                    {% for message in app.flashes('error') %}
+                        <script>
+                            $(document).ready(function () {
+                                toastr.error('{{ message }}');
+                            });
+                        </script>
+                    {% endfor %}
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </main>
+        <footer class="c-footer">
+            <div><a href="https://zentlix.io" target="_blank">Zentlix</a> © {{ 'now' | date('Y') }} All rights reserved.</div>
+            <div class="ml-auto">Design by&nbsp;<a href="https://coreui.io/" target="_blank">CoreUI</a></div>
+        </footer>
+    </div>
+</div>
+<script src="{{ admin_asset('vendors/cke/ckeditor.js') }}"></script>
+<script src="{{ admin_asset('vendors/cke/lang/' ~ app.request.locale ~ '.js') }}"></script>
+<script src="{{ admin_asset('vendors/datatable/datatables.min.js') }}"></script>
+<script src="{{ admin_asset('vendors/datatable/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ admin_asset('js/datatables.js') }}"></script>
+<script src="{{ admin_asset('vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
+<!--[if IE]><!-->
+<script src="{{ admin_asset('vendors/@coreui/icons/js/svgxuse.min.js') }}"></script>
+<!--<![endif]-->
+<script src="{{ admin_asset('vendors/@coreui/chartjs/js/coreui-chartjs.bundle.js') }}"></script>
+<script src="{{ admin_asset('vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
+<script src="{{ admin_asset('vendors/toastr/toastr.min.js') }}"></script>
+{% block footer_scripts %}{% endblock %}
+<script src="{{ admin_asset('js/main.js') }}"></script>
+</body>
+</html>

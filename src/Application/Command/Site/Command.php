@@ -13,12 +13,12 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\Site;
 
 use Symfony\Component\Validator\Constraints;
-use Zentlix\MainBundle\Application\Command\DynamicPropertyCommand;
-use Zentlix\MainBundle\Application\Command\MetaTrait;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
 use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\DynamicPropertyCommand;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\MetaTrait;
 
 class Command extends DynamicPropertyCommand implements CommandInterface
 {

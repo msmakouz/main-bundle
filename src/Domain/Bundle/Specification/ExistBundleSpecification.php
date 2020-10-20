@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Bundle\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 use function is_null;
 
 final class ExistBundleSpecification

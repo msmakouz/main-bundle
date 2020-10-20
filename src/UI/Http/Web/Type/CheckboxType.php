@@ -23,12 +23,11 @@ class CheckboxType extends BaseCheckboxType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefined(['specification', 'update']);
+        $resolver->setDefined(['specification']);
         $resolver->setDefaults([
             'specification' => null,
             'false_values' => ['', null],
-            'required' => false,
-            'update' => null
+            'required' => false
         ]);
     }
 
@@ -37,8 +36,7 @@ class CheckboxType extends BaseCheckboxType
         parent::buildView($view, $form, $options);
 
         $view->vars = array_merge($view->vars, [
-            'specification' => $options['specification'],
-            'update' => $options['update']
+            'specification' => $options['specification']
         ]);
     }
 }

@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Locale\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Application\Query\NotFoundException;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 use function is_null;
 
 final class ExistLocaleSpecification

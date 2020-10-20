@@ -1,0 +1,6 @@
+{% if not value %}
+    <form method="post">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('uninstall_form') }}">
+        <button type="submit" class="btn btn-primary btn-sm">{{ 'zentlix_main.delete' | trans }}</button>
+    </form>
+{% endif %}

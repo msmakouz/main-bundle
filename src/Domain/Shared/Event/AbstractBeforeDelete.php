@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Shared\Event;
 
-use Zentlix\MainBundle\Application\Command\DeleteCommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\DeleteCommandInterface;
 
 class AbstractBeforeDelete
 {

@@ -14,11 +14,11 @@ namespace Zentlix\MainBundle\Application\Command\Setting;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\Locale\Specification\ExistLocaleSpecification;
 use Zentlix\MainBundle\Domain\Setting\Event\AfterChange;
 use Zentlix\MainBundle\Domain\Setting\Event\BeforeChange;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class SettingHandler implements CommandHandlerInterface
 {

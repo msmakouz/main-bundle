@@ -13,11 +13,10 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\Template;
 
 use Symfony\Component\Validator\Constraints;
-use Zentlix\MainBundle\Application\Command\DynamicPropertyCommand;
 use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 
-class Command extends DynamicPropertyCommand implements CommandInterface
+class Command implements CommandInterface
 {
     /** @Constraints\NotBlank() */
     public ?string $title = null;
@@ -27,8 +26,6 @@ class Command extends DynamicPropertyCommand implements CommandInterface
 
     /** @Constraints\NotBlank() */
     public int $sort = 1;
-
-    public ?string $icon = null;
 
     protected Template $entity;
 

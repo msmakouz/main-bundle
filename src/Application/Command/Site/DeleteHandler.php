@@ -14,11 +14,11 @@ namespace Zentlix\MainBundle\Application\Command\Site;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\Site\Event\Site\BeforeDelete;
 use Zentlix\MainBundle\Domain\Site\Event\Site\AfterDelete;
 use Zentlix\MainBundle\Domain\Site\Specification\NotSingleSpecification;
 use Zentlix\MainBundle\Domain\Site\Service\Sites;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class DeleteHandler implements CommandHandlerInterface
 {

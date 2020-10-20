@@ -13,11 +13,11 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\Setting;
 
 use Symfony\Component\Validator\Constraints;
-use Zentlix\MainBundle\Application\Command\DynamicPropertyCommand;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
 use Zentlix\MainBundle\Domain\Setting\Entity\SettingInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\DynamicPropertyCommand;
 
 class SettingCommand extends DynamicPropertyCommand implements CommandInterface, SettingCommandInterface
 {

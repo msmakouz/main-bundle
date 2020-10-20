@@ -16,23 +16,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Zentlix\MainBundle\Application\Command\Setting\DefaultSettingCommand;
 use Zentlix\MainBundle\UI\Http\Web\FormType\AbstractForm;
-use Zentlix\MainBundle\UI\Http\Web\Type\NoticeType;
 
 class DefaultForm extends AbstractForm
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder->add('default', NoticeType::class, ['data' => 'zentlix_main.bundle.without_settings']);
-    }
+    public function buildForm(FormBuilderInterface $builder, array $options): void {}
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class'     => DefaultSettingCommand::class,
-            'label'          => 'zentlix_main.bundle.update.process',
-            'form'           => self::SIMPLE_FORM,
-            'disable_delete' => true,
-            'disable_submit' => true
-        ]);
+        $resolver->setDefaults(['data_class' => DefaultSettingCommand::class]);
     }
 }

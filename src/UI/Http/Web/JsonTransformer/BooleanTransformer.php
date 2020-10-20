@@ -36,10 +36,6 @@ class BooleanTransformer extends AbstractTransformer
             $schema['specification'] = $formView->vars['specification'];
         }
 
-        if(!empty($formView->vars['update'])) {
-            $schema['update'] = $formView->vars['update'];
-        }
-
         return $schema;
     }
 }

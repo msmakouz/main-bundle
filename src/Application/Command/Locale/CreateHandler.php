@@ -14,11 +14,11 @@ namespace Zentlix\MainBundle\Application\Command\Locale;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\Locale\Event\AfterCreate;
 use Zentlix\MainBundle\Domain\Locale\Event\BeforeCreate;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Locale\Specification\UniqueCodeSpecification;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class CreateHandler implements CommandHandlerInterface
 {
@@ -26,7 +26,9 @@ class CreateHandler implements CommandHandlerInterface
     private EntityManagerInterface $entityManager;
     private EventDispatcherInterface $eventDispatcher;
 
-    public function __construct(UniqueCodeSpecification $uniqueCodeSpecification, EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
+    public function __construct(UniqueCodeSpecification $uniqueCodeSpecification,
+                                EntityManagerInterface $entityManager,
+                                EventDispatcherInterface $eventDispatcher)
     {
         $this->uniqueCodeSpecification = $uniqueCodeSpecification;
         $this->entityManager = $entityManager;

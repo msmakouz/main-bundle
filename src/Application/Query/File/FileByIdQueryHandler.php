@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Query\File;
 
-use Zentlix\MainBundle\Application\Query\QueryHandlerInterface;
-use Zentlix\MainBundle\Domain\File\Repository\FileRepository;
 use Symfony\Component\HttpFoundation\File\File;
+use Zentlix\MainBundle\Domain\File\Repository\FileRepository;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryHandlerInterface;
 
 class FileByIdQueryHandler implements QueryHandlerInterface
 {

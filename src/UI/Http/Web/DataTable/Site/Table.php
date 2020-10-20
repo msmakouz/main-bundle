@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\DataTable\Site;
 
+use Omines\DataTablesBundle\Column\TwigColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -23,25 +24,22 @@ class Table extends AbstractDataTableType
 {
     public function configure(DataTable $dataTable, array $options)
     {
-        $dataTable->setName($this->router->generate('admin.site.list'));
-        $dataTable->setTitle('zentlix_main.site.sites');
-        $dataTable->setCreateBtnLabel('zentlix_main.site.create.action');
+        $dataTable->setName('sites-datatable');
 
         $dataTable
             ->add('id', TextColumn::class, ['label' => 'ID', 'visible' => true])
-            ->add('title', TextColumn::class,
+            ->add('title', TwigColumn::class,
                 [
-                    'render' => fn($value, Site $context) =>
-                        sprintf('<a href="%s">%s</a>', $this->router->generate('admin.site.update', ['id' => $context->getId()]), $value),
-                    'visible' => true,
-                    'label' => 'zentlix_main.title'
+                    'template' => '@MainBundle/admin/sites/datatable/title.html.twig',
+                    'visible'  => true,
+                    'label'    => 'zentlix_main.title'
                 ])
 
             ->add('url', TextColumn::class, ['label' => 'zentlix_main.site.url', 'visible' => true])
             ->add('template', TextColumn::class, [
-                'data' => fn (Site $site) => $site->getTemplate()->getTitle(),
-                'label' => 'zentlix_main.template',
-                'visible' => true,
+                'data'      => fn (Site $site) => $site->getTemplate()->getTitle(),
+                'label'     => 'zentlix_main.template',
+                'visible'   => true,
                 'orderable' => false
             ])
             ->add('sort', TextColumn::class, ['label' => 'zentlix_main.sort', 'visible' => true])

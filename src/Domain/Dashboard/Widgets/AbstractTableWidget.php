@@ -12,27 +12,15 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Dashboard\Widgets;
 
-use Zentlix\MainBundle\Domain\Dashboard\WidgetInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Dashboard\Widget\WidgetInterface;
 
 abstract class AbstractTableWidget implements WidgetInterface
 {
-    public function getType(): string
-    {
-        return self::TYPE_TABLE;
-    }
-
-    public function getData()
-    {
-        return [
-            'type'    => $this->getType(),
-            'title'   => $this->getTitle(),
-            'headers' => $this->getHeaders(),
-            'data'    => $this->getRows()
-        ];
-    }
-
     abstract function getHeaders(): array;
     abstract function getRows(): array;
 
-    public const TYPE_TABLE = 'table';
+    public function getTemplate(): string
+    {
+        return '@MainBundle/admin/widgets/dashboard/table.html.twig';
+    }
 }

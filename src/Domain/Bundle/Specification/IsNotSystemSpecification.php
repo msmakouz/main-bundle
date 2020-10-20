@@ -12,18 +12,15 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Specification;
 
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 
 final class IsNotSystemSpecification
 {
     private BundleRepository $bundleRepository;
-    private TranslatorInterface $translator;
 
-    public function __construct(BundleRepository $bundleRepository, TranslatorInterface $translator)
+    public function __construct(BundleRepository $bundleRepository)
     {
         $this->bundleRepository = $bundleRepository;
-        $this->translator = $translator;
     }
 
     public function isNotSystem(int $id): bool

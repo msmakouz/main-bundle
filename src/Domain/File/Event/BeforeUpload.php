@@ -16,7 +16,7 @@ use Zentlix\MainBundle\Application\Command\File\UploadCommand;
 
 final class BeforeUpload
 {
-    private $command;
+    private UploadCommand $command;
 
     public function __construct(UploadCommand $command)
     {

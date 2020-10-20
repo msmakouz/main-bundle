@@ -14,11 +14,11 @@ namespace Zentlix\MainBundle\Application\Command\Template;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\Site\Event\Template\AfterCreate;
 use Zentlix\MainBundle\Domain\Site\Event\Template\BeforeCreate;
 use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class CreateHandler implements CommandHandlerInterface
 {

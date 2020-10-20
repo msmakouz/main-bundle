@@ -1,0 +1,46 @@
+{% extends '@MainBundle/admin/layouts/base.html.twig' %}
+
+{% block title %}{{ 'zentlix_main.about_system' | trans }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('admin.index') }}"></a>{{ 'zentlix_main.control_panel' | trans }}</li>
+    <li class="breadcrumb-item active">{{ 'zentlix_main.about_system' | trans }}</li>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-header">{{ 'zentlix_main.about_system' | trans }}</div>
+            <div class="card-body">
+                <div class="row pb-3">
+                    <div class="col-md-3">{{ 'zentlix_main.php_version' | trans }}:</div>
+                    <div class="col-md-9">{{ platform.php_version }}</div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-md-3">{{ 'zentlix_main.max_execution_time' | trans }}:</div>
+                    <div class="col-md-9">{{ platform.max_execution_time }} {{ 'zentlix_main.sec' | trans }}</div>
+                </div>
+                <div class="row pb-3">
+                    <div class="col-md-3">{{ 'zentlix_main.memory_limit' | trans }}:</div>
+                    <div class="col-md-9">{{ platform.memory_limit }}</div>
+                </div>
+                {% if(platform.database_server is defined) %}
+                    <div class="row pb-3">
+                        <div class="col-md-3">{{ 'zentlix_main.database_server' | trans }}:</div>
+                        <div class="col-md-9">{{ platform.database_server }}</div>
+                    </div>
+                {% endif %}
+                <div class="row pb-3">
+                    <div class="col-md-3">{{ 'zentlix_main.database_server_version' | trans }}:</div>
+                    <div class="col-md-9">{{ platform.database_server_version }}</div>
+                </div>
+                {% if(platform.database_server_info is defined) %}
+                    <div class="row pb-3">
+                        <div class="col-md-3">{{ 'zentlix_main.database_server_state' | trans }}:</div>
+                        <div class="col-md-9">{{ platform.database_server_info }}</div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

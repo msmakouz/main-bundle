@@ -50,23 +50,25 @@ class Form extends AbstractForm
         $command = $builder->getData();
 
         $main = $builder->create('main', Type\FormType::class, ['inherit_data' => true, 'label' => 'zentlix_main.main'])
-            ->add('title', Type\TextType::class, ['label' => 'zentlix_main.title'])
+            ->add('title', Type\TextType::class, [
+                'label' => 'zentlix_main.title'
+            ])
             ->add('url', Type\TextType::class, [
-                'label' =>'zentlix_main.site.site_url',
+                'label'   =>'zentlix_main.site.site_url',
                 'prepend' => 'https://'
             ])
             ->add('locale', Type\ChoiceType::class, [
                 'choices'  => $this->localeRepository->assoc(),
-                'label' => 'zentlix_main.site.locale'
+                'label'    => 'zentlix_main.site.locale'
             ])
             ->add('template', Type\ChoiceType::class, [
                 'choices'  => $this->templateRepository->assoc(),
-                'label' => 'zentlix_main.template'
+                'label'    => 'zentlix_main.template'
             ])
-            ->add('meta', MetaType::class, ['inherit_data' => true])
+            ->add('meta', MetaType::class, ['inherit_data' => true, 'label' => false])
             ->add('sort', Type\IntegerType::class, [
-                'label' => 'zentlix_main.sort',
-                'data' => $command instanceof CreateCommand ? $this->siteRepository->getMaxSort() + 1 : $command->sort,
+                'label'       => 'zentlix_main.sort',
+                'data'        => $command instanceof CreateCommand ? $this->siteRepository->getMaxSort() + 1 : $command->sort,
                 'constraints' => [
                     new GreaterThan(['value' => 0, 'message' => $this->translator->trans('zentlix_main.validation.greater_0')])
                 ]

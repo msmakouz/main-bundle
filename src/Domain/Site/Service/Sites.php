@@ -13,21 +13,18 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Site\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
 use Zentlix\MainBundle\Domain\Cache\Service\Cache;
 
 class Sites {
 
-    private ContainerInterface $container;
     private ?EntityManagerInterface $entityManager;
     private ?string $host = null;
 
-    public function __construct(ContainerInterface $container, RequestStack $request)
+    public function __construct(EntityManagerInterface $entityManager, RequestStack $request)
     {
-        $this->container = $container;
-        $this->entityManager = $container->get('doctrine.orm.entity_manager');
+        $this->entityManager = $entityManager;
 
         if($request->getCurrentRequest()) {
             $this->host = $request->getCurrentRequest()->server->get('SERVER_NAME');

@@ -22,15 +22,15 @@ class MetaType extends AbstractType
     {
         $builder
             ->add('meta_title', TextType::class, [
-                'label' => 'zentlix_main.meta_title',
+                'label'    => 'zentlix_main.meta_title',
                 'required' => false
             ])
             ->add('meta_description', TextType::class, [
-                'label' => 'zentlix_main.meta_description',
+                'label'    => 'zentlix_main.meta_description',
                 'required' => false
             ])
             ->add('meta_keywords', TextType::class, [
-                'label' => 'zentlix_main.meta_keywords',
+                'label'    => 'zentlix_main.meta_keywords',
                 'required' => false
             ]);
     }

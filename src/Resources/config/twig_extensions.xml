@@ -8,9 +8,19 @@
             <argument type="service" id="zentlix_main.visual_editor"/>
             <tag name="twig.extension"/>
         </service>
-
         <service id="zentlix_main.twig_extension.asset" class="Zentlix\MainBundle\UI\Http\Web\Widget\Asset">
             <argument type="service" id="zentlix_main.sites"/>
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="zentlix_main.twig_extension.sidebar" class="Zentlix\MainBundle\UI\Http\Web\Widget\Admin\Sidebar">
+            <argument type="service" id="zentlix_main.sidebar"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="twig.extension"/>
+        </service>
+        <service id="zentlix_main.twig_extension.dashboard_widgets" class="Zentlix\MainBundle\UI\Http\Web\Widget\Admin\DashboardWidgets">
+            <argument type="service" id="zentlix_user.admin_settings"/>
+            <argument type="service" id="zentlix_main.widgets"/>
             <tag name="twig.extension"/>
         </service>
     </services>

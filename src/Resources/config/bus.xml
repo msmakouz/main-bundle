@@ -7,10 +7,10 @@
     <services>
         <defaults public="false"/>
 
-        <instanceof id="Zentlix\MainBundle\Application\Command\CommandHandlerInterface">
+        <instanceof id="Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface">
             <tag name="messenger.message_handler" bus="messenger.bus.default"/>
         </instanceof>
-        <instanceof id="Zentlix\MainBundle\Application\Query\QueryHandlerInterface">
+        <instanceof id="Zentlix\MainBundle\Infrastructure\Share\Bus\QueryHandlerInterface">
             <tag name="messenger.message_handler" bus="messenger.bus.default"/>
         </instanceof>
 
@@ -44,12 +44,6 @@
             <argument type="service" id="zentlix_main.locale_unique_code_specification"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
-            <tag name="messenger.message_handler"/>
-        </service>
-        <service id="zentlix_main.locale.json_handler" class="Zentlix\MainBundle\Application\Command\Locale\JsonHandler">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
-            <argument type="string">%kernel.project_dir%</argument>
             <tag name="messenger.message_handler"/>
         </service>
         <service id="zentlix_main.locale.update_command" class="Zentlix\MainBundle\Application\Command\Locale\UpdateHandler">
@@ -116,11 +110,6 @@
         </service>
 
         <!-- Query bus -->
-        <service id="zentlix_main.route.build_query_handler" class="Zentlix\MainBundle\Application\Query\AdminRoute\BuildQueryHandler">
-            <argument type="service" id="zentlix_main.routes"/>
-            <tag name="messenger.message_handler"/>
-        </service>
-
         <service id="zentlix_main.bundle.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Bundle\DataTableQueryHandler">
             <argument type="service" id="zentlix_main.data_table_service"/>
             <tag name="messenger.message_handler"/>
@@ -149,22 +138,6 @@
         <service id="zentlix_main.visual_editor.command_query_handler" class="Zentlix\MainBundle\Application\Query\VisualEditor\EditorCommandQueryHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <tag name="messenger.message_handler"/>
-        </service>
-
-        <service id="zentlix_main.state.build.query_handler" class="Zentlix\MainBundle\Application\Query\State\BuildQueryHandler">
-            <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="security.helper"/>
-            <argument type="service" id="router" />
-            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
-            <argument type="service" id="Zentlix\UserBundle\Domain\Admin\Repository\NotificationRepository"/>
-            <argument type="service" id="zentlix_main.sidebar"/>
-            <argument type="service" id="zentlix_user.admin_settings"/>
-            <tag name="messenger.message_handler"/>
-        </service>
-
-        <service id="zentlix_main.widgets.query_handler" class="Zentlix\MainBundle\Application\Query\Widget\WidgetsQueryHandler">
-            <argument type="service" id="zentlix_main.widgets"/>
-            <argument type="service" id="zentlix_user.admin_settings"/>
         </service>
     </services>
 </container>

@@ -31,17 +31,12 @@ class Form extends DefaultForm
     {
         $builder->add('default_locale', ChoiceType::class, [
             'choices'  => $this->localeRepository->assoc(),
-            'label' => 'zentlix_main.default_locale'
+            'label'    => 'zentlix_main.default_locale'
         ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class'     => SettingCommand::class,
-            'label'          => 'zentlix_main.bundle.update.process',
-            'form'           => self::SIMPLE_FORM,
-            'disable_delete' => true
-        ]);
+        $resolver->setDefaults(['data_class' => SettingCommand::class]);
     }
 }

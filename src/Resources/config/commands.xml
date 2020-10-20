@@ -21,10 +21,6 @@
             <argument id="zentlix_main.files" type="service"/>
             <tag name="console.command"/>
         </service>
-        <service id="zentlix_main.generate_json_localisation_file_command" class="Zentlix\MainBundle\UI\Cli\Command\GenerateJsonLocalisationFileCommand">
-            <argument id="zentlix_main.command_bus" type="service"/>
-            <tag name="console.command"/>
-        </service>
         <service id="zentlix_main.install_command" class="Zentlix\MainBundle\UI\Cli\Command\InstallCommand">
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.bundles"/>

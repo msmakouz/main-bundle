@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Limenius\Liform\Resolver;
@@ -71,21 +70,16 @@ class AbstractAdminController extends BaseController implements AbstractControll
         return $this->queryBus->handle($query);
     }
 
-    protected function handleRequest(Request $request, FormInterface $form): void
-    {
-        if($request->request->get('_token')) {
-            $form->submit($request->request->all());
-        }
-    }
-
     protected function redirectSuccess(string $url, string $message): array
     {
         return ['redirect' => $url, 'success' => true, 'message' => $message];
     }
 
-    protected function redirectError(string $url, string $message): array
+    protected function redirectError(string $message): Response
     {
-        return ['redirect' => $url, 'success' => false, 'message' => $message];
+        $this->addFlash('error', $message);
+
+        return $this->redirectToRoute('admin.index');
     }
 
     protected function error(string $message): array
@@ -99,7 +93,6 @@ class AbstractAdminController extends BaseController implements AbstractControll
         $resolver->setTransformer('email', new JsonTransformer\StringTransformer($this->translator), 'email');
         $resolver->setTransformer('phone_number', new JsonTransformer\StringTransformer($this->translator), 'tel');
         $resolver->setTransformer('password', new JsonTransformer\StringTransformer($this->translator), 'password');
-        $resolver->setTransformer('notice', new JsonTransformer\NoticeTransformer($this->translator));
         $resolver->setTransformer('editor', new JsonTransformer\EditorTransformer($this->translator));
         $resolver->setTransformer('file', new JsonTransformer\FileTransformer($this->translator));
         $resolver->setTransformer('data', new JsonTransformer\DataTransformer($this->translator));

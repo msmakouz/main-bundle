@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\DataTable\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Omines\DataTablesBundle\Column\AbstractColumn;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Omines\DataTablesBundle\Column\AbstractColumn;
 use Omines\DataTablesBundle\DataTableRendererInterface;
 use Omines\DataTablesBundle\DependencyInjection\Instantiator;
 use Omines\DataTablesBundle\DataTableFactory as BaseDataTableFactory;
@@ -51,7 +51,9 @@ class DataTableFactory extends BaseDataTableFactory
             ->setPersistState($config['persist_state'] ?? 'fragment')
             ->setTranslationDomain($config['translation_domain'] ?? 'messages')
             ->setLanguageFromCDN($config['language_from_cdn'] ?? true)
-            ->setTemplate($config['template'] ?? DataTable::DEFAULT_TEMPLATE, $config['template_parameters'] ?? []);
+            ->setTemplate($config['template'] ?? DataTable::DEFAULT_TEMPLATE,
+                $config['template_parameters'] ?? ['className' => 'table table-striped table-bordered']
+            );
     }
 
     public function createFromType($type, array $typeOptions = [], array $options = [])

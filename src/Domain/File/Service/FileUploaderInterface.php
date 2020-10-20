@@ -18,8 +18,6 @@ use Zentlix\MainBundle\Domain\File\Entity\File;
 interface FileUploaderInterface
 {
     public function upload(UploadCommand $command): File;
-
     public function remove(File $file): void;
-
     public function getUploadDirectory(): string;
 }

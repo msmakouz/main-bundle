@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Application\Command\Setting\DefaultSettingCommand;
 use Zentlix\MainBundle\Application\Query\Bundle\DataTableQuery;
@@ -24,21 +23,24 @@ use Zentlix\MainBundle\UI\Http\Web\Form\Setting\DefaultForm;
 class BundleController extends ResourceController
 {
     static $updateSuccessMessage = 'zentlix_main.bundle.update.success';
+    static $redirectAfterAction = 'admin.bundle.list';
 
-    public function index(Request $request): Response
+    public function index(): Response
     {
-       return $this->listResource(new DataTableQuery(Table::class), $request);
+       return $this->listResource(new DataTableQuery(Table::class),'@MainBundle/admin/bundles/bundles.html.twig');
     }
 
-    public function changeSettings(Bundle $bundle, EntityManagerInterface $entityManager, Request $request): Response
+    public function changeSettings(Bundle $bundle, EntityManagerInterface $entityManager): Response
     {
         if($bundle->getSettingsEntity() && $bundle->getSettingsForm()) {
             $settingRepository = $entityManager->getRepository($bundle->getSettingsEntity());
             $command = $this->createForm($bundle->getSettingsForm())->getConfig()->getDataClass();
 
-            return $this->updateResource(new $command($settingRepository->findOneBy([])), $bundle->getSettingsForm(), $request);
+            return $this->updateResource(
+                new $command($settingRepository->findOneBy([])), $bundle->getSettingsForm(), '@MainBundle/admin/bundles/settings.html.twig'
+            );
         }
 
-        return $this->updateResource(new DefaultSettingCommand(), DefaultForm::class, $request);
+        return $this->updateResource(new DefaultSettingCommand(), DefaultForm::class, '@MainBundle/admin/bundles/default.html.twig');
     }
 }

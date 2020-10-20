@@ -18,6 +18,7 @@ use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Zentlix\UserBundle\Domain\User\Entity\User;
 use Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor;
+use function is_null;
 
 class AdminPanel extends AbstractExtension
 {
@@ -33,7 +34,7 @@ class AdminPanel extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('adminPanelWidget', [$this, 'getAdminPanel'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('admin_panel_widget', [$this, 'getAdminPanel'], ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 
@@ -42,7 +43,7 @@ class AdminPanel extends AbstractExtension
         /** @var User $user */
         $user = $this->security->getUser();
 
-        if($user === null || !$user->isAdminRole()) {
+        if(is_null($user) || !$user->isAdminRole()) {
             return null;
         }
 

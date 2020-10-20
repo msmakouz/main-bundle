@@ -13,12 +13,12 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\File;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\File\Event\BeforeUpload;
 use Zentlix\MainBundle\Domain\File\Event\AfterUpload;
 use Zentlix\MainBundle\Domain\File\Service\FileUploaderInterface;
 use Zentlix\MainBundle\Domain\File\Specification\UniqueFilenameSpecification;
 use Zentlix\MainBundle\Domain\File\Specification\UniquePathSpecification;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
 
 class UploadHandler implements CommandHandlerInterface

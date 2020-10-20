@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Query\Platform;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Driver\PDOConnection;
-use Zentlix\MainBundle\Application\Query\QueryHandlerInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryHandlerInterface;
 
 class AboutQueryHandler implements QueryHandlerInterface
 {
@@ -27,20 +26,11 @@ class AboutQueryHandler implements QueryHandlerInterface
 
     public function __invoke(AboutQuery $query): array
     {
-        $connection = $this->connection->getWrappedConnection();
-
-        $platform = [
-            'php_version' => phpversion(),
-            'max_execution_time' => ini_get('max_execution_time'),
-            'memory_limit' => ini_get('memory_limit'),
+        return [
+            'php_version'             => phpversion(),
+            'max_execution_time'      => ini_get('max_execution_time'),
+            'memory_limit'            => ini_get('memory_limit'),
             'database_server_version' => $this->connection->getWrappedConnection()->getServerVersion(),
         ];
-
-        if($connection instanceof PDOConnection) {
-            $platform['database_driver'] = $connection->getAttribute(\PDO::ATTR_DRIVER_NAME);
-            $platform['database_server_info'] = $connection->getAttribute(\PDO::ATTR_SERVER_INFO);
-        }
-
-        return $platform;
     }
 }

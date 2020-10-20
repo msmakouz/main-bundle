@@ -16,7 +16,7 @@ use Zentlix\MainBundle\Domain\Setting\Entity\SettingInterface;
 
 final class AfterChange
 {
-    private $settings;
+    private SettingInterface $settings;
 
     public function __construct(SettingInterface $settings)
     {

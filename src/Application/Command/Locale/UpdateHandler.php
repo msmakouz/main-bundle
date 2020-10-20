@@ -14,9 +14,9 @@ namespace Zentlix\MainBundle\Application\Command\Locale;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MainBundle\Domain\Locale\Event\BeforeUpdate;
 use Zentlix\MainBundle\Domain\Locale\Event\AfterUpdate;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class UpdateHandler implements CommandHandlerInterface
 {

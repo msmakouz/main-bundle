@@ -23,11 +23,10 @@ class ChoiceType extends BaseChoiceType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefined(['disabled_values', 'specification', 'update']);
+        $resolver->setDefined(['disabled_values', 'specification']);
         $resolver->setDefaults([
             'disabled_values' => [],
-            'specification' => null,
-            'update' => null
+            'specification' => null
         ]);
     }
 
@@ -37,8 +36,7 @@ class ChoiceType extends BaseChoiceType
 
         $view->vars = array_merge($view->vars, [
             'disabled_values' => $options['disabled_values'],
-            'specification' => $options['specification'],
-            'update' => $options['update']
+            'specification' => $options['specification']
         ]);
     }
 }

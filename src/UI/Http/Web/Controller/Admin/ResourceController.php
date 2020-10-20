@@ -12,14 +12,12 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryInterface;
 
 class ResourceController extends AbstractAdminController
 {
-    protected static $redirectListError = 'admin.index';
     protected static $redirectAfterCreate;
     protected static $redirectAfterUpdate;
     protected static $redirectAfterDelete;
@@ -28,67 +26,73 @@ class ResourceController extends AbstractAdminController
     protected static $deleteSuccessMessage;
     protected static $redirectAfterAction = 'admin.index';
 
-    public function listResource(QueryInterface $query, Request $request): Response
+    public function listResource(QueryInterface $query, string $template, array $parameters = []): Response
     {
         try {
-            $table = $this->ask($query);
-            return $table->handleRequest($request)->getResponse();
+            $table = $this->ask($query)->handleRequest($this->container->get('request_stack')->getCurrentRequest());
+            if ($table->isCallback()) {
+                return $table->getResponse();
+            }
+
+            return $this->render($template, array_merge(['datatable' => $table], $parameters));
         } catch (\Exception $e) {
-            return $this->json($this->redirectError($this->generateUrl(static::$redirectListError), $e->getMessage()));
+            return $this->redirectError($e->getMessage());
         }
     }
 
-    public function createResource(CommandInterface $command, string $formClass, Request $request): Response
+    public function createResource(CommandInterface $command, string $formClass, string $template, array $parameters = []): Response
     {
         try {
             $form = $this->createForm($formClass, $command);
-
-            $this->handleRequest($request, $form);
+            $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
-                return $this->json($this->redirectSuccess($this->generateRedirectRoute(static::$redirectAfterCreate), $this->translator->trans(static::$createSuccessMessage)));
+                $this->addFlash('success', $this->translator->trans(static::$createSuccessMessage));
+                return $this->redirectToRoute($this->getRedirectRoute(static::$redirectAfterCreate));
             }
         } catch (\Exception $e) {
-            return $this->json($this->error($e->getMessage()));
+            return $this->redirectError($e->getMessage());
         }
 
-        return $this->json($this->liform->transform($form));
+        return $this->render($template, array_merge(['form' => $form->createView()], $parameters));
     }
 
-    public function updateResource(CommandInterface $command, string $formClass, Request $request): Response
+    public function updateResource(CommandInterface $command, string $formClass, string $template, array $parameters = []): Response
     {
         $form = $this->createForm($formClass, $command);
 
         try {
-            $this->handleRequest($request, $form);
+            $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
-                return $this->json($this->redirectSuccess($this->generateRedirectRoute(static::$redirectAfterUpdate), $this->translator->trans(static::$updateSuccessMessage)));
+                $this->addFlash('success', $this->translator->trans(static::$updateSuccessMessage));
+                return $this->redirectToRoute($this->getRedirectRoute(static::$redirectAfterUpdate));
             }
         } catch (\Exception $e) {
-            return $this->json($this->error($e->getMessage()));
+            return $this->redirectError($e->getMessage());
         }
 
-        return $this->json($this->liform->transform($form));
+        return $this->render($template, array_merge(['form' => $form->createView()], $parameters));
     }
 
     public function deleteResource(CommandInterface $command): Response
     {
         try {
             $this->exec($command);
-            return $this->json($this->redirectSuccess($this->generateRedirectRoute(static::$redirectAfterDelete), $this->translator->trans(static::$deleteSuccessMessage)));
+            $this->addFlash('success', $this->translator->trans(static::$deleteSuccessMessage));
+            return $this->redirectToRoute($this->getRedirectRoute(static::$redirectAfterDelete));
         } catch (\Exception $e) {
-            return $this->json($this->error($e->getMessage()));
+            return $this->redirectError($e->getMessage());
         }
     }
 
-    private function generateRedirectRoute(array $route = null)
+    private function getRedirectRoute(array $route = null)
     {
-        if(is_array($route)) {
-            return $this->generateUrl($route[0], $route[1]);
-        }
+       if(is_null($route)) {
+           return static::$redirectAfterAction;
+       }
 
-        return $this->generateUrl(static::$redirectAfterAction);
+        return $route;
     }
 }

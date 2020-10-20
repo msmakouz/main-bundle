@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Query\VisualEditor;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Zentlix\MainBundle\Application\Command\VisualEditorCommandInterface;
-use Zentlix\MainBundle\Application\Query\QueryHandlerInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryHandlerInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\VisualEditorCommandInterface;
 
 class EditorCommandQueryHandler implements QueryHandlerInterface
 {

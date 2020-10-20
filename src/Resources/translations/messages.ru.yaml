@@ -58,6 +58,7 @@ zentlix_main:
   event:                  "Событие"
   elements_not_found:     "Элементы не найдены."
   id:                     "ID"
+  loading_dots:           "Загрузка..."
 
   locale:
     already_exist: "Язык с кодом %s уже существует."
@@ -79,7 +80,6 @@ zentlix_main:
   meta_keywords:              "SEO ключевые слова"
   meta_title:                 "SEO заголовок"
   no:                         "Нет"
-  no_notifications:           "Нет уведомлений"
   operations:                 "Операции"
   page_not_found:             "Страница не найдена"
   page_not_found_description: "Проверьте корректность URL адреса или вернитесь на главную страницу."
@@ -140,6 +140,7 @@ zentlix_main:
   visual_editor:    "Визуальный редактор"
   yes:              "Да"
   update_available: "Доступно обновление"
+  zentlix_cms:      "Система управления контентом Zentlix"
 
   widgets:
     count_sites:   "Количество сайтов"

@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Shared\Event;
 
-use Zentlix\MainBundle\Application\Command\UpdateCommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\UpdateCommandInterface;
 
 class AbstractBeforeUpdate
 {

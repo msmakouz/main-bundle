@@ -14,8 +14,8 @@ namespace Zentlix\MainBundle\Application\Command\Site;
 
 use Symfony\Component\Validator\Constraints;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
-use Zentlix\MainBundle\Application\Command\DeleteCommandInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\DeleteCommandInterface;
 
 class DeleteCommand implements DeleteCommandInterface, CommandInterface
 {

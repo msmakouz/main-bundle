@@ -15,6 +15,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Widget;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Zentlix\MainBundle\Domain\Site\Service\Sites;
+use function is_null;
 
 class Asset extends AbstractExtension
 {
@@ -30,6 +31,7 @@ class Asset extends AbstractExtension
     {
         return [
             new TwigFunction('template_asset', [$this, 'getAssetsPath'], ['needs_environment' => false]),
+            new TwigFunction('admin_asset', [$this, 'getAdminAssetsPath'], ['needs_environment' => false])
         ];
     }
 
@@ -44,5 +46,14 @@ class Asset extends AbstractExtension
         }
 
         return '/templates/' . $this->templateFolder . '/' . $path;
+    }
+
+    public function getAdminAssetsPath(string $path)
+    {
+        if($path[0] === '/') {
+            $path = substr($path, 1);
+        }
+
+        return '/zentlix/main-bundle/admin/' . $path;
     }
 }

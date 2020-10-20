@@ -28,10 +28,6 @@ class CreateForm extends Form
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => CreateCommand::class,
-            'label'      => 'zentlix_main.site.create.process',
-            'form'       => self::TABS_FORM
-        ]);
+        $resolver->setDefaults(['data_class' => CreateCommand::class]);
     }
 }
