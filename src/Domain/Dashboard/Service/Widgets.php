@@ -27,11 +27,29 @@ class Widgets
 
     public function addWidget(WidgetInterface $widget)
     {
-        $this->widgets[] = $widget;
+        $this->widgets[get_class($widget)] = $widget;
     }
 
     public function getWidgets(): array
     {
         return $this->widgets;
+    }
+
+    public function get(string $class): WidgetInterface
+    {
+        if(isset($this->widgets[$class])) {
+            return $this->widgets[$class];
+        }
+
+        throw new \DomainException(sprintf('Widget %s not found.', $class));
+    }
+
+    public function find(string $class): ?WidgetInterface
+    {
+        if(isset($this->widgets[$class])) {
+            return $this->widgets[$class];
+        }
+
+        return null;
     }
 }

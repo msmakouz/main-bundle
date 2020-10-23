@@ -12,8 +12,6 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle;
 
-use Zentlix\UserBundle\Domain\Mailer\Entity\Event;
-
 interface ZentlixBundleInterface {
 
     public function getTitle():string;
@@ -23,8 +21,6 @@ interface ZentlixBundleInterface {
     public function configureRights(): array;
     public function getSettingsClass(): ?string;
     public function getSettingsForm(): ?string;
-    /** @return Event[] */
-    public function installMailerEvents(): array;
     public function getBundleName(): string;
     public function isSystem(): bool;
 }

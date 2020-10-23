@@ -46,11 +46,6 @@ trait ZentlixBundleTrait
         return [];
     }
 
-    public function installMailerEvents(): array
-    {
-        return [];
-    }
-
     public function getSettingsClass(): ?string
     {
         return null;

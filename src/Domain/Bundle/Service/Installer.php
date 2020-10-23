@@ -37,11 +37,6 @@ class Installer
         $this->copyRoutes(get_class($bundleClass));
         $this->copyPublicFiles(get_class($bundleClass));
         $this->copyTemplates(get_class($bundleClass));
-
-        foreach ($bundleClass->installMailerEvents() as $mailerEvent) {
-            $mailerEvent->setBundle($bundleEntity);
-            $this->entityManager->persist($mailerEvent);
-        }
     }
 
     public function replaceSecurityConfig(): void
