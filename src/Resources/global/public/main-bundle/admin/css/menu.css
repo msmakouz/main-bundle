@@ -6,7 +6,6 @@
     min-height: 20px;
     width: 100%;
     max-width: 385px;
-    line-height: 30px;
     overflow: hidden;
     word-wrap: break-word;
     margin-bottom: 9px;
@@ -38,4 +37,7 @@
 }
 #menu-providers {
     max-width: 385px;
+}
+.menu-item-form {
+    padding-top: 20px;
 }

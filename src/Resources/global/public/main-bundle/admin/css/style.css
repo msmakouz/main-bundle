@@ -17269,14 +17269,14 @@ div.dataTables_wrapper div.dataTables_filter label {
 .card-widget {
   margin-bottom: 2rem;
 }
-.accordion a {
+.accordion-toggle {
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   display: block;
   color: #3c4b64;
 }
-.accordion a:hover {
+.accordion-toggle:hover {
   text-decoration: none;
   cursor: pointer;
 }
