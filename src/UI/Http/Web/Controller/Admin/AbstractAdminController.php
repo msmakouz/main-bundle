@@ -29,6 +29,8 @@ use Zentlix\MainBundle\UI\Http\Web\JsonTransformer;
 
 class AbstractAdminController extends BaseController implements AbstractControllerInterface
 {
+    public static $redirectErrorPath = 'admin.index';
+
     protected TranslatorInterface $translator;
     protected Liform $liform;
     private CsrfTokenManagerInterface $tokenManager;
@@ -79,7 +81,7 @@ class AbstractAdminController extends BaseController implements AbstractControll
     {
         $this->addFlash('error', $message);
 
-        return $this->redirectToRoute('admin.index');
+        return $this->redirectToRoute(self::$redirectErrorPath);
     }
 
     protected function error(string $message): array

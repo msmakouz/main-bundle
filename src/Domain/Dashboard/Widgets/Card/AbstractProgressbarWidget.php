@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Dashboard\Widgets\Card;
 
-use Zentlix\MainBundle\Infrastructure\Share\Dashboard\Widget\WidgetInterface;
+use Zentlix\MainBundle\Infrastructure\Dashboard\Widget\WidgetInterface;
 
 abstract class AbstractProgressbarWidget implements WidgetInterface
 {

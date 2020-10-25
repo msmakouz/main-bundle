@@ -16,7 +16,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Zentlix\MainBundle\Domain\Dashboard\Service\Widgets;
-use Zentlix\MainBundle\Infrastructure\Share\Dashboard\Widget\WidgetInterface;
+use Zentlix\MainBundle\Infrastructure\Dashboard\Widget\WidgetInterface;
 use Zentlix\UserBundle\Domain\Admin\Service\AdminSettings;
 
 class DashboardWidgets extends AbstractExtension

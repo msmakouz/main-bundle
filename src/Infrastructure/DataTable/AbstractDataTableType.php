@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Infrastructure\Share\DataTable;
+namespace Zentlix\MainBundle\Infrastructure\DataTable;
 
 use Omines\DataTablesBundle\DataTableTypeInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;

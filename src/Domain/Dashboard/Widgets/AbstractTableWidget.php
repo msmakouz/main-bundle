@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Dashboard\Widgets;
 
-use Zentlix\MainBundle\Infrastructure\Share\Dashboard\Widget\WidgetInterface;
+use Zentlix\MainBundle\Infrastructure\Dashboard\Widget\WidgetInterface;
 
 abstract class AbstractTableWidget implements WidgetInterface
 {

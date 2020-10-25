@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Infrastructure\Share\Dashboard\Widget;
+namespace Zentlix\MainBundle\Infrastructure\Dashboard\Widget;
 
 interface WidgetInterface
 {

@@ -17,7 +17,7 @@ use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Column\TwigColumn;
-use Zentlix\MainBundle\Infrastructure\Share\DataTable\AbstractDataTableType;
+use Zentlix\MainBundle\Infrastructure\DataTable\AbstractDataTableType;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 
 class Table extends AbstractDataTableType
