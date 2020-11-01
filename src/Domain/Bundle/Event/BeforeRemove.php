@@ -12,18 +12,18 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Event;
 
-use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\RemoveCommand;
 
-final class BeforeInstall
+final class BeforeRemove
 {
-    private InstallCommand $command;
+    private RemoveCommand $command;
 
-    public function __construct(InstallCommand $command)
+    public function __construct(RemoveCommand $command)
     {
         $this->command = $command;
     }
 
-    public function getCommand(): InstallCommand
+    public function getCommand(): RemoveCommand
     {
         return $this->command;
     }

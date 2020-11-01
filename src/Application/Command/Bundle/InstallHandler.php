@@ -20,6 +20,7 @@ use Zentlix\MainBundle\Domain\Bundle\Event\BeforeInstall;
 use Zentlix\MainBundle\Domain\Bundle\Service\Installer;
 use Zentlix\MainBundle\Domain\Bundle\Specification\UniqueClassSpecification;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
+use function get_class;
 
 class InstallHandler implements CommandHandlerInterface
 {
@@ -49,7 +50,7 @@ class InstallHandler implements CommandHandlerInterface
 
         $this->entityManager->persist($bundle);
 
-        $this->installer->install($command->getBundle(), $bundle);
+        $this->installer->install($command->getBundle());
 
         $this->entityManager->flush();
 

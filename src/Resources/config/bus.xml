@@ -31,6 +31,18 @@
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="zentlix_main.installer"/>
         </service>
+        <service id="zentlix_main.bundle.remove_handler" class="Zentlix\MainBundle\Application\Command\Bundle\RemoveHandler">
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
+            <argument type="service" id="zentlix_main.bundle.exist_by_class_bundle_specification"/>
+            <argument type="service" id="zentlix_main.bundle_is_not_system_specification"/>
+            <argument type="service" id="zentlix_main.installer"/>
+        </service>
+        <service id="zentlix_main.composer.remove_handler" class="Zentlix\MainBundle\Application\Command\Composer\RemoveHandler">
+            <argument type="service" id="zentlix_main.bundles"/>
+            <argument type="service" id="kernel"/>
+        </service>
 
         <service id="zentlix_main.file.upload_handler" class="Zentlix\MainBundle\Application\Command\File\UploadHandler">
             <argument type="service" id="event_dispatcher"/>

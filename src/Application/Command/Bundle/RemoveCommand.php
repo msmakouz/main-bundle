@@ -10,20 +10,20 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Domain\Bundle\Event;
+namespace Zentlix\MainBundle\Application\Command\Bundle;
 
-use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
+use Zentlix\MainBundle\ZentlixBundleInterface;
 
-final class AfterInstall
+class RemoveCommand
 {
-    private Bundle $bundle;
+    private ZentlixBundleInterface $bundle;
 
-    public function __construct(Bundle $bundle)
+    public function __construct(ZentlixBundleInterface $bundle)
     {
         $this->bundle = $bundle;
     }
 
-    public function getBundle(): Bundle
+    public function getBundle(): ZentlixBundleInterface
     {
         return $this->bundle;
     }

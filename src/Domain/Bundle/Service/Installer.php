@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 use Zentlix\MainBundle\ZentlixBundleInterface;
 
 class Installer
@@ -32,31 +31,21 @@ class Installer
         $this->filesystem = $filesystem;
     }
 
-    public function install(ZentlixBundleInterface $bundleClass, Bundle $bundleEntity): void
+    public function install(ZentlixBundleInterface $bundleClass): void
     {
-        $this->copyRoutes(get_class($bundleClass));
-        $this->copyPublicFiles(get_class($bundleClass));
-        $this->copyTemplates(get_class($bundleClass));
+        $this->installRoutes(get_class($bundleClass));
+        $this->installPublicFiles(get_class($bundleClass));
+        $this->installTemplates(get_class($bundleClass));
     }
 
-    public function replaceSecurityConfig(): void
+    public function remove(ZentlixBundleInterface $bundleClass): void
     {
-        $this->filesystem->remove($this->kernel->getProjectDir() . '/config/packages/security.yaml');
-        $this->filesystem->copy(
-            $this->kernel->locateResource('@UserBundle/Resources/global/packages/security.yaml'),
-            $this->kernel->getProjectDir() . '/config/packages/security.yaml'
-        );
+        $this->removeRoutes(get_class($bundleClass));
+        $this->removePublicFiles(get_class($bundleClass));
+        $this->removeTemplates(get_class($bundleClass));
     }
 
-    public function copyHtaccess(): void
-    {
-        $this->filesystem->copy(
-            $this->kernel->locateResource('@MainBundle/Resources/global/.htaccess'),
-            $this->kernel->getProjectDir() . '/public/.htaccess'
-        );
-    }
-
-    private function copyRoutes($class): void
+    private function installRoutes($class): void
     {
         $routesDir = $this->getBundleResourceDir($class) . 'global/routes';
 
@@ -71,7 +60,24 @@ class Installer
         }
     }
 
-    private function copyPublicFiles($class): void
+    private function removeRoutes($class): void
+    {
+        $routesDir = $this->getBundleResourceDir($class) . 'global/routes';
+
+        $finder = new Finder();
+        if(is_dir($routesDir)) {
+            $routes = $finder->files()->in($routesDir);
+            if($routes->hasResults()) {
+                foreach ($finder as $file) {
+                    if(is_file($this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename())) {
+                        $this->filesystem->remove($this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename());
+                    }
+                }
+            }
+        }
+    }
+
+    private function installPublicFiles($class): void
     {
         $publicDir = $this->getBundleResourceDir($class) . 'global/public';
 
@@ -80,12 +86,42 @@ class Installer
         }
     }
 
-    private function copyTemplates($class): void
+    private function removePublicFiles($class): void
+    {
+        $publicDir = $this->getBundleResourceDir($class) . 'global/public';
+
+        if(is_dir($publicDir)) {
+            $finder = new Finder();
+            $public = $finder->in($publicDir);
+            if($public->hasResults()) {
+                foreach ($public as $element) {
+                    $this->filesystem->remove($this->kernel->getProjectDir() . '/public/zentlix/' . $element->getFilename());
+                }
+            }
+        }
+    }
+
+    private function installTemplates($class): void
     {
         $templatesDir = $this->getBundleResourceDir($class) . 'global/templates';
 
         if(is_dir($templatesDir)) {
             $this->filesystem->mirror($templatesDir, $this->kernel->getProjectDir() . '/templates/');
+        }
+    }
+
+    private function removeTemplates($class): void
+    {
+        $templatesDir = $this->getBundleResourceDir($class) . 'global/templates';
+
+        if(is_dir($templatesDir)) {
+            $finder = new Finder();
+            $templates = $finder->in($templatesDir);
+            if($templates->hasResults()) {
+                foreach ($templates as $element) {
+                    $this->filesystem->remove($this->kernel->getProjectDir() . '/templates/' . $element->getFilename());
+                }
+            }
         }
     }
 

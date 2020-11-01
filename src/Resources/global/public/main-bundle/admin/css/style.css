@@ -17255,14 +17255,17 @@ div.dataTables_wrapper div.dataTables_filter label {
 .ck-editor__editable_inline {
   min-height: 350px;
 }
-.table a, .nav-tabs .nav-link {
+.table .item-title, .nav-tabs .nav-link {
   font-size: 13px;
   font-weight: 600;
   line-height: 20px;
   display: block;
   color: #3c4b64;
 }
-.table a:hover {
+.item-title small {
+  font-size: 12px;
+}
+.table .item-title:hover {
   text-decoration: none;
   color: #321fdb;
 }

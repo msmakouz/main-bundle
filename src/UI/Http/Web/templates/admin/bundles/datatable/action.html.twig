@@ -1,6 +1,8 @@
-{% if not value %}
-    <form method="post">
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('uninstall_form') }}">
-        <button type="submit" class="btn btn-primary btn-sm">{{ 'zentlix_main.delete' | trans }}</button>
-    </form>
+{% if not row.system %}
+    {% include '@MainBundle/admin/partials/delete_confirmation.html.twig' with {
+        'title': 'zentlix_main.delete',
+        'confirmation': 'zentlix_main.bundle.delete.confirmation',
+        'path': path('admin.bundle.remove', {'id': row.id}),
+        'class': ''
+    } %}
 {% endif %}

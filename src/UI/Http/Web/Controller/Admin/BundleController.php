@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Zentlix\MainBundle\Application\Command\Composer\RemoveCommand;
 use Zentlix\MainBundle\Application\Command\Setting\DefaultSettingCommand;
 use Zentlix\MainBundle\Application\Query\Bundle\DataTableQuery;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
@@ -42,5 +43,20 @@ class BundleController extends ResourceController
         }
 
         return $this->updateResource(new DefaultSettingCommand(), DefaultForm::class, '@MainBundle/admin/bundles/default.html.twig');
+    }
+
+    public function remove(Bundle $bundle): Response
+    {
+        static::$redirectErrorPath = 'admin.bundle.list';
+
+        try {
+            $this->exec(new RemoveCommand($bundle));
+        } catch (\Exception $exception) {
+            return $this->redirectError($exception->getMessage());
+        }
+
+        $this->addFlash('success', $this->translator->trans('zentlix_main.bundle.remove_success'));
+
+        return $this->redirectToRoute('admin.bundle.list');
     }
 }

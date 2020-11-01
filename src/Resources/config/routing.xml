@@ -41,6 +41,9 @@
     <route id="admin.bundle.update" path="/backend/settings/bundles/{id}/edit">
         <default key="_controller">zentlix_main.bundle_controller::changeSettings</default>
     </route>
+    <route id="admin.bundle.remove" path="/backend/settings/bundles/{id}/remove">
+        <default key="_controller">zentlix_main.bundle_controller::remove</default>
+    </route>
 
     <route id="admin.editor.enable" path="/backend/editor/enable">
         <condition>request.isXmlHttpRequest()</condition>

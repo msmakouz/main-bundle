@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\DataTable\Bundle;
 
+use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\Column\DateTimeColumn;
@@ -55,13 +56,15 @@ class Table extends AbstractDataTableType
                 [
                     'template'   => '@MainBundle/admin/bundles/datatable/action.html.twig',
                     'label'      => 'zentlix_main.action',
-                    'visible'    => false,
+                    'visible'    => true,
                     'orderable'  => true,
-                    'searchable' => false,
-                    'data'       => fn(Bundle $bundle) => $bundle->isSystem()
+                    'searchable' => false
                 ])
             ->addOrderBy($dataTable->getColumnByName('system_bundle'), $dataTable::SORT_DESCENDING)
             ->addOrderBy($dataTable->getColumnByName('id'), $dataTable::SORT_DESCENDING)
-            ->createAdapter(ORMAdapter::class, ['entity' => Bundle::class]);
+            ->createAdapter(ORMAdapter::class, [
+                'entity' => Bundle::class,
+                'query' => fn (QueryBuilder $builder) => $builder->select('bundle')->from(Bundle::class, 'bundle')
+            ]);
     }
 }

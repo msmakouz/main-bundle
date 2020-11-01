@@ -17,11 +17,11 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand as InstallBundleCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\RemoveCommand as RemoveBundleCommand;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
-class InstallCommand extends ConsoleCommand {
+class RemoveCommand extends ConsoleCommand {
 
     private CommandBus $commandBus;
     private Bundles $bundles;
@@ -37,9 +37,9 @@ class InstallCommand extends ConsoleCommand {
     protected function configure(): void
     {
         $this
-            ->setName('zentlix_main:install')
-            ->setDescription('Copying configuration files, public files to the application.')
-            ->addArgument('bundle', InputArgument::OPTIONAL, 'Bundle name, e.g. zentlix/shop-bundle');
+            ->setName('zentlix_main:remove')
+            ->setDescription('Removing public Zentlix bundle files, configuration from the application.')
+            ->addArgument('bundle', InputArgument::REQUIRED, 'Bundle name, e.g. zentlix/shop-bundle');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -48,38 +48,24 @@ class InstallCommand extends ConsoleCommand {
         $io = new SymfonyStyle($input, $output);
 
         try {
-            if($package) {
-                $this->installSingleBundle($package, $io);
-            } else {
-                $this->installCMS($io);
-            }
+            $this->removeBundle($package, $io);
         } catch (\Exception $exception) {
             $io->error($exception->getMessage());
 
             return 1;
         }
 
-        $io->success(sprintf('%s successfully installed!', $package ? sprintf('Bundle %s', $package) : 'Zentlix CMS'));
+        $io->success(sprintf('Bundle %s successfully removed!', $package));
 
         return 0;
     }
 
-    private function installSingleBundle(string $package, SymfonyStyle $io): void
+    private function removeBundle(string $package, SymfonyStyle $io): void
     {
         $bundle = $this->bundles->getByPackageName($package);
 
-        $io->comment(sprintf('Installing <info>%s</info>', $bundle->getBundleName()));
+        $io->comment(sprintf('Removing <info>%s</info>', $bundle->getBundleName()));
 
-        $this->commandBus->handle(new InstallBundleCommand($bundle));
-    }
-
-    private function installCMS(SymfonyStyle $io): void
-    {
-        $bundles = $this->bundles->getBundles();
-
-        foreach ($bundles as $bundle) {
-            $io->comment(sprintf('Installing <info>%s</info>', $bundle->getBundleName()));
-            $this->commandBus->handle(new InstallBundleCommand($bundle));
-        }
+        $this->commandBus->handle(new RemoveBundleCommand($bundle));
     }
 }

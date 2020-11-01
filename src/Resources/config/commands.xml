@@ -21,10 +21,19 @@
             <argument id="zentlix_main.files" type="service"/>
             <tag name="console.command"/>
         </service>
+        <service id="zentlix_main.configure_htaccess" class="Zentlix\MainBundle\UI\Cli\Command\CreateHtaccessCommand">
+            <argument type="service" id="filesystem"/>
+            <argument type="service" id="kernel"/>
+            <tag name="console.command"/>
+        </service>
         <service id="zentlix_main.install_command" class="Zentlix\MainBundle\UI\Cli\Command\InstallCommand">
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.bundles"/>
-            <argument type="service" id="zentlix_main.installer"/>
+            <tag name="console.command"/>
+        </service>
+        <service id="zentlix_main.remove_command" class="Zentlix\MainBundle\UI\Cli\Command\RemoveCommand">
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="console.command"/>
         </service>
     </services>

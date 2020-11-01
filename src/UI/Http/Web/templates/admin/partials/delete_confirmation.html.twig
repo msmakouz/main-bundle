@@ -1,3 +1,6 @@
+{% if class is not defined %}
+    {% set class = 'float-right' %}
+{% endif %}
 {% set modalId = random() %}
 <div class="modal fade" id="delete-confirmation-{{ modalId }}" tabindex="-1" role="dialog" aria-labelledby="{{ title | trans }}" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -16,6 +19,6 @@
         </div>
     </div>
 </div>
-<a href="#" class="btn btn-danger btn-sm float-right" data-toggle="modal" data-target="#delete-confirmation-{{ modalId }}">
+<a href="#" class="btn btn-danger btn-sm {{ class }}" data-toggle="modal" data-target="#delete-confirmation-{{ modalId }}">
     {{ title | trans }}
 </a>

@@ -8,98 +8,80 @@
         <service id="zentlix_main.bundle_is_not_system_specification"
                  class="Zentlix\MainBundle\Domain\Bundle\Specification\IsNotSystemSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
+            <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Bundle\Specification\IsNotSystemSpecification"
-                 alias="zentlix_main.bundle_is_not_system_specification"/>
 
         <service id="zentlix_main.bundle_unique_class_specification"
                  class="Zentlix\MainBundle\Domain\Bundle\Specification\UniqueClassSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Bundle\Specification\UniqueClassSpecification"
-                 alias="zentlix_main.bundle_unique_class_specification"/>
 
         <service id="zentlix_main.bundle.exist_bundle_specification"
                  class="Zentlix\MainBundle\Domain\Bundle\Specification\ExistBundleSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
             <argument type="service" id="translator"/>
         </service>
+        <service id="zentlix_main.bundle.exist_by_class_bundle_specification"
+                 class="Zentlix\MainBundle\Domain\Bundle\Specification\ExistByClassBundleSpecification">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
+            <argument type="service" id="translator"/>
+        </service>
 
         <service id="zentlix_main.file_unique_filename_specification"
                  class="Zentlix\MainBundle\Domain\File\Specification\UniqueFilenameSpecification"/>
-        <service id="Zentlix\MainBundle\Domain\File\Specification\UniqueFilenameSpecification"
-                 alias="zentlix_main.file_unique_filename_specification"/>
 
         <service id="zentlix_main.file_unique_path_specification"
                  class="Zentlix\MainBundle\Domain\File\Specification\UniquePathSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\File\Repository\FileRepository"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\File\Specification\UniquePathSpecification"
-                 alias="zentlix_main.file_unique_path_specification"/>
 
         <service id="zentlix_main.locale_exist_locale_specification"
                  class="Zentlix\MainBundle\Domain\Locale\Specification\ExistLocaleSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Locale\Specification\ExistLocaleSpecification"
-                 alias="zentlix_main.locale_exist_locale_specification"/>
 
         <service id="zentlix_main.locale_unique_code_specification"
                  class="Zentlix\MainBundle\Domain\Locale\Specification\UniqueCodeSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Locale\Specification\UniqueCodeSpecification"
-                 alias="zentlix_main.locale_unique_code_specification"/>
 
         <service id="zentlix_main.site_exist_site_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\ExistSiteSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Specification\ExistSiteSpecification"
-                 alias="zentlix_main.site_exist_site_specification"/>
 
         <service id="zentlix_main.site_exist_template_file_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFileSpecification">
             <argument type="service" id="translator"/>
             <argument type="string">%kernel.project_dir%</argument>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFileSpecification"
-                 alias="zentlix_main.site_exist_template_file_specification"/>
 
         <service id="zentlix_main.site_exist_template_folder_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification">
             <argument type="service" id="translator"/>
             <argument type="string">%kernel.project_dir%</argument>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification"
-                 alias="zentlix_main.site_exist_template_folder_specification"/>
 
         <service id="zentlix_main.site_exist_template_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateSpecification">
             <argument type="service" id="translator"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateSpecification"
-                 alias="zentlix_main.site_exist_template_specification"/>
 
         <service id="zentlix_main.site_not_single_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\NotSingleSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Specification\NotSingleSpecification"
-                 alias="zentlix_main.site_not_single_specification"/>
 
         <service id="zentlix_main.site_unique_url_specification"
                  class="Zentlix\MainBundle\Domain\Site\Specification\UniqueUrlSpecification">
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <argument type="service" id="translator"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Specification\UniqueUrlSpecification"
-                 alias="zentlix_main.site_unique_url_specification"/>
     </services>
 </container>
