@@ -53,7 +53,21 @@ zentlix_main:
   delete_element_process: "Удаление элемента"
   delete_element_confirm: "Вы действительно хотите удалить элемент?"
   description:            "Описание"
-  dropzone_help:          "Перетащите файл в эту область (Drag&Drop)"
+
+  dropzone:
+    default_message:            "Перетащите файл в эту область (Drag&Drop)"
+    fallback_message:           "Ваш браузер не поддерживает Drag&Drop загрузку файлов."
+    fallback_text:              "Пожалуйста, воспользуйтесь формой ниже для загрузки файла."
+    file_too_big:               "Максимально допустимый размер файла для загрузки: {{maxFilesize}} МБ."
+    invalid_file_type:          "Загрузка данного типа файлов запрещена."
+    response_error:             "От сервера получен код: {{statusCode}}."
+    cancel_upload:              "Отменить загрузку"
+    upload_canceled:            "Загрузка отменена."
+    cancel_upload_confirmation: "Вы действительно хотите отменить загрузку?"
+    remove_file:                "Удалить файл"
+    max_files_exceeded:         "Вы загрузили максимальное количество файлов. Загрузка невозможна."
+
+  empty_data:             "Данные отсутствуют."
   install_success:        "Ваш сайт успешно установлен."
   edit:                   "Редактировать"
   editor:                 "Редактор"

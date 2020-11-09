@@ -16,9 +16,10 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
 use Zentlix\MainBundle\Domain\Cache\Service\Cache;
+use function is_null;
 
-class Sites {
-
+class Sites
+{
     private ?EntityManagerInterface $entityManager;
     private ?string $host = null;
 
@@ -66,6 +67,11 @@ class Sites {
     public function getCurrentSiteId(): int
     {
         return $this->getCurrentSite()->getId();
+    }
+
+    public function hasCurrentSite(): bool
+    {
+        return is_null($this->host) === false && isset($this->getSites()[$this->host]);
     }
 
     public static function clearCache(): void

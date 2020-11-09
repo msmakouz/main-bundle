@@ -53,8 +53,22 @@ zentlix_main:
   delete_element_process: "Видалення елемента"
   delete_element_confirm: "Ви дійсно бажаєте видалити елемент?"
   description:            "Опис"
-  dropzone_help:          "Перетягніть файл в цю область (Drag&Drop)"
+
+  dropzone:
+    default_message:            "Перетягніть файл в цю область (Drag&Drop)"
+    fallback_message:           "Ваш браузер не підтримує Drag&Drop завантаження файлів."
+    fallback_text:              "Будь ласка, скористайтеся формою нижче для завантаження файлу."
+    file_too_big:               "Максимально допустимий розмір файлу для завантаження: {{maxFilesize}} МБ."
+    invalid_file_type:          "Завантаження даного типу заборонено."
+    response_error:             "Від сервера отримано код: {{statusCode}}."
+    cancel_upload:              "Скасувати завантаження"
+    upload_canceled:            "Завантаження скасовано."
+    cancel_upload_confirmation: "Ви дійсно хочете скасувати завантаження?"
+    remove_file:                "Видалити файл"
+    max_files_exceeded:         "Ви завантажили максимальну кількість файлів. Завантаження неможливе."
+
   install_success:        "Ваш сайт успішно встановлено."
+  empty_data:             "Дані відсутні."
   edit:                   "Редагувати"
   editor:                 "Редактор"
   email:                  "Email"

@@ -21,6 +21,13 @@
                     {% endfor %}
                 </tr>
             {% endfor %}
+            {% if widget.rows is empty %}
+                <tr>
+                    <td class="text-center" colspan="{{ widget.headers | length }}">
+                        {{ 'zentlix_main.empty_data' | trans }}
+                    </td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 </div>

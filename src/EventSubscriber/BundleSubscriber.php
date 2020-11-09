@@ -23,7 +23,7 @@ use Zentlix\MainBundle\Application\Command;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
 use Zentlix\MainBundle\MainBundle;
 
-class InstallBundleSubscriber implements EventSubscriberInterface
+class BundleSubscriber implements EventSubscriberInterface
 {
     private EntityManagerInterface $entityManager;
     private CommandBus $commandBus;
@@ -57,30 +57,42 @@ class InstallBundleSubscriber implements EventSubscriberInterface
         $bundle = $afterInstall->getBundle();
 
         if($bundle->getClass() === MainBundle::class) {
-            $command = new Command\Locale\CreateCommand();
-            $command->title = 'Русский';
-            $command->code = 'ru';
-            $command->icon = 'flag-icon-ru';
-            $command->sort = 500;
-
-            $this->commandBus->handle($command);
-
-            $command = new Command\Locale\CreateCommand();
-            $command->title = 'Українська';
-            $command->code = 'ua';
-            $command->icon = 'flag-icon-ua';
-            $command->sort = 500;
-
-            $this->commandBus->handle($command);
-
-            $this->entityManager->persist(new Setting($this->localeRepository->getOneByCode($this->defaultLocale)));
-
-            $command = new Command\Template\CreateCommand();
-            $command->title = $this->translator->trans('zentlix_main.default_template');
-            $command->folder = 'default';
-            $this->commandBus->handle($command);
-
-            $this->entityManager->flush();
+            $this->createLocales();
+            $this->createTemplate();
+            $this->createMainBundleSettings();
         }
+    }
+
+    private function createLocales(): void
+    {
+        $command = new Command\Locale\CreateCommand();
+        $command->title = 'Русский';
+        $command->code = 'ru';
+        $command->icon = 'flag-icon-ru';
+        $command->sort = 500;
+
+        $this->commandBus->handle($command);
+
+        $command = new Command\Locale\CreateCommand();
+        $command->title = 'Українська';
+        $command->code = 'ua';
+        $command->icon = 'flag-icon-ua';
+        $command->sort = 500;
+
+        $this->commandBus->handle($command);
+    }
+
+    private function createTemplate(): void
+    {
+        $command = new Command\Template\CreateCommand();
+        $command->title = $this->translator->trans('zentlix_main.default_template');
+        $command->folder = 'default';
+        $this->commandBus->handle($command);
+    }
+
+    private function createMainBundleSettings(): void
+    {
+        $this->entityManager->persist(new Setting($this->localeRepository->getOneByCode($this->defaultLocale)));
+        $this->entityManager->flush();
     }
 }

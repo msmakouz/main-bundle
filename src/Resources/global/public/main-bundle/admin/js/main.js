@@ -38,3 +38,17 @@ function initHTMLEditors() {
         });
     });
 }
+
+function getFileSize(url) {
+    var fileSize = '';
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+
+    http.send(null);
+
+    if (http.status === 200) {
+        fileSize = http.getResponseHeader('content-length');
+    }
+
+    return fileSize;
+}

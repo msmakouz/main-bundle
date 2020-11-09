@@ -1,0 +1,13 @@
+zentlix_main:
+  dropzone:
+    default_message:            "Drop files here to upload (Drag&Drop)"
+    fallback_message:           "Your browser does not support Drag&Drop file uploads."
+    fallback_text:              "Please use the fallback form below to upload your files like in the olden days."
+    file_too_big:               "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB."
+    invalid_file_type:          "You can't upload files of this type."
+    response_error:             "Server responded with {{statusCode}} code."
+    cancel_upload:              "Cancel upload"
+    upload_canceled:            "Upload canceled."
+    cancel_upload_confirmation: "Are you sure you want to cancel this upload?"
+    remove_file:                "Remove file"
+    max_files_exceeded:         "You can not upload any more files."

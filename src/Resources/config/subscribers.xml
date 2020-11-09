@@ -21,7 +21,7 @@
             <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <tag name="kernel.event_subscriber"/>
         </service>
-        <service id="Zentlix\MainBundle\EventSubscriber\InstallBundleSubscriber">
+        <service id="Zentlix\MainBundle\EventSubscriber\BundleSubscriber">
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="translator"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>

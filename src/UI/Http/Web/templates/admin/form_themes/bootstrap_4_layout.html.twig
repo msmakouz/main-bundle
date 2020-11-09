@@ -19,3 +19,70 @@
         {{- parent() -}}
     {%- endif -%}
 {% endblock %}
+
+{% block file_storage_widget -%}
+    <div id="{{ id }}" class="zentlix-dropzone {{ form.vars.attr.class | default('') }}">
+        <div class="dropzone needsclick">
+            <div class="dz-message needsclick">
+                {% if form.vars.dictDefaultMessage is not empty %}
+                    {{ form.vars.dictDefaultMessage | trans }}
+                {% else %}
+                    {{ 'zentlix_main.dropzone.default_message' | trans }}
+                {% endif %}
+            </div>
+        </div>
+        <script>;
+            $(document).ready(function () {
+                var maxFiles = {{ form.vars.maxFiles }};
+
+                var dz = new Dropzone('#{{ id }}', {{ dropzone_settings(form.vars) }})
+                    .on("success", function(file, response) {
+                        if(maxFiles > 1) {
+                            $('<input type="hidden" value="' + response.url + '" name="{{ full_name }}[]" class="file-{{ id }}"/>').insertAfter('#{{ id }}');
+                        } else {
+                            if($('input[name="{{ full_name }}"]').length > 0) {
+                                $('input[name="{{ full_name }}"]').val(response.url);
+                            } else {
+                                $('<input type="hidden" value="' + response.url + '" name="{{ full_name }}" class="file-{{ id }}"/>').insertAfter('#{{ id }}');
+                            }
+                        }
+                    })
+                    .on('removedfile', function (file) {
+                        $('.file-{{ id }}').each(function (index, element) {
+                            if($(element).val() === file.dataURL) {
+                                $(element).remove();
+                            }
+                        });
+                    });
+
+                $('.file-{{ id }}').each(function (index, element) {
+                    var file = {
+                        name: $(element).val().split('/').pop(),
+                        size: getFileSize($(element).val()),
+                        status: Dropzone.ADDED,
+                        accepted: true,
+                        dataURL: $(element).val()
+                    };
+                    dz.files.push(file);
+                    dz.emit("addedfile", file);
+                    dz.createThumbnailFromUrl(file, {{ form.vars.thumbnailWidth }}, {{ form.vars.thumbnailHeight }}, '{{ form.vars.thumbnailMethod }}', true,
+                        function(thumbnail) {
+                            dz.emit('thumbnail', file, thumbnail);
+                        },
+                        'Anonymous'
+                    );
+                    dz.emit("complete", file);
+                });
+            });
+        </script>
+    </div>
+    {% if value is not empty %}
+        {% if form.vars.maxFiles > 1 %}
+            {% for file in value %}
+                <input type="hidden" value="{{ file }}" name="{{ full_name }}[]" class="file-{{ id }}"/>
+            {% endfor %}
+        {% else %}
+            <input type="hidden" value="{{ value }}" name="{{ full_name }}" class="file-{{ id }}"/>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -44,8 +44,8 @@ class File
     public function __construct(string $path, string $alt = null, string $title = null)
     {
         if(strpos($path, 'http:') === false && strpos($path, 'https:') === false) {
-            if($path[0] !== DIRECTORY_SEPARATOR) {
-                $path = DIRECTORY_SEPARATOR . $path;
+            if($path[0] !== '/') {
+                $path = '/' . $path;
             }
         }
 
@@ -74,7 +74,7 @@ class File
             return $path;
         }
 
-        return dirname(__DIR__, 7) . DIRECTORY_SEPARATOR . 'public' . $path;
+        return dirname(__DIR__, 7) . '/' . 'public' . $path;
     }
 
     public function finishUpload(): self

@@ -47,7 +47,6 @@
         <service id="zentlix_main.file.upload_handler" class="Zentlix\MainBundle\Application\Command\File\UploadHandler">
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="zentlix_main.file_uploader"/>
-            <argument type="service" id="zentlix_main.file_unique_filename_specification"/>
             <argument type="service" id="zentlix_main.file_unique_path_specification"/>
             <tag name="messenger.message_handler"/>
         </service>
