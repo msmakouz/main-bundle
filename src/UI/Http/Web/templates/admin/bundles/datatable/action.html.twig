@@ -1,8 +1,6 @@
 {% if not row.system %}
-    {% include '@MainBundle/admin/partials/delete_confirmation.html.twig' with {
-        'title': 'zentlix_main.delete',
-        'confirmation': 'zentlix_main.bundle.delete.confirmation',
-        'path': path('admin.bundle.remove', {'id': row.id}),
-        'class': ''
-    } %}
+    <a href="#" data-toggle="modal" data-target="#delete-bundle-confirm"
+       class="btn btn-danger btn-sm float-right delete-bundle-btn" data-bundle-id="{{ row.id }}">
+        {{ 'zentlix_main.delete' | trans }}
+    </a>
 {% endif %}

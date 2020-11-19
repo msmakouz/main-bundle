@@ -1,0 +1,4 @@
+<option{% for attr, value in options %} {% if attr == 'href' %}value="{{ value }}" {% else %}{{ attr }}="{{ value }}"{% endif %}{% endfor %}
+    {% if app.request.get('direction') == direction and app.request.get('sort') == key  %} selected="selected" {% endif %}>
+{{ title | trans }}
+</option>

@@ -28,7 +28,7 @@ class FileController extends AbstractAdminController
 
             return $this->json($this->ask(new FileByIdQuery($command->id)));
         } catch (\Exception $e) {
-            return $this->json($this->error($e->getMessage()));
+            return $this->jsonError($e->getMessage());
         }
     }
 }

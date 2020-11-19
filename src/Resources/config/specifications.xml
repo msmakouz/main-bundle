@@ -27,6 +27,16 @@
             <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
             <argument type="service" id="translator"/>
         </service>
+        <service id="zentlix_main.bundle.exist_by_package_bundle_specification"
+                 class="Zentlix\MainBundle\Domain\Bundle\Specification\ExistByPackageBundleSpecification">
+            <argument type="service" id="zentlix_main.bundles"/>
+            <argument type="service" id="translator"/>
+        </service>
+        <service id="zentlix_main.bundle.is_not_required_specification"
+                 class="Zentlix\MainBundle\Domain\Bundle\Specification\IsNotRequiredSpecification">
+            <argument type="service" id="zentlix_main.bundles"/>
+            <argument type="service" id="translator"/>
+        </service>
 
         <service id="zentlix_main.file_unique_path_specification"
                  class="Zentlix\MainBundle\Domain\File\Specification\UniquePathSpecification">

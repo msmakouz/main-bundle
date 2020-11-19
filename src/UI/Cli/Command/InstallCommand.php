@@ -17,7 +17,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand as InstallBundleCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand as InstallBundleCommand;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 

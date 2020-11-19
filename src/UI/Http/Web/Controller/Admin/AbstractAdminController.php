@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -84,9 +85,9 @@ class AbstractAdminController extends BaseController implements AbstractControll
         return $this->redirectToRoute(self::$redirectErrorPath);
     }
 
-    protected function error(string $message): array
+    protected function jsonError(string $message): JsonResponse
     {
-        return ['success' => false, 'message' => $message];
+        return $this->json(['success' => false, 'message' => $message]);
     }
 
     private function configureLiform() :Resolver

@@ -29,5 +29,9 @@
             <argument type="string">%kernel.default_locale%</argument>
             <tag name="kernel.event_subscriber"/>
         </service>
+        <service id="Zentlix\MainBundle\EventSubscriber\PaginatorSubscriber">
+            <argument type="service" id="request_stack"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
     </services>
 </container>

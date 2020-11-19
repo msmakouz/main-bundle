@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Application\Command\Bundle;
+namespace Zentlix\MainBundle\Application\Command\Bundle\Zentlix;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

@@ -13,10 +13,14 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Zentlix\MainBundle\Application\Command\Composer\RemoveCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\RemoveCommand;
 use Zentlix\MainBundle\Application\Command\Setting\DefaultSettingCommand;
 use Zentlix\MainBundle\Application\Query\Bundle\DataTableQuery;
+use Zentlix\MainBundle\Application\Query\Bundle\GetNotInstalledBundlesQuery;
+use Zentlix\MainBundle\Application\Query\Bundle\GetBundleEntityByPackageNameQuery;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 use Zentlix\MainBundle\UI\Http\Web\DataTable\Bundle\Table;
 use Zentlix\MainBundle\UI\Http\Web\Form\Setting\DefaultForm;
@@ -45,18 +49,27 @@ class BundleController extends ResourceController
         return $this->updateResource(new DefaultSettingCommand(), DefaultForm::class, '@MainBundle/admin/bundles/default.html.twig');
     }
 
-    public function remove(Bundle $bundle): Response
+    public function install(Request $request): Response
     {
-        static::$redirectErrorPath = 'admin.bundle.list';
-
         try {
-            $this->exec(new RemoveCommand($bundle));
+            foreach ($this->ask(new GetNotInstalledBundlesQuery($request->get('package'))) as $app) {
+                $this->exec(new InstallCommand($app));
+            }
         } catch (\Exception $exception) {
-            return $this->redirectError($exception->getMessage());
+            return $this->jsonError($exception->getMessage());
         }
 
-        $this->addFlash('success', $this->translator->trans('zentlix_main.bundle.remove_success'));
+        return $this->json(['success' => true]);
+    }
 
-        return $this->redirectToRoute('admin.bundle.list');
+    public function remove(Request $request): Response
+    {
+        try {
+            $this->exec(new RemoveCommand($this->ask(new GetBundleEntityByPackageNameQuery($request->get('package')))));
+        } catch (\Exception $exception) {
+            return $this->jsonError($exception->getMessage());
+        }
+
+        return $this->json(['success' => true]);
     }
 }

@@ -1,0 +1,49 @@
+<div class="modal fade" id="delete-bundle-process" tabindex="-1" role="dialog" aria-labelledby="{{ 'zentlix_main.bundle.delete.process' | trans }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ 'zentlix_main.bundle.delete.process' | trans }}</h4>
+            </div>
+            <div class="modal-body" id="delete-bundle-content">
+                <ul class="list-group">
+                    <li class="list-group-item process-app-data">
+                        {{ 'zentlix_main.bundle.remove.data' | trans }}
+                        {% include '@MainBundle/admin/partials/sk_circle.html.twig' %}
+                    </li>
+                    <li class="list-group-item process-install d-none">
+                        {{ 'zentlix_main.bundle.remove.process' | trans }}
+                        {% include '@MainBundle/admin/partials/sk_circle.html.twig' %}
+                    </li>
+                    <li class="list-group-item process-migrations d-none">
+                        {{ 'zentlix_main.bundle.apply_migrations' | trans }}
+                        {% include '@MainBundle/admin/partials/sk_circle.html.twig' %}
+                    </li>
+                    <li class="list-group-item process-finished list-group-item-success d-none">
+                        {{ 'zentlix_main.bundle.remove.success' | trans }}
+                    </li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary bundle-modal-close" type="button" data-dismiss="modal" disabled="disabled">{{ 'zentlix_main.close' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="delete-bundle-confirm" tabindex="-1" role="dialog" aria-labelledby="{{ 'zentlix_main.bundle.delete.process' | trans }}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">{{ 'zentlix_main.bundle.delete.process' | trans }}</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <p>{{ 'zentlix_main.bundle.delete.confirmation' | trans }}</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary delete-bundle-confirm" type="button" data-package="">{{ 'zentlix_main.delete' | trans }}</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ 'zentlix_main.cancel' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>

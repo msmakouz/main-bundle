@@ -1,0 +1,12 @@
+<form method="get" action="{{ action }}" enctype="application/x-www-form-urlencoded" name="marketplace-filter">
+    <select name="{{ filterFieldName }}" onChange="applyFilter()" class="form-control mb">
+        {% for field, label in fields %}
+            <option value="{{ field }}"{% if selectedField == field %} selected="selected"{% endif %}>{{ label }}</option>
+        {% endfor %}
+    </select>
+</form>
+<script>
+    function applyFilter() {
+        $('form[name="marketplace-filter"]').submit();
+    }
+</script>

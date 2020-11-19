@@ -41,8 +41,32 @@
     <route id="admin.bundle.update" path="/backend/settings/bundles/{id}/edit">
         <default key="_controller">zentlix_main.bundle_controller::changeSettings</default>
     </route>
-    <route id="admin.bundle.remove" path="/backend/settings/bundles/{id}/remove">
+
+    <route id="admin.bundle.composer_require" path="/backend/settings/bundles/composer/require">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.composer_controller::require</default>
+    </route>
+    <route id="admin.bundle.composer_remove" path="/backend/settings/bundles/composer/remove">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.composer_controller::remove</default>
+    </route>
+
+    <route id="admin.bundle.migrations" path="/backend/settings/bundles/migrations">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.migration_controller::run</default>
+    </route>
+
+    <route id="admin.bundle.install" path="/backend/settings/bundles/install">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_main.bundle_controller::install</default>
+    </route>
+    <route id="admin.bundle.remove" path="/backend/settings/bundles/remove">
+        <condition>request.isXmlHttpRequest()</condition>
         <default key="_controller">zentlix_main.bundle_controller::remove</default>
+    </route>
+
+    <route id="admin.marketplace.applications" path="/backend/marketplace/applications">
+        <default key="_controller">zentlix_main.marketplace_controller::applications</default>
     </route>
 
     <route id="admin.editor.enable" path="/backend/editor/enable">

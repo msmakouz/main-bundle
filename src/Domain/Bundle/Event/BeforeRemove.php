@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Event;
 
-use Zentlix\MainBundle\Application\Command\Bundle\RemoveCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\RemoveCommand;
 
 final class BeforeRemove
 {

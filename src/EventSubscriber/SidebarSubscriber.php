@@ -77,10 +77,20 @@ class SidebarSubscriber implements EventSubscriberInterface
 
         $sidebar->addSectionTitle('zentlix_main.tools')->sort(220);
 
+        $marketplace = $sidebar->addMenuItem('zentlix_main.marketplace.marketplace')
+            ->url('/marketplace/')
+            ->icon(MenuItemInterface::ICON_APPLICATIONS)
+            ->sort(330);
+
+        $marketplace
+            ->addChildren('zentlix_main.bundle.bundles')
+            ->generateUrl('admin.marketplace.applications')
+            ->sort(100);
+
         $platform = $sidebar->addMenuItem('zentlix_main.platform')
             ->url('admin.platform.about')
             ->icon(MenuItemInterface::ICON_LAYERS)
-            ->sort(230);
+            ->sort(440);
 
         $platform
             ->addChildren('zentlix_main.about_system')

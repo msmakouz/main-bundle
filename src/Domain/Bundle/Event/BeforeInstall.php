@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Event;
 
-use Zentlix\MainBundle\Application\Command\Bundle\InstallCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand;
 
 final class BeforeInstall
 {

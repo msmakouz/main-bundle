@@ -21,4 +21,9 @@
             </div>
         </div>
     </div>
+    {% include '@MainBundle/admin/partials/delete_bundle_modal.html.twig' %}
+{% endblock %}
+{% block footer_scripts %}
+    {{ parent() }}
+    <script src="{{ admin_asset('js/bundles.js') }}"></script>
 {% endblock %}

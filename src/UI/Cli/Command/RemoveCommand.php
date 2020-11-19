@@ -17,20 +17,24 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Zentlix\MainBundle\Application\Command\Bundle\RemoveCommand as RemoveBundleCommand;
+use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\RemoveCommand as RemoveBundleCommand;
+use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
+use function get_class;
 
 class RemoveCommand extends ConsoleCommand {
 
     private CommandBus $commandBus;
     private Bundles $bundles;
+    private BundleRepository $bundleRepository;
 
-    public function __construct(CommandBus $commandBus, Bundles $bundles)
+    public function __construct(CommandBus $commandBus, Bundles $bundles, BundleRepository $bundleRepository)
     {
         parent::__construct();
 
         $this->bundles = $bundles;
+        $this->bundleRepository = $bundleRepository;
         $this->commandBus = $commandBus;
     }
 
@@ -63,9 +67,10 @@ class RemoveCommand extends ConsoleCommand {
     private function removeBundle(string $package, SymfonyStyle $io): void
     {
         $bundle = $this->bundles->getByPackageName($package);
+        $entity = $this->bundleRepository->getOneByClass(get_class($bundle));
 
         $io->comment(sprintf('Removing <info>%s</info>', $bundle->getBundleName()));
 
-        $this->commandBus->handle(new RemoveBundleCommand($bundle));
+        $this->commandBus->handle(new RemoveBundleCommand($entity));
     }
 }

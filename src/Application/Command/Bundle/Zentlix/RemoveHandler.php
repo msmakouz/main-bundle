@@ -10,55 +10,59 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Application\Command\Bundle;
+namespace Zentlix\MainBundle\Application\Command\Bundle\Zentlix;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zentlix\MainBundle\Domain\Bundle\Event\AfterRemove;
 use Zentlix\MainBundle\Domain\Bundle\Event\BeforeRemove;
-use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
+use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Domain\Bundle\Service\Installer;
-use Zentlix\MainBundle\Domain\Bundle\Specification\ExistByClassBundleSpecification;
+use Zentlix\MainBundle\Domain\Bundle\Specification\ExistBundleSpecification;
+use Zentlix\MainBundle\Domain\Bundle\Specification\IsNotRequiredSpecification;
 use Zentlix\MainBundle\Domain\Bundle\Specification\IsNotSystemSpecification;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
-use function get_class;
 
 class RemoveHandler implements CommandHandlerInterface
 {
     private EventDispatcherInterface $eventDispatcher;
     private EntityManagerInterface $entityManager;
-    private ExistByClassBundleSpecification $existByClassBundleSpecification;
+    private Bundles $bundles;
+    private IsNotRequiredSpecification $isNotRequiredSpecification;
+    private ExistBundleSpecification $existBundleSpecification;
     private IsNotSystemSpecification $isNotSystemSpecification;
-    private BundleRepository $bundleRepository;
     private Installer $installer;
 
     public function __construct(EventDispatcherInterface $eventDispatcher,
                                 EntityManagerInterface $entityManager,
-                                BundleRepository $bundleRepository,
-                                ExistByClassBundleSpecification $existByClassBundleSpecification,
+                                Bundles $bundles,
+                                ExistBundleSpecification $existBundleSpecification,
                                 IsNotSystemSpecification $isNotSystemSpecification,
+                                IsNotRequiredSpecification $isNotRequiredSpecification,
                                 Installer $installer)
     {
         $this->eventDispatcher = $eventDispatcher;
         $this->entityManager = $entityManager;
-        $this->existByClassBundleSpecification = $existByClassBundleSpecification;
+        $this->bundles = $bundles;
+        $this->existBundleSpecification = $existBundleSpecification;
         $this->isNotSystemSpecification = $isNotSystemSpecification;
-        $this->bundleRepository = $bundleRepository;
+        $this->isNotRequiredSpecification = $isNotRequiredSpecification;
         $this->installer = $installer;
     }
 
     public function __invoke(RemoveCommand $command): void
     {
-        $this->existByClassBundleSpecification->isExist(get_class($command->getBundle()));
-        $bundle = $this->bundleRepository->getOneByClass(get_class($command->getBundle()));
-        $this->isNotSystemSpecification->isNotSystem($bundle->getId());
-        $class = $bundle->getClass();
+        $this->existBundleSpecification->isExist($command->getBundle()->getId());
+        $this->isNotSystemSpecification->isNotSystem($command->getBundle()->getId());
+        $this->isNotRequiredSpecification->isNotRequired($this->bundles->getByClass($command->getBundle()->getClass())->getBundleName());
 
         $this->eventDispatcher->dispatch(new BeforeRemove($command));
 
-        $this->installer->remove($command->getBundle());
+        $class = $command->getBundle()->getClass();
 
-        $this->entityManager->remove($bundle);
+        $this->installer->remove($this->bundles->getByClass($command->getBundle()->getClass()));
+
+        $this->entityManager->remove($command->getBundle());
         $this->entityManager->flush();
 
         $this->eventDispatcher->dispatch(new AfterRemove($class));

@@ -21,6 +21,7 @@
 
         <service id="zentlix_main.bundles" class="Zentlix\MainBundle\Domain\Bundle\Service\Bundles">
             <argument type="tagged_iterator" tag="zentlix_bundle"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\Bundle\Service\Bundles" alias="zentlix_main.bundles"/>
 
@@ -84,6 +85,10 @@
             <argument type="service" id="session"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor" alias="zentlix_main.visual_editor"/>
+
+        <service id="zentlix_main.service.applications" class="Zentlix\MainBundle\Domain\Marketplace\Service\Applications">
+            <argument type="service" id="http_client"/>
+        </service>
 
         <service id="zentlix_main.main_bundle" class="Zentlix\MainBundle\MainBundle">
             <tag name="zentlix_bundle"/>

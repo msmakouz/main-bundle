@@ -1,26 +1,36 @@
 zentlix_main:
-  about_system:  "Про систему"
-  access_denied: "У вас недостатньо прав для виконання даної операції."
-  action:        "Дія"
-  add:           "Додати"
-  admin_panel:   "Панель управління"
+  about_system:   "Про систему"
+  access_denied:  "У вас недостатньо прав для виконання даної операції."
+  action:         "Дія"
+  add:            "Додати"
+  admin_panel:    "Панель управління"
+  all_categories: "Всі категорії"
 
   bundle:
     already_exist:    "Додаток вже встановлено."
+    apply_migrations: "Застосування міграцій бази даних"
     bundles:          "Додатки"
     bundles_shop:     "Магазин додатків"
-    install:          "Встановлення додатку"
+    install:
+      action:  "Встановити додаток"
+      process: "Встановлення додатку"
+      data:    "Копіювання даних додатку"
+      success: "Додаток успішно встановлено."
+    remove:
+      process:  "Видалення додатку"
+      data:     "Видалення даних додатку"
+      success:  "Додаток успішно видалено."
+      failed:   "Помилка видалення додатку."
+      required: "Додаток потрібен для коректної роботи додатку: %s. Видалення неможливе."
     installed_at:     "Встановлено"
     not_exist:        "Додаток з id %s не встановлено."
-    remove_failed:    "Помилка видалення додатку."
-    remove_success:   "Додаток успішно видалено."
     settings:         "Налаштування"
     system_bundle:    "Додаток є системним. Операція неможлива."
-    uninstall:        "Видалення додатків"
     updated:          "Дата оновлення"
     view:             "Перегляд додатків"
     without_settings: "Даний додаток не потребує налаштувань."
     delete:
+      process:      "Видалення додатку"
       confirmation: "Ви справді бажаєте видалити додаток? Увага! Всі дані додатку будуть видалені. Процес видалення може зайняти декілька хвилин."
     update:
       process: "Налаштування додатку"
@@ -93,6 +103,18 @@ zentlix_main:
   main_bundle:                "Zentlix Core"
   main_bundle_description:    "Ядро системи."
   manage_structure:           "Управління маршрутами"
+
+  marketplace:
+    categories:
+      content_manage: "Управління контентом"
+    developer:       "Розробник"
+    install:         "Встановити"
+    installed:       "Встановлень"
+    marketplace:     "Магазин розширень"
+    sort:
+      popular: "Спочатку популярні"
+      title: "По назві"
+
   max_execution_time:         "Макс. час роботи"
   memory_limit:               "Ліміт пам'яті"
   meta_description:           "SEO опис"

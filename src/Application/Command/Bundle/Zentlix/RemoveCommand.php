@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MainBundle\Application\Command\Composer;
+namespace Zentlix\MainBundle\Application\Command\Bundle\Zentlix;
 
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
