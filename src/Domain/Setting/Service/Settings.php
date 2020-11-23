@@ -16,21 +16,33 @@ use Doctrine\ORM\EntityManagerInterface;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
 use function is_null;
 
-class Settings {
-
-    private ?Setting $settings;
+class Settings
+{
+    private EntityManagerInterface $entityManager;
+    private ?Setting $settings = null;
 
     public function __construct(EntityManagerInterface $entityManager)
     {
-        $this->settings = $entityManager->getRepository(Setting::class)->findOneBy([]);
-
-        if(is_null($this->settings)) {
-            throw new \DomainException('Main bundle settings not found, please install bundle correctly.');
-        }
+        $this->entityManager = $entityManager;
     }
 
     public function getDefaultLocale()
     {
-        return $this->settings->getDefaultLocale();
+        return $this->getSettings()->getDefaultLocale();
+    }
+
+    private function getSettings(): Setting
+    {
+        if(is_null($this->settings)) {
+            $settings = $this->entityManager->getRepository(Setting::class)->findOneBy([]);
+
+            if(is_null($settings)) {
+                throw new \DomainException('MainBundle settings not found, please install bundle correctly.');
+            }
+
+            $this->settings = $settings;
+        }
+
+        return $this->settings;
     }
 }

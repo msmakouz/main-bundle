@@ -22,7 +22,7 @@
 
 {% block file_storage_widget -%}
     <div id="{{ id }}" class="zentlix-dropzone {{ form.vars.attr.class | default('') }}">
-        <div class="dropzone needsclick">
+        <div class="needsclick">
             <div class="dz-message needsclick">
                 {% if form.vars.dictDefaultMessage is not empty %}
                     {{ form.vars.dictDefaultMessage | trans }}

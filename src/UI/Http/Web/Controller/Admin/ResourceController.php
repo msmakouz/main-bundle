@@ -49,7 +49,9 @@ class ResourceController extends AbstractAdminController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
                 $this->addFlash('success', $this->translator->trans(static::$createSuccessMessage));
-                return $this->redirectToRoute($this->getRedirectRoute(static::$redirectAfterCreate));
+                return $this->redirectToRoute(
+                    $this->getRedirectRoute(static::$redirectAfterCreate), $this->getRedirectRouteParam(static::$redirectAfterCreate)
+                );
             }
         } catch (\Exception $e) {
             return $this->redirectError($e->getMessage());
@@ -67,7 +69,9 @@ class ResourceController extends AbstractAdminController
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
                 $this->addFlash('success', $this->translator->trans(static::$updateSuccessMessage));
-                return $this->redirectToRoute($this->getRedirectRoute(static::$redirectAfterUpdate));
+                return $this->redirectToRoute(
+                    $this->getRedirectRoute(static::$redirectAfterUpdate), $this->getRedirectRouteParam(static::$redirectAfterUpdate)
+                );
             }
         } catch (\Exception $e) {
             return $this->redirectError($e->getMessage());
@@ -81,7 +85,8 @@ class ResourceController extends AbstractAdminController
         try {
             $this->exec($command);
             $this->addFlash('success', $this->translator->trans(static::$deleteSuccessMessage));
-            return $this->redirectToRoute($this->getRedirectRoute(static::$redirectAfterDelete));
+            return $this->redirectToRoute(
+                $this->getRedirectRoute(static::$redirectAfterDelete), $this->getRedirectRouteParam(static::$redirectAfterDelete));
         } catch (\Exception $e) {
             return $this->redirectError($e->getMessage());
         }
@@ -93,6 +98,15 @@ class ResourceController extends AbstractAdminController
            return static::$redirectAfterAction;
        }
 
-        return $route;
+        return $route[0];
+    }
+
+    private function getRedirectRouteParam(array $route = null)
+    {
+        if(is_null($route)) {
+            return [];
+        }
+
+        return $route[1];
     }
 }

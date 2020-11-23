@@ -49,6 +49,8 @@ class File
             }
         }
 
+        $path = str_replace('\\', '/', $path);
+
         $this->id = Uuid::uuid4();
         $this->path = $path;
         $this->alt = $alt;

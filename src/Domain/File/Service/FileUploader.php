@@ -29,7 +29,7 @@ class FileUploader implements FileUploaderInterface
 
     public function upload(UploadCommand $command): File
     {
-        $file = $command->uploadedFile->move($this->uploadDirectory . DIRECTORY_SEPARATOR . $command->savePath, $command->filename);
+        $file = $command->uploadedFile->move($this->uploadDirectory . '/' . $command->savePath, $command->filename);
 
         $entity = new File($file->getPathname(), $command->alt, $command->title);
 
