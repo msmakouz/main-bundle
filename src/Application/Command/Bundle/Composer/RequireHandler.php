@@ -15,6 +15,8 @@ namespace Zentlix\MainBundle\Application\Command\Bundle\Composer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Bundle\FrameworkBundle\Console\Application as SymfonyApplication;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Composer\Console\Application;
 use Composer\Json\JsonFile;
@@ -54,11 +56,15 @@ class RequireHandler implements CommandHandlerInterface
                 $application->run(new ArrayInput([
                     'command'       => 'require',
                     'packages'      => [$package],
-                    '--working-dir' => $this->kernel->getProjectDir(),
-                    '--no-scripts'  => true
+                    '--working-dir' => $this->kernel->getProjectDir()
                 ]), $output);
             }
         }
+
+        $application = new SymfonyApplication($this->kernel);
+        $application->setAutoExit(false);
+
+        $application->run(new ArrayInput(['command' => 'cache:clear', '--no-warmup' => true]), new NullOutput());
 
         $this->logger->info($output->fetch());
     }
