@@ -16,6 +16,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Zentlix\MainBundle\Domain\File\Entity\File;
 use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
+use function is_null;
 
 /**
  * @method File|null find($id, $lockMode = null, $lockVersion = null)
@@ -41,5 +42,16 @@ class FileRepository extends ServiceEntityRepository
     public function findOneByPath(string $path): ?File
     {
         return $this->findOneBy(['path' => $path]);
+    }
+
+    public function getOneByPath(string $path): File
+    {
+        $file = $this->findOneBy(['path' => $path]);
+
+        if(is_null($file)) {
+            throw new \DomainException(sprintf('File %s not found.', $path));
+        }
+
+        return $file;
     }
 }

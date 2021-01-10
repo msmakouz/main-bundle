@@ -15,7 +15,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Application\Command\File\UploadCommand;
-use Zentlix\MainBundle\Application\Query\File\FileByIdQuery;
+use Zentlix\MainBundle\Application\Query\File\GetFileByIdQuery;
 
 class FileController extends AbstractController
 {
@@ -26,7 +26,7 @@ class FileController extends AbstractController
             $command = new UploadCommand(array_shift($files));
             $this->exec($command);
 
-            $file = $this->ask(new FileByIdQuery($command->id));
+            $file = $this->ask(new GetFileByIdQuery($command->id));
 
             return $this->json(['url' => $file['url']]);
         } catch (\Exception $e) {

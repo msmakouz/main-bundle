@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\Application\Command\Locale;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Zentlix\MainBundle\Domain\Attribute\Service\Attributes;
 use Zentlix\MainBundle\Domain\Locale\Event\AfterCreate;
 use Zentlix\MainBundle\Domain\Locale\Event\BeforeCreate;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
@@ -25,14 +26,17 @@ class CreateHandler implements CommandHandlerInterface
     private UniqueCodeSpecification $uniqueCodeSpecification;
     private EntityManagerInterface $entityManager;
     private EventDispatcherInterface $eventDispatcher;
+    private Attributes $attributes;
 
     public function __construct(UniqueCodeSpecification $uniqueCodeSpecification,
                                 EntityManagerInterface $entityManager,
-                                EventDispatcherInterface $eventDispatcher)
+                                EventDispatcherInterface $eventDispatcher,
+                                Attributes $attributes)
     {
         $this->uniqueCodeSpecification = $uniqueCodeSpecification;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->attributes = $attributes;
     }
 
     public function __invoke(CreateCommand $command): void
@@ -45,6 +49,8 @@ class CreateHandler implements CommandHandlerInterface
 
         $this->entityManager->persist($locale);
         $this->entityManager->flush();
+
+        $this->attributes->saveValues($locale, $command->attributes);
 
         $this->eventDispatcher->dispatch(new AfterCreate($locale, $command));
     }

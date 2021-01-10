@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\Template;
 
 use Symfony\Component\Validator\Constraints;
-use Zentlix\MainBundle\Domain\Site\Entity\Template;
+use Zentlix\MainBundle\Domain\Template\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 
 class Command implements CommandInterface
@@ -26,6 +26,7 @@ class Command implements CommandInterface
 
     /** @Constraints\NotBlank() */
     public int $sort = 1;
+    public array $attributes = [];
 
     protected Template $entity;
 

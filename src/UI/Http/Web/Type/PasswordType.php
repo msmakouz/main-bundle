@@ -14,4 +14,4 @@ namespace Zentlix\MainBundle\UI\Http\Web\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\PasswordType as BasePasswordType;
 
-class PasswordType extends BasePasswordType { }
+class PasswordType extends BasePasswordType {}

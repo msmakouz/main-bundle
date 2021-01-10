@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <doctrine:config>
+        <doctrine:orm auto-mapping="true">
+            <doctrine:mapping
+                    name="zentlix_main_attribute"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Attribute/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\Attribute\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_bundle"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Bundle/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\Bundle\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_datatable"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/DataTable/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\DataTable\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_file"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/File/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\File\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_locale"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Locale/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\Locale\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_setting"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Setting/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\Setting\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_site"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Site/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\Site\Entity"
+            />
+            <doctrine:mapping
+                    name="zentlix_main_template"
+                    type="annotation"
+                    dir="%kernel.project_dir%/vendor/zentlix/main-bundle/src/Domain/Template/Entity"
+                    is-bundle="false"
+                    prefix="Zentlix\MainBundle\Domain\Template\Entity"
+            />
+        </doctrine:orm>
+        <doctrine:dbal>
+            <doctrine:type name="meta" class="Zentlix\MainBundle\Infrastructure\Share\Doctrine\MetaType"/>
+            <doctrine:type name="uuid_binary" class="Ramsey\Uuid\Doctrine\UuidBinaryType"/>
+
+            <doctrine:mapping-type name="uuid_binary">binary</doctrine:mapping-type>
+        </doctrine:dbal>
+    </doctrine:config>
+</container>

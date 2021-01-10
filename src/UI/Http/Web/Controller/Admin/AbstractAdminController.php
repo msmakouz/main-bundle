@@ -82,7 +82,14 @@ class AbstractAdminController extends BaseController implements AbstractControll
     {
         $this->addFlash('error', $message);
 
-        return $this->redirectToRoute(self::$redirectErrorPath);
+        $route = self::$redirectErrorPath;
+        $parameters = [];
+        if(is_array(self::$redirectErrorPath)) {
+            $route = self::$redirectErrorPath[0];
+            $parameters = self::$redirectErrorPath[1];
+        }
+
+        return $this->redirectToRoute($route, $parameters);
     }
 
     protected function jsonError(string $message): JsonResponse

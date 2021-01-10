@@ -68,6 +68,16 @@ class File
         return $this->path;
     }
 
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
     public function getAbsolutePath(): string
     {
         $path = $this->path;

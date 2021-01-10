@@ -19,6 +19,8 @@ use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\MetaTrait;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
+use Zentlix\MainBundle\Domain\Template\Entity\Template;
+use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository")
@@ -26,7 +28,7 @@ use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
  *     @Mapping\UniqueConstraint(columns={"url"})
  * })
  */
-class Site implements Eventable
+class Site implements Eventable, SupportAttributeInterface
 {
     use MetaTrait, SortTrait;
 
@@ -52,7 +54,7 @@ class Site implements Eventable
 
     /**
      * @var Template
-     * @Mapping\ManyToOne(targetEntity="Template")
+     * @Mapping\ManyToOne(targetEntity="Zentlix\MainBundle\Domain\Template\Entity\Template")
      * @Mapping\JoinColumn(name="template_id", referencedColumnName="id")
      */
     private $template;
@@ -62,7 +64,7 @@ class Site implements Eventable
         $this->setValuesFromCommands($command);
     }
 
-    public function update(UpdateCommand $command)
+    public function update(UpdateCommand $command): void
     {
         $this->setValuesFromCommands($command);
     }
@@ -105,6 +107,16 @@ class Site implements Eventable
     public function isUrlEqual(string $url): bool
     {
         return $this->url === $url;
+    }
+
+    public static function getEntityCode(): string
+    {
+        return 'site';
+    }
+
+    public static function getEntityTitle(): string
+    {
+        return 'zentlix_main.site.site';
     }
 
     /**

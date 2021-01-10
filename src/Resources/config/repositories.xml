@@ -3,6 +3,14 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <service id="Zentlix\MainBundle\Domain\Attribute\Repository\AttributeRepository">
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
+            <tag name="doctrine.repository_service"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository">
+            <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
+            <tag name="doctrine.repository_service"/>
+        </service>
         <service id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository">
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
@@ -27,9 +35,20 @@
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository">
+        <service id="Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository">
             <argument type="service" id="Doctrine\Persistence\ManagerRegistry"/>
             <tag name="doctrine.repository_service"/>
+        </service>
+
+        <!-- Read repositories -->
+        <service id="Zentlix\MainBundle\Domain\Locale\Read\LocaleFetcher">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\Site\Read\SiteFetcher">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+        <service id="Zentlix\MainBundle\Domain\Template\Read\TemplateFetcher">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
     </services>
 </container>

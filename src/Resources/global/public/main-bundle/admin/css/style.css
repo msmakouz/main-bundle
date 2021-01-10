@@ -17269,6 +17269,10 @@ div.dataTables_wrapper div.dataTables_filter label {
   text-decoration: none;
   color: #321fdb;
 }
+.table .item-image {
+  max-width: 50px;
+  max-height: 50px;
+}
 .card-widget {
   margin-bottom: 2rem;
 }
@@ -17307,4 +17311,15 @@ label.required:after {
 .sk-circle-fade {
   width: 15px;
   height: 15px;
+}
+.tab-content > form > .tab-pane,
+.pill-content > form > .pill-pane {
+  display: none;
+}
+.tab-content > form > .active,
+.pill-content > form > .active {
+  display: block;
+}
+option:checked {
+  background: #0078d7;
 }

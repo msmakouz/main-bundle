@@ -12,6 +12,77 @@
     <services>
         <defaults autowire="false" autoconfigure="false" public="false"/>
 
+        <!-- attributes -->
+        <service id="zentlix_main.attribute.service.attributes" class="Zentlix\MainBundle\Domain\Attribute\Service\Attributes">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="zentlix_main.attribute.service.attribute_types"/>
+        </service>
+        <service id="zentlix_main.attribute.service.attribute_types" class="Zentlix\MainBundle\Domain\Attribute\Service\AttributeTypes">
+            <argument type="tagged_iterator" tag="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.service.relations" class="Zentlix\MainBundle\Domain\Attribute\Service\Relations">
+            <argument type="tagged_iterator" tag="zentlix_main.attribute.relation"/>
+        </service>
+
+        <service id="zentlix_main.attribute.type.relations.locale" class="Zentlix\MainBundle\Domain\Attribute\Type\Relations\Locale">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Read\LocaleFetcher"/>
+            <tag name="zentlix_main.attribute.relation"/>
+        </service>
+        <service id="zentlix_main.attribute.type.relations.site" class="Zentlix\MainBundle\Domain\Attribute\Type\Relations\Site">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Read\SiteFetcher"/>
+            <tag name="zentlix_main.attribute.relation"/>
+        </service>
+        <service id="zentlix_main.attribute.type.relations.template" class="Zentlix\MainBundle\Domain\Attribute\Type\Relations\Template">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Template\Read\TemplateFetcher"/>
+            <tag name="zentlix_main.attribute.relation"/>
+        </service>
+
+        <service id="zentlix_main.attribute.type.checkbox_type" class="Zentlix\MainBundle\Domain\Attribute\Type\CheckboxType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.type.choice_type" class="Zentlix\MainBundle\Domain\Attribute\Type\ChoiceType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.type.editor_type" class="Zentlix\MainBundle\Domain\Attribute\Type\EditorType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.type.file_type" class="Zentlix\MainBundle\Domain\Attribute\Type\FileType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.type.number_type" class="Zentlix\MainBundle\Domain\Attribute\Type\NumberType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.type.relation_type" class="Zentlix\MainBundle\Domain\Attribute\Type\RelationType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="zentlix_main.attribute.service.relations"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <service id="zentlix_main.attribute.type.string_type" class="Zentlix\MainBundle\Domain\Attribute\Type\StringType">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository"/>
+            <tag name="zentlix_main.attribute.type"/>
+        </service>
+        <!-- end attributes -->
+
         <service id="zentlix_main.sidebar" class="Zentlix\MainBundle\Domain\AdminSidebar\Service\Sidebar">
             <argument type="service" id="router" />
         </service>
@@ -79,7 +150,7 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="request_stack"/>
         </service>
-        <service id="Zentlix\MainBundle\Domain\Site\Service\Sites" alias="zentlix_main.sites"/>
+        <service id="Zentlix\MainBundle\Domain\Site\Service\Sites" alias="zentlix_main.sites" public="true"/>
 
         <service id="zentlix_main.visual_editor" class="Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor">
             <argument type="service" id="session"/>

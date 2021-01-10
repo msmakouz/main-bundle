@@ -4,7 +4,7 @@
   "description": "Zentlix Main bundle",
   "license": "proprietary",
   "require": {
-    "php": "^7.4.4",
+    "php": ">=7.4.0",
     "symfony/framework-bundle": "4.4.*",
     "sensio/framework-extra-bundle": "^5.5",
     "symfony/orm-pack": "^1.0",
@@ -23,7 +23,7 @@
     "ramsey/uuid-doctrine": "^1.6",
     "knplabs/knp-paginator-bundle": "^5.3",
     "composer/composer": "^2.0",
-    "zentlix/user-bundle": "^1.0"
+    "zentlix/user-bundle": "^1.1"
   },
   "require-dev": {
   },

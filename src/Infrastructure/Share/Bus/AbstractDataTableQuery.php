@@ -14,29 +14,14 @@ namespace Zentlix\MainBundle\Infrastructure\Share\Bus;
 
 abstract class AbstractDataTableQuery implements QueryInterface
 {
-    private string $table;
-    private array $typeOptions;
-    private array $options;
+    public string $table;
+    public array $typeOptions;
+    public array $options;
 
     public function __construct(string $table, array $typeOptions = [], array $options = [])
     {
         $this->table = $table;
         $this->typeOptions = $typeOptions;
         $this->options = $options;
-    }
-
-    public function getTableType(): string
-    {
-        return $this->table;
-    }
-
-    public function getTypeOptions(): array
-    {
-        return $this->typeOptions;
-    }
-
-    public function getOptions(): array
-    {
-        return $this->options;
     }
 }

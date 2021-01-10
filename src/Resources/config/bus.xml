@@ -25,8 +25,28 @@
         <service id="Zentlix\MainBundle\Infrastructure\Share\Bus\QueryBus" alias="zentlix_main.query_bus"/>
 
         <!-- Command bus -->
+        <!-- attributes -->
+        <service id="zentlix_main.attribute.create_handler" class="Zentlix\MainBundle\Application\Command\Attribute\CreateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.attribute.unique_code_specification"/>
+            <argument type="service" id="zentlix_main.bundle.exist_by_class_bundle_specification"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
+        </service>
+        <service id="zentlix_main.attribute.update_handler" class="Zentlix\MainBundle\Application\Command\Attribute\UpdateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.attribute.unique_code_specification"/>
+        </service>
+        <service id="zentlix_main.attribute.delete_handler" class="Zentlix\MainBundle\Application\Command\Attribute\DeleteHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+        </service>
+        <!-- end attributes -->
+
+        <!-- install\remove bundles -->
         <service id="zentlix_main.bundle.install_handler" class="Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallHandler">
-            <argument type="service" id="zentlix_main.bundle_unique_class_specification"/>
+            <argument type="service" id="zentlix_main.bundle.unique_class_specification"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="zentlix_main.installer"/>
@@ -36,10 +56,13 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="zentlix_main.bundles"/>
             <argument type="service" id="zentlix_main.bundle.exist_bundle_specification"/>
-            <argument type="service" id="zentlix_main.bundle_is_not_system_specification"/>
+            <argument type="service" id="zentlix_main.bundle.is_not_system_specification"/>
             <argument type="service" id="zentlix_main.bundle.is_not_required_specification"/>
             <argument type="service" id="zentlix_main.installer"/>
         </service>
+        <!-- end install\remove bundles -->
+
+        <!-- composer require\remove bundles -->
         <service id="zentlix_main.composer.require_handler" class="Zentlix\MainBundle\Application\Command\Bundle\Composer\RequireHandler">
             <argument type="service" id="kernel"/>
             <argument type="service" id="logger"/>
@@ -48,65 +71,91 @@
             <argument type="service" id="kernel"/>
             <argument type="service" id="zentlix_main.bundle.exist_by_package_bundle_specification"/>
         </service>
+        <!-- end composer require\remove bundles -->
+
+        <!-- bundle db migration -->
         <service id="zentlix_main.bundle.migration_handler" class="Zentlix\MainBundle\Application\Command\Bundle\Migration\MigrationHandler">
             <argument type="service" id="kernel"/>
         </service>
+        <!-- end bundle db migration -->
 
+        <!-- files -->
         <service id="zentlix_main.file.upload_handler" class="Zentlix\MainBundle\Application\Command\File\UploadHandler">
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="zentlix_main.file_uploader"/>
             <argument type="service" id="zentlix_main.file_unique_path_specification"/>
         </service>
+        <!-- end files -->
 
+        <!-- locales -->
         <service id="zentlix_main.locale.create_handler" class="Zentlix\MainBundle\Application\Command\Locale\CreateHandler">
-            <argument type="service" id="zentlix_main.locale_unique_code_specification"/>
+            <argument type="service" id="zentlix_main.locale.unique_code_specification"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
         </service>
         <service id="zentlix_main.locale.update_command" class="Zentlix\MainBundle\Application\Command\Locale\UpdateHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
         </service>
+        <!-- end locales -->
 
+        <!-- main bundle settings -->
         <service id="zentlix_main.setting.setting_handler" class="Zentlix\MainBundle\Application\Command\Setting\SettingHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="zentlix_main.locale_exist_locale_specification"/>
+            <argument type="service" id="zentlix_main.locale.exist_locale_specification"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
         </service>
+        <!-- end main bundle settings -->
 
+        <!-- sites -->
         <service id="zentlix_main.site.create_handler" class="Zentlix\MainBundle\Application\Command\Site\CreateHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="zentlix_main.site_unique_url_specification"/>
-            <argument type="service" id="zentlix_main.locale_exist_locale_specification"/>
-            <argument type="service" id="zentlix_main.site_exist_template_specification"/>
-            <argument type="service" id="zentlix_main.site_exist_template_folder_specification"/>
+            <argument type="service" id="zentlix_main.site.unique_url_specification"/>
+            <argument type="service" id="zentlix_main.locale.exist_locale_specification"/>
+            <argument type="service" id="zentlix_main.template.exist_template_specification"/>
+            <argument type="service" id="zentlix_main.template.exist_folder_specification"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
         </service>
         <service id="zentlix_main.site.delete_handler" class="Zentlix\MainBundle\Application\Command\Site\DeleteHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="zentlix_main.site_not_single_specification"/>
+            <argument type="service" id="zentlix_main.site.not_single_specification"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
         </service>
         <service id="zentlix_main.site.update_handler" class="Zentlix\MainBundle\Application\Command\Site\UpdateHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
-            <argument type="service" id="zentlix_main.site_unique_url_specification"/>
-            <argument type="service" id="zentlix_main.locale_exist_locale_specification"/>
-            <argument type="service" id="zentlix_main.site_exist_template_specification"/>
-            <argument type="service" id="zentlix_main.site_exist_template_folder_specification"/>
+            <argument type="service" id="zentlix_main.site.unique_url_specification"/>
+            <argument type="service" id="zentlix_main.locale.exist_locale_specification"/>
+            <argument type="service" id="zentlix_main.template.exist_template_specification"/>
+            <argument type="service" id="zentlix_main.template.exist_folder_specification"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
         </service>
+        <!-- end sites -->
 
+        <!-- site templates -->
         <service id="zentlix_main.template.create_handler" class="Zentlix\MainBundle\Application\Command\Template\CreateHandler">
-            <argument type="service" id="zentlix_main.site_exist_template_folder_specification"/>
+            <argument type="service" id="zentlix_main.template.exist_folder_specification"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
         </service>
+        <service id="zentlix_main.template.update_handler" class="Zentlix\MainBundle\Application\Command\Template\UpdateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
+        </service>
+        <!-- end site templates -->
 
+        <!-- visual editor -->
         <service id="zentlix_main.visual_editor.disable_handler" class="Zentlix\MainBundle\Application\Command\VisualEditor\DisableHandler">
             <argument type="service" id="zentlix_main.visual_editor"/>
             <argument type="service" id="event_dispatcher"/>
@@ -115,9 +164,13 @@
             <argument type="service" id="zentlix_main.visual_editor"/>
             <argument type="service" id="event_dispatcher"/>
         </service>
+        <!-- end visual editor -->
 
         <!-- Query bus -->
-        <service id="zentlix_main.bundle.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Bundle\DataTableQueryHandler">
+        <service id="zentlix_main.attribute.get_entities_handler" class="Zentlix\MainBundle\Application\Query\Attribute\GetEntitiesHandler">
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
+        </service>
+        <service id="zentlix_main.bundle.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Bundle\DataTableHandler">
             <argument type="service" id="zentlix_main.data_table_service"/>
         </service>
         <service id="zentlix_main.bundle.get_bundle_entity_by_package_handler" class="Zentlix\MainBundle\Application\Query\Bundle\GetBundleEntityByPackageNameHandler">
@@ -129,23 +182,30 @@
             <argument type="service" id="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository"/>
         </service>
 
-        <service id="zentlix_main.file.by_id_query_handler" class="Zentlix\MainBundle\Application\Query\File\FileByIdQueryHandler">
+        <service id="zentlix_main.file.by_id_query_handler" class="Zentlix\MainBundle\Application\Query\File\GetFileByIdHandler">
+            <argument type="service" id="Zentlix\MainBundle\Domain\File\Repository\FileRepository"/>
+        </service>
+        <service id="zentlix_main.file.by_path_query_handler" class="Zentlix\MainBundle\Application\Query\File\GetFileByPathHandler">
             <argument type="service" id="Zentlix\MainBundle\Domain\File\Repository\FileRepository"/>
         </service>
 
-        <service id="zentlix_main.locale.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Locale\DataTableQueryHandler">
+        <service id="zentlix_main.locale.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Locale\DataTableHandler">
             <argument type="service" id="zentlix_main.data_table_service"/>
         </service>
 
-        <service id="zentlix_main.platform.about.query_handler" class="Zentlix\MainBundle\Application\Query\Platform\AboutQueryHandler">
+        <service id="zentlix_main.platform.about.query_handler" class="Zentlix\MainBundle\Application\Query\Platform\AboutHandler">
             <argument type="service" id="doctrine.dbal.default_connection"/>
         </service>
 
-        <service id="zentlix_main.site.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Site\DataTableQueryHandler">
+        <service id="zentlix_main.site.data_table_query_handler" class="Zentlix\MainBundle\Application\Query\Site\DataTableHandler">
             <argument type="service" id="zentlix_main.data_table_service"/>
         </service>
 
-        <service id="zentlix_main.visual_editor.command_query_handler" class="Zentlix\MainBundle\Application\Query\VisualEditor\EditorCommandQueryHandler">
+        <service id="zentlix_main.template.data_table_handler" class="Zentlix\MainBundle\Application\Query\Template\DataTableHandler">
+            <argument type="service" id="zentlix_main.data_table_service"/>
+        </service>
+
+        <service id="zentlix_main.visual_editor.command_query_handler" class="Zentlix\MainBundle\Application\Query\VisualEditor\EditorCommandHandler">
             <argument type="service" id="doctrine.orm.entity_manager"/>
         </service>
 

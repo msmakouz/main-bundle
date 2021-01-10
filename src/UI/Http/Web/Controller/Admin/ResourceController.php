@@ -15,6 +15,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryInterface;
+use function is_null;
 
 class ResourceController extends AbstractAdminController
 {

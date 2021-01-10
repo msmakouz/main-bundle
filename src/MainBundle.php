@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Zentlix\MainBundle\Application;
 use Zentlix\MainBundle\Domain\Setting\Entity\Setting;
 use Zentlix\MainBundle\UI\Http\Web\Form\Setting\Form;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class MainBundle extends Bundle implements ZentlixBundleInterface
 {
@@ -23,7 +23,7 @@ class MainBundle extends Bundle implements ZentlixBundleInterface
 
     public function getVersion(): string
     {
-        return '1.3.2';
+        return '1.4.0';
     }
 
     public function getTitle(): string
@@ -48,6 +48,7 @@ class MainBundle extends Bundle implements ZentlixBundleInterface
             Application\Command\Site\CreateCommand::class         => 'zentlix_main.site.create.process',
             Application\Command\Site\UpdateCommand::class         => 'zentlix_main.site.update.process',
             Application\Command\Site\DeleteCommand::class         => 'zentlix_main.site.delete.process',
+            Application\Command\Template\UpdateCommand::class     => 'zentlix_main.template.update.process',
             Application\Query\Bundle\DataTableQuery::class        => 'zentlix_main.bundle.view',
             Application\Command\VisualEditor\EnableCommand::class => 'zentlix_main.visual_editor'
         ];

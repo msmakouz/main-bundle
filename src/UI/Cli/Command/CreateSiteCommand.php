@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
-use Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository;
+use Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 

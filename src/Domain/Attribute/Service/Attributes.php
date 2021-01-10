@@ -1,0 +1,159 @@
+<?php
+
+/**
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Zentlix to newer
+ * versions in the future. If you wish to customize Zentlix for your
+ * needs please refer to https://docs.zentlix.io for more information.
+ */
+
+declare(strict_types=1);
+
+namespace Zentlix\MainBundle\Domain\Attribute\Service;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Zentlix\MainBundle\Domain\Attribute\Entity\Attribute;
+use Zentlix\MainBundle\Domain\Attribute\Entity\Value;
+use Zentlix\MainBundle\Domain\Cache\Service\Cache;
+use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
+use function count;
+use function in_array;
+use function is_null;
+
+class Attributes
+{
+    private EntityManagerInterface $entityManager;
+    private AttributeTypes $attributeTypes;
+
+    public function __construct(EntityManagerInterface $entityManager, AttributeTypes $attributeTypes)
+    {
+        $this->entityManager = $entityManager;
+        $this->attributeTypes = $attributeTypes;
+    }
+
+    public function getSupportEntities(): array
+    {
+        $classes = [];
+        $metas = $this->entityManager->getMetadataFactory()->getAllMetadata();
+        foreach ($metas as $meta) {
+            if(in_array(SupportAttributeInterface::class, class_implements($meta->getName()))) {
+                $classes[] = $meta->getName();
+            }
+        }
+
+        return $classes;
+    }
+
+    public function saveValues(SupportAttributeInterface $entity, array $attributeValues): void
+    {
+        $this->removeValues($entity->getId());
+
+        $attributes = $this->entityManager->getRepository(Attribute::class)->findActiveByEntity($entity::getEntityCode());
+
+        /** @var Attribute $attribute */
+        foreach ($attributes as $attribute) {
+            if(isset($attributeValues[$attribute->getCode()])) {
+                foreach ((array) $attributeValues[$attribute->getCode()] as $val) {
+                    $val = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeSavedValue($val);
+                    $this->entityManager->persist(new Value(Uuid::uuid4(), $val, $entity->getId(), $attribute));
+                }
+            }
+        }
+
+        $this->entityManager->flush();
+    }
+
+    public function removeValues($entityId): void
+    {
+        $values = $this->entityManager->getRepository(Value::class)->findByEntityId($entityId);
+        foreach ($values as $value) {
+            $this->entityManager->remove($value);
+        }
+
+        $this->entityManager->flush();
+    }
+
+    public function getAttributeValue(string $attributeCode, $entityId, $default = null)
+    {
+        $attribute = $this->findCachedAttributeByCode($attributeCode);
+
+        if(is_null($attribute)) {
+            return $default;
+        }
+
+        $values = $this->entityManager
+            ->getRepository(Value::class)
+            ->findByAttributeAndEntity($attribute->getId(), $entityId);
+
+        if(count($values) === 0) {
+            return $default;
+        }
+
+        $config = $attribute->getConfig();
+        if(!isset($config['multiple']) || !$config['multiple']) {
+            $values = array_shift($values);
+        }
+
+        $normalizedValue = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeValue($values, $attribute);
+
+        return $normalizedValue;
+    }
+
+    public function getTemplateAttribute(int $templateId, string $code)
+    {
+        $attribute = $this->findCachedAttributeByCode($code);
+
+        if(is_null($attribute)) {
+            return null;
+        }
+
+        return $this->findCachedTemplateValue($attribute, $templateId);
+    }
+
+    private function findCachedAttributeByCode(string $code): ?Attribute
+    {
+        $attribute = Cache::findAttribute($code);
+
+        if(!is_null($attribute)) {
+            return $attribute;
+        }
+
+        $attribute = $this->entityManager->getRepository(Attribute::class)->findOneByCode($code);
+
+        if($attribute) {
+            Cache::setAttribute($attribute);
+        }
+
+        return $attribute;
+    }
+
+    private function findCachedTemplateValue(Attribute $attribute, int $templateId)
+    {
+        $cached = Cache::findTemplateAttributeValues($attribute->getCode());
+
+        if(!is_null($cached) && isset($cached[$attribute->getCode()])) {
+            return $cached[$attribute->getCode()];
+        }
+
+        $values = $this->entityManager
+            ->getRepository(Value::class)
+            ->findByAttributeAndEntity($attribute->getId(), $templateId);
+
+        if(count($values) === 0) {
+            return null;
+        }
+
+        $config = $attribute->getConfig();
+        if(!isset($config['multiple']) || !$config['multiple']) {
+            $values = array_shift($values);
+        }
+
+        $normalizedValue = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeValue($values, $attribute);
+
+        Cache::setTemplateAttributeValues($attribute->getCode(), $normalizedValue);
+
+        return $normalizedValue;
+    }
+}

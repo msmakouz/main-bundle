@@ -17,6 +17,7 @@ use Zentlix\MainBundle\Application\Command\Locale\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Locale\UpdateCommand;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
+use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository")
@@ -24,7 +25,7 @@ use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
  *     @Mapping\UniqueConstraint(columns={"code"})
  * })
  */
-class Locale implements Eventable
+class Locale implements Eventable, SupportAttributeInterface
 {
     use SortTrait;
 
@@ -76,5 +77,15 @@ class Locale implements Eventable
     public function getIcon(): ?string
     {
         return $this->icon;
+    }
+
+    public static function getEntityCode(): string
+    {
+        return 'locale';
+    }
+
+    public static function getEntityTitle(): string
+    {
+        return 'zentlix_main.locale.locale';
     }
 }

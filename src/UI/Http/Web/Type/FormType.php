@@ -14,4 +14,4 @@ namespace Zentlix\MainBundle\UI\Http\Web\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\FormType as BaseFormType;
 
-class FormType extends BaseFormType { }
+class FormType extends BaseFormType {}

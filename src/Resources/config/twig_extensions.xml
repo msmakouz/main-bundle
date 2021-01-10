@@ -3,31 +3,44 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="zentlix_main.twig_extension.admin_panel" class="Zentlix\MainBundle\UI\Http\Web\Widget\AdminPanel">
+        <service id="zentlix_main.twig_extension.admin_panel" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\AdminPanelExtension">
             <argument type="service" id="security.helper"/>
             <argument type="service" id="zentlix_main.visual_editor"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="zentlix_main.twig_extension.asset" class="Zentlix\MainBundle\UI\Http\Web\Widget\Asset">
+        <service id="zentlix_main.twig_extension.asset" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\AssetExtension">
             <argument type="service" id="zentlix_main.sites"/>
             <tag name="twig.extension"/>
         </service>
+        <service id="zentlix_main.twig_extension.attribute" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\AttributeExtension">
+            <argument type="service" id="zentlix_main.sites"/>
+            <argument type="service" id="zentlix_main.attribute.service.attributes"/>
+            <tag name="twig.extension"/>
+        </service>
+        <service id="zentlix_main.twig_extension.type_casting" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\TypeCastingExtension">
+            <tag name="twig.extension"/>
+        </service>
 
-        <service id="zentlix_main.twig_extension.sidebar" class="Zentlix\MainBundle\UI\Http\Web\Widget\Admin\Sidebar">
+        <service id="zentlix_main.twig_extension.admin.attributes" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\Admin\AttributesExtension">
+            <argument type="service" id="zentlix_main.attribute.service.attribute_types"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Attribute\Repository\AttributeRepository"/>
+            <tag name="twig.extension"/>
+        </service>
+        <service id="zentlix_main.twig_extension.sidebar" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\Admin\SidebarExtension">
             <argument type="service" id="zentlix_main.sidebar"/>
             <argument type="service" id="event_dispatcher"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="zentlix_main.twig_extension.dashboard_widgets" class="Zentlix\MainBundle\UI\Http\Web\Widget\Admin\DashboardWidgets">
+        <service id="zentlix_main.twig_extension.dashboard_widgets" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\Admin\DashboardWidgetsExtension">
             <argument type="service" id="zentlix_user.admin_settings"/>
             <argument type="service" id="zentlix_main.widgets"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="zentlix_main.twig_extension.dropzone_settings" class="Zentlix\MainBundle\UI\Http\Web\Widget\Admin\DropzoneSettings">
+        <service id="zentlix_main.twig_extension.dropzone_settings" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\Admin\DropzoneSettingsExtension">
             <argument type="service" id="translator"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="zentlix_main.twig_extension.admin.bundles" class="Zentlix\MainBundle\UI\Http\Web\Widget\Admin\Bundles">
+        <service id="zentlix_main.twig_extension.admin.bundles" class="Zentlix\MainBundle\UI\Http\Web\Twig\Extension\Admin\BundlesExtension">
             <argument type="service" id="zentlix_main.bundles"/>
             <tag name="twig.extension"/>
         </service>

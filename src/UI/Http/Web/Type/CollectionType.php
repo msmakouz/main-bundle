@@ -14,4 +14,4 @@ namespace Zentlix\MainBundle\UI\Http\Web\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\CollectionType as BaseCollectionType;
 
-class CollectionType extends BaseCollectionType { }
+class CollectionType extends BaseCollectionType {}

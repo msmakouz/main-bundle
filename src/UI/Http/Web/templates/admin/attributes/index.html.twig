@@ -1,0 +1,63 @@
+{% extends '@MainBundle/admin/layouts/base.html.twig' %}
+
+{% block title %}{{ 'zentlix_main.attribute.attributes' | trans }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('admin.index') }}">{{ 'zentlix_main.control_panel' | trans }}</a></li>
+    <li class="breadcrumb-item active">{{ 'zentlix_main.attribute.attributes' | trans }}</li>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-header">
+                {{ 'zentlix_main.attribute.attributes' | trans }}
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label class="required" for="attribute_entities">{{ 'zentlix_main.attribute.select_entity' | trans }}</label>
+                            <select id="attribute_entities" class="form-control">
+                                <option value="">{{ 'zentlix_main.not_selected' | trans }}</option>
+                                {% for element in entities %}
+                                    <option value="{{ element.code }}" {% if element.code == entity %}selected="selected"{% endif %}>
+                                        {{ element.title | trans }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            {% if entity is not empty %}
+                                {{ admin_attribute_types(entity) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-12 pt-4 pt-md-4">
+                        {% if entity is not empty %}
+                            {{ admin_attributes_widget(entity) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-primary" type="submit">
+                    <i class="fa fa-dot-circle-o"></i> {{ 'zentlix_main.save' | trans }}
+                </button>
+                <a href="{{ path('admin.index') }}" class="btn btn-sm btn-secondary" type="button">{{ 'zentlix_main.cancel' | trans }}</a>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#attribute_entities').on('change', function () {
+                var url = '{{ path('admin.attribute.manage', {'entity': 'entity'}) }}';
+                window.location.href = url.replace('/entity', '/' + $(this).val());
+            });
+        })
+    </script>
+{% endblock %}
+{% block footer_scripts %}
+    {{ parent() }}
+    <script src="{{ admin_asset('js/attributes.js') }}"></script>
+{% endblock %}

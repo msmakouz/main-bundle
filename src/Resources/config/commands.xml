@@ -9,7 +9,7 @@
         </service>
         <service id="zentlix_main.create_site_command" class="Zentlix\MainBundle\UI\Cli\Command\CreateSiteCommand">
             <argument id="zentlix_main.command_bus" type="service"/>
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository"/>
             <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
             <tag name="console.command"/>
         </service>

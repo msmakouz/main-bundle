@@ -1,17 +1,21 @@
 {% use "bootstrap_4_layout.html.twig" %}
 
+{% block alert_widget %}
+    <div class="alert alert-{{ form.vars.type }}">{{ value | trans | raw }}</div>
+{% endblock %}
+
 {% block form_widget_simple %}
     {%- if (prepend is defined and prepend is not empty) or (append is defined and append is not empty) -%}
         <div class="input-group{{ group_class|default('') }}">
             {%- if prepend is defined and prepend is not empty -%}
                 <div class="input-group-prepend">
-                    <span class="input-group-text">{{ prepend }}</span>
+                    <span class="input-group-text">{{ prepend | raw }}</span>
                 </div>
             {%- endif -%}
             {{- parent() -}}
             {%- if append is defined and append is not empty -%}
                 <div class="input-group-append">
-                    <span class="input-group-text">{{ append }}</span>
+                    <span class="input-group-text">{{ append | raw }}</span>
                 </div>
             {%- endif -%}
         </div>

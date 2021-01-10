@@ -26,7 +26,8 @@ class TextType extends BaseTextType
         $resolver->setDefined(['specification', 'prepend']);
         $resolver->setDefaults([
             'specification' => null,
-            'prepend' => null
+            'append'        => null,
+            'prepend'       => null
         ]);
     }
 
@@ -36,7 +37,8 @@ class TextType extends BaseTextType
 
         $view->vars = array_merge($view->vars, [
             'specification' => $options['specification'],
-            'prepend' => $options['prepend']
+            'append'        => $options['append'],
+            'prepend'       => $options['prepend']
         ]);
     }
 }

@@ -52,7 +52,7 @@ class DataTableFactory extends BaseDataTableFactory
             ->setTranslationDomain($config['translation_domain'] ?? 'messages')
             ->setLanguageFromCDN($config['language_from_cdn'] ?? true)
             ->setTemplate($config['template'] ?? DataTable::DEFAULT_TEMPLATE,
-                $config['template_parameters'] ?? ['className' => 'table table-striped table-bordered']
+                $config['template_parameters'] ?? ['className' => 'table table-hover']
             );
     }
 

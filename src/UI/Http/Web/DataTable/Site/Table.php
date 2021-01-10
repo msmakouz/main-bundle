@@ -17,7 +17,7 @@ use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
 use Zentlix\MainBundle\Infrastructure\DataTable\AbstractDataTableType;
-use Zentlix\MainBundle\Domain\Site\Event\Site\Table as TableEvent;
+use Zentlix\MainBundle\Domain\Site\Event\Table as TableEvent;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
 
 class Table extends AbstractDataTableType
@@ -38,7 +38,7 @@ class Table extends AbstractDataTableType
             ->add('url', TextColumn::class, ['label' => 'zentlix_main.site.url', 'visible' => true])
             ->add('template', TextColumn::class, [
                 'data'      => fn (Site $site) => $site->getTemplate()->getTitle(),
-                'label'     => 'zentlix_main.template',
+                'label'     => 'zentlix_main.template.template',
                 'visible'   => true,
                 'orderable' => false
             ])

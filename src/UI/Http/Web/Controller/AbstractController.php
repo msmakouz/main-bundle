@@ -16,10 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseControll
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Domain\Site\Entity\Site;
-use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\Domain\Site\Service\Sites;
+use Zentlix\MainBundle\Domain\Template\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryBus;
+use function array_key_exists;
 
 class AbstractController extends BaseController implements AbstractControllerInterface
 {

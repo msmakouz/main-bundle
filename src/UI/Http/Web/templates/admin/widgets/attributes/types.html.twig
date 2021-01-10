@@ -1,0 +1,21 @@
+<div class="accordion providers-wrapper" id="attribute-types">
+    {% for type in types %}
+        <div class="card mb-0">
+            <div class="card-header" id="heading-{{ type.code }}">
+                <div class="mb-0 provider-title">
+                    <a data-toggle="collapse" href="#{{ type.code }}" aria-expanded="true" aria-controls="{{ type.code }}" role="button" class="accordion-toggle">
+                        <i class="c-icon c-icon-2xl cil-chevron-bottom float-right"></i>
+                        {{ type.title | trans }}
+                    </a>
+                </div>
+            </div>
+            <div class="collapse" id="{{ type.code }}" aria-labelledby="heading-{{ type.code }}" data-parent="#attribute-types">
+                <div class="card-body">
+                    {% autoescape %}
+                        {{ type.createForm({'entity': entity}) | raw }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

@@ -15,9 +15,8 @@ namespace Zentlix\MainBundle\Application\Command\Locale;
 use Symfony\Component\Validator\Constraints;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Bus\DynamicPropertyCommand;
 
-class Command extends DynamicPropertyCommand implements CommandInterface
+class Command implements CommandInterface
 {
     /** @Constraints\NotBlank() */
     public ?string $title = null;
@@ -29,6 +28,7 @@ class Command extends DynamicPropertyCommand implements CommandInterface
     public int $sort = 1;
 
     public ?string $icon = null;
+    public array $attributes = [];
 
     protected Locale $entity;
 

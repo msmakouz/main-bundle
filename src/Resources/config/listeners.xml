@@ -5,8 +5,27 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Zentlix\MainBundle\EventListener\BundleListener">
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository"/>
+            <argument type="string">%kernel.default_locale%</argument>
+            <tag name="kernel.event_listener"/>
+        </service>
+
+        <service id="Zentlix\MainBundle\EventListener\PaginatorListener">
+            <argument type="service" id="request_stack"/>
+            <tag name="kernel.event_listener" event="knp_pager.items" priority="1"/>
+        </service>
+
         <service id="Zentlix\MainBundle\EventListener\RequestTransformerListener">
             <tag name="kernel.event_listener" event="kernel.request"/>
+        </service>
+
+        <service id="Zentlix\MainBundle\EventListener\SidebarListener">
+            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
+            <tag name="kernel.event_listener"/>
         </service>
     </services>
 </container>

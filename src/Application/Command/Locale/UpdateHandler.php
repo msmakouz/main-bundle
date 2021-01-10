@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\Application\Command\Locale;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Zentlix\MainBundle\Domain\Attribute\Service\Attributes;
 use Zentlix\MainBundle\Domain\Locale\Event\BeforeUpdate;
 use Zentlix\MainBundle\Domain\Locale\Event\AfterUpdate;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
@@ -22,11 +23,15 @@ class UpdateHandler implements CommandHandlerInterface
 {
     private EntityManagerInterface $entityManager;
     private EventDispatcherInterface $eventDispatcher;
+    private Attributes $attributes;
 
-    public function __construct(EntityManagerInterface $entityManager, EventDispatcherInterface $eventDispatcher)
+    public function __construct(EntityManagerInterface $entityManager,
+                                EventDispatcherInterface $eventDispatcher,
+                                Attributes $attributes)
     {
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->attributes = $attributes;
     }
 
     public function __invoke(UpdateCommand $command): void
@@ -34,6 +39,8 @@ class UpdateHandler implements CommandHandlerInterface
         $locale = $command->getEntity();
 
         $this->eventDispatcher->dispatch(new BeforeUpdate($command));
+
+        $this->attributes->saveValues($locale, $command->attributes);
 
         $locale->update($command);
 

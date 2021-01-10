@@ -14,30 +14,34 @@ namespace Zentlix\MainBundle\Application\Command\Template;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Domain\Site\Event\Template\AfterCreate;
-use Zentlix\MainBundle\Domain\Site\Event\Template\BeforeCreate;
-use Zentlix\MainBundle\Domain\Site\Entity\Template;
-use Zentlix\MainBundle\Domain\Site\Specification\ExistTemplateFolderSpecification;
+use Zentlix\MainBundle\Domain\Attribute\Service\Attributes;
+use Zentlix\MainBundle\Domain\Template\Event\AfterCreate;
+use Zentlix\MainBundle\Domain\Template\Event\BeforeCreate;
+use Zentlix\MainBundle\Domain\Template\Entity\Template;
+use Zentlix\MainBundle\Domain\Template\Specification\ExistFolderSpecification;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class CreateHandler implements CommandHandlerInterface
 {
-    private ExistTemplateFolderSpecification $existTemplateFolderSpecification;
+    private ExistFolderSpecification $existFolderSpecification;
     private EntityManagerInterface $entityManager;
     private EventDispatcherInterface $eventDispatcher;
+    private Attributes $attributes;
 
-    public function __construct(ExistTemplateFolderSpecification $existTemplateFolderSpecification,
+    public function __construct(ExistFolderSpecification $existFolderSpecification,
                                 EntityManagerInterface $entityManager,
-                                EventDispatcherInterface $eventDispatcher)
+                                EventDispatcherInterface $eventDispatcher,
+                                Attributes $attributes)
     {
-        $this->existTemplateFolderSpecification = $existTemplateFolderSpecification;
+        $this->existFolderSpecification = $existFolderSpecification;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
+        $this->attributes = $attributes;
     }
 
     public function __invoke(CreateCommand $command): void
     {
-        $this->existTemplateFolderSpecification->isExist($command->folder);
+        $this->existFolderSpecification->isExist($command->folder);
 
         $this->eventDispatcher->dispatch(new BeforeCreate($command));
 
@@ -45,6 +49,8 @@ class CreateHandler implements CommandHandlerInterface
 
         $this->entityManager->persist($template);
         $this->entityManager->flush();
+
+        $this->attributes->saveValues($template, $command->attributes);
 
         $this->eventDispatcher->dispatch(new AfterCreate($template, $command));
     }

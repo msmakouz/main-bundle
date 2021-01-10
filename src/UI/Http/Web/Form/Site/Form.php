@@ -17,20 +17,23 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
+use Zentlix\MainBundle\Application\Command\Site\UpdateCommand;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
+use Zentlix\MainBundle\Domain\Site\Entity\Site;
 use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
-use Zentlix\MainBundle\Domain\Site\Repository\TemplateRepository;
+use Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository;
 use Zentlix\MainBundle\UI\Http\Web\FormType\AbstractForm;
+use Zentlix\MainBundle\UI\Http\Web\FormType\AttributeType;
 use Zentlix\MainBundle\UI\Http\Web\FormType\MetaType;
 use Zentlix\MainBundle\UI\Http\Web\Type;
 
 class Form extends AbstractForm
 {
     protected EventDispatcherInterface $eventDispatcher;
-    protected TranslatorInterface $translator;
-    protected LocaleRepository $localeRepository;
-    protected SiteRepository $siteRepository;
-    protected TemplateRepository $templateRepository;
+    private TranslatorInterface $translator;
+    private LocaleRepository $localeRepository;
+    private SiteRepository $siteRepository;
+    private TemplateRepository $templateRepository;
 
     public function __construct(EventDispatcherInterface $eventDispatcher,
                                 TranslatorInterface $translator,
@@ -63,7 +66,7 @@ class Form extends AbstractForm
             ])
             ->add('template', Type\ChoiceType::class, [
                 'choices'  => $this->templateRepository->assoc(),
-                'label'    => 'zentlix_main.template'
+                'label'    => 'zentlix_main.template.template'
             ])
             ->add('meta', MetaType::class, ['inherit_data' => true, 'label' => false])
             ->add('sort', Type\IntegerType::class, [
@@ -75,5 +78,11 @@ class Form extends AbstractForm
             ]);
 
         $builder->add($main);
+
+        $builder->add($builder->create('attributes', AttributeType::class, [
+            'label'  => 'zentlix_main.additional',
+            'entity' => $command instanceof UpdateCommand ? $command->getEntity() : null,
+            'code'   => Site::getEntityCode()
+        ]));
     }
 }
