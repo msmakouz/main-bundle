@@ -23,8 +23,12 @@ class EmailType extends BaseEmailType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefined('specification');
-        $resolver->setDefault('specification', null);
+        $resolver->setDefined(['specification', 'prepend', 'append']);
+        $resolver->setDefaults([
+            'specification' => null,
+            'append'        => null,
+            'prepend'       => null
+        ]);
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)
@@ -32,7 +36,9 @@ class EmailType extends BaseEmailType
         parent::buildView($view, $form, $options);
 
         $view->vars = array_merge($view->vars, [
-            'specification' => $options['specification']
+            'specification' => $options['specification'],
+            'append'        => $options['append'],
+            'prepend'       => $options['prepend']
         ]);
     }
 }

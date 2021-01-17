@@ -82,11 +82,11 @@ class AbstractAdminController extends BaseController implements AbstractControll
     {
         $this->addFlash('error', $message);
 
-        $route = self::$redirectErrorPath;
+        $route = static::$redirectErrorPath;
         $parameters = [];
-        if(is_array(self::$redirectErrorPath)) {
-            $route = self::$redirectErrorPath[0];
-            $parameters = self::$redirectErrorPath[1];
+        if(is_array(static::$redirectErrorPath)) {
+            $route = static::$redirectErrorPath[0];
+            $parameters = static::$redirectErrorPath[1];
         }
 
         return $this->redirectToRoute($route, $parameters);

@@ -66,9 +66,7 @@
         </doctrine:orm>
         <doctrine:dbal>
             <doctrine:type name="meta" class="Zentlix\MainBundle\Infrastructure\Share\Doctrine\MetaType"/>
-            <doctrine:type name="uuid_binary" class="Ramsey\Uuid\Doctrine\UuidBinaryType"/>
-
-            <doctrine:mapping-type name="uuid_binary">binary</doctrine:mapping-type>
+            <doctrine:type name="uuid" class="Ramsey\Uuid\Doctrine\UuidType"/>
         </doctrine:dbal>
     </doctrine:config>
 </container>

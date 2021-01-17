@@ -58,7 +58,7 @@ final class RelationType extends AbstractRelationType implements AttributeTypeIn
         $elementIds = [];
         /** @var Value $val */
         foreach ((array) $value as $val) {
-            $elementIds[] = (int) $val->getValue();
+            $elementIds[] = $val->getValue();
         }
 
         return $this->relations->getByCode($config['relation'])->getElements($elementIds);

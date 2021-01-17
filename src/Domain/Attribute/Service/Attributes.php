@@ -48,13 +48,18 @@ class Attributes
 
     public function saveValues(SupportAttributeInterface $entity, array $attributeValues): void
     {
-        $this->removeValues($entity->getId());
-
         $attributes = $this->entityManager->getRepository(Attribute::class)->findActiveByEntity($entity::getEntityCode());
 
         /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {
             if(isset($attributeValues[$attribute->getCode()])) {
+                $oldValues = $this->entityManager
+                    ->getRepository(Value::class)
+                    ->findByAttributeAndEntity($attribute->getId(), $entity->getId());
+                foreach ($oldValues as $value) {
+                    $this->entityManager->remove($value);
+                }
+
                 foreach ((array) $attributeValues[$attribute->getCode()] as $val) {
                     $val = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeSavedValue($val);
                     $this->entityManager->persist(new Value(Uuid::uuid4(), $val, $entity->getId(), $attribute));

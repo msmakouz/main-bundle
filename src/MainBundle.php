@@ -23,7 +23,7 @@ class MainBundle extends Bundle implements ZentlixBundleInterface
 
     public function getVersion(): string
     {
-        return '1.4.0';
+        return '1.4.1';
     }
 
     public function getTitle(): string
