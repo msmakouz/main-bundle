@@ -64,9 +64,9 @@ class Sites
         return $this->getSites()[$this->host];
     }
 
-    public function getCurrentSiteId(): int
+    public function getCurrentSiteId(): string
     {
-        return $this->getCurrentSite()->getId();
+        return $this->getCurrentSite()->getId()->toString();
     }
 
     public function hasCurrentSite(): bool

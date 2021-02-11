@@ -23,6 +23,8 @@ class Command implements CommandInterface
 {
     use MetaTrait;
 
+    public $id;
+
     /** @Constraints\NotBlank() */
     public ?string $title = null;
 
@@ -30,13 +32,13 @@ class Command implements CommandInterface
     public ?string $url = null;
 
     /**
-     * @var int|Locale
+     * @var string|Locale
      * @Constraints\NotBlank()
      */
     public $locale;
 
     /**
-     * @var int|Template
+     * @var string|Template
      * @Constraints\NotBlank()
      */
     public $template;

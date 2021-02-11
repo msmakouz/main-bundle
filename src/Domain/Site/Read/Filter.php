@@ -16,10 +16,10 @@ class Filter
 {
     public function __construct(array $parameters)
     {
-        $this->id  = isset($parameters['id']) ? (int) $parameters['id'] : null;
+        $this->id  = isset($parameters['id']) ? (string) $parameters['id'] : null;
         $this->url = isset($parameters['url']) ? (string) $parameters['url'] : null;
     }
 
-    public ?int $id;
+    public ?string $id;
     public ?string $url;
 }

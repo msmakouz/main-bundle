@@ -15,10 +15,6 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Limenius\Liform\Resolver;
-use Limenius\Liform\Liform;
 use Throwable;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
@@ -26,28 +22,19 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryBus;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryInterface;
 use Zentlix\MainBundle\UI\Http\Web\Controller\AbstractControllerInterface;
-use Zentlix\MainBundle\UI\Http\Web\JsonTransformer;
 
 class AbstractAdminController extends BaseController implements AbstractControllerInterface
 {
     public static $redirectErrorPath = 'admin.index';
 
-    protected TranslatorInterface $translator;
-    protected Liform $liform;
-    private CsrfTokenManagerInterface $tokenManager;
     private Bundles $bundles;
     private CommandBus $commandBus;
     private QueryBus $queryBus;
 
-    public function __construct(TranslatorInterface $translator,
-                                CsrfTokenManagerInterface $tokenManager,
-                                Bundles $bundles,
+    public function __construct(Bundles $bundles,
                                 CommandBus $commandBus,
                                 QueryBus $queryBus)
     {
-        $this->translator = $translator;
-        $this->tokenManager = $tokenManager;
-        $this->liform = new Liform($this->configureLiform());
         $this->bundles = $bundles;
         $this->commandBus = $commandBus;
         $this->queryBus = $queryBus;
@@ -97,28 +84,6 @@ class AbstractAdminController extends BaseController implements AbstractControll
         return $this->json(['success' => false, 'message' => $message]);
     }
 
-    private function configureLiform() :Resolver
-    {
-        $resolver = new Resolver();
-        $resolver->setTransformer('email', new JsonTransformer\StringTransformer($this->translator), 'email');
-        $resolver->setTransformer('phone_number', new JsonTransformer\StringTransformer($this->translator), 'tel');
-        $resolver->setTransformer('password', new JsonTransformer\StringTransformer($this->translator), 'password');
-        $resolver->setTransformer('editor', new JsonTransformer\EditorTransformer($this->translator));
-        $resolver->setTransformer('file', new JsonTransformer\FileTransformer($this->translator));
-        $resolver->setTransformer('data', new JsonTransformer\DataTransformer($this->translator));
-        $resolver->setTransformer('choice', new JsonTransformer\ChoiceTransformer($this->translator));
-        $resolver->setTransformer('text', new JsonTransformer\StringTransformer($this->translator));
-        $resolver->setTransformer('textarea', new JsonTransformer\TextareaTransformer($this->translator));
-        $resolver->setTransformer('hidden', new JsonTransformer\HiddenTransformer($this->translator));
-        $resolver->setTransformer('number', new JsonTransformer\NumberTransformer($this->translator));
-        $resolver->setTransformer('integer', new JsonTransformer\IntegerTransformer($this->translator));
-        $resolver->setTransformer('compound', new JsonTransformer\CompoundTransformer($this->translator, $resolver, $this->tokenManager, null));
-        $resolver->setTransformer('checkbox', new JsonTransformer\BooleanTransformer($this->translator));
-        $resolver->setTransformer('datatable', new JsonTransformer\DataTableTransformer($this->translator));
-
-        return $resolver;
-    }
-
     private function checkAccess($command)
     {
         if(!$this->bundles->isBundle(get_class($command))) {
@@ -128,7 +93,7 @@ class AbstractAdminController extends BaseController implements AbstractControll
         $rights = $this->bundles->getBundleByNamespace(get_class($command))->configureRights();
 
         if(isset($rights[get_class($command)]) && !$this->getUser()->isAccessGranted(get_class($command))) {
-            throw new \Exception($this->translator->trans('zentlix_main.access_denied'));
+            throw new \Exception('zentlix_main.access_denied');
         }
     }
 }

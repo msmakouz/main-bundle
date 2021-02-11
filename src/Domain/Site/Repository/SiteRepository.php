@@ -67,12 +67,17 @@ class SiteRepository extends ServiceEntityRepository
 
     public function assoc(): array
     {
-        return array_column(
-            $this->createQueryBuilder('a')
-                ->select('a.id', 'a.title')
-                ->orderBy('a.sort')
-                ->getQuery()
-                ->execute(), 'id', 'title'
-        );
+        $sites = $this->createQueryBuilder('a')
+            ->select('a.id', 'a.title')
+            ->orderBy('a.sort')
+            ->getQuery()
+            ->execute();
+
+        $result = [];
+        foreach ($sites as $site) {
+            $result[$site['id']->toString()] = $site['title'];
+        }
+
+        return $result;
     }
 }

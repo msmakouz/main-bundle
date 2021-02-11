@@ -32,7 +32,7 @@ final class AttributeExtension extends AbstractExtension
     {
         return [
             new TwigFunction('template_attribute', function ($code) {
-                $templateId = $this->sites->getCurrentSite()->getTemplate()->getId();
+                $templateId = $this->sites->getCurrentSite()->getTemplate()->getId()->toString();
 
                 return $this->attributes->getTemplateAttribute($templateId, $code);
             }, ['needs_environment' => false])

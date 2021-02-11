@@ -22,7 +22,7 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\DynamicPropertyCommand;
 class SettingCommand extends DynamicPropertyCommand implements CommandInterface, SettingCommandInterface
 {
     /**
-     * @var int|Locale
+     * @var string|Locale
      * @Constraints\NotBlank()
      */
     public $default_locale;
@@ -31,9 +31,8 @@ class SettingCommand extends DynamicPropertyCommand implements CommandInterface,
 
     public function __construct(Setting $setting)
     {
-        $this->setting = $setting;
-
-        $this->default_locale = $setting->getDefaultLocale()->getId();
+        $this->setting        = $setting;
+        $this->default_locale = $setting->getDefaultLocale()->getId()->toString();
     }
 
     public function getSettings(): SettingInterface

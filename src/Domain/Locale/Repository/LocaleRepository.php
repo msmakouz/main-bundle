@@ -43,12 +43,17 @@ class LocaleRepository extends ServiceEntityRepository
 
     public function assoc(): array
     {
-        return array_column(
-            $this->createQueryBuilder('a')
-                ->select('a.id', 'a.title')
-                ->orderBy('a.sort')
-                ->getQuery()
-                ->execute(), 'id', 'title'
-        );
+        $locales = $this->createQueryBuilder('a')
+            ->select('a.id', 'a.title')
+            ->orderBy('a.sort')
+            ->getQuery()
+            ->execute();
+
+        $result = [];
+        foreach ($locales as $locale) {
+            $result[$locale['id']->toString()] = $locale['title'];
+        }
+
+        return $result;
     }
 }

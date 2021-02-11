@@ -27,7 +27,7 @@ class Table extends AbstractDataTableType
         $dataTable->setName('templates-datatable');
 
         $dataTable
-            ->add('id', TextColumn::class, ['label' => 'ID', 'visible' => true])
+            ->add('id', TextColumn::class, ['label' => 'ID', 'visible' => false])
             ->add('title', TwigColumn::class,
                 [
                     'template' => '@MainBundle/admin/templates/datatable/title.html.twig',

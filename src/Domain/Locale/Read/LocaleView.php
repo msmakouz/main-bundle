@@ -16,14 +16,14 @@ class LocaleView
 {
     public function __construct($id, $code, $title, $icon, $sort)
     {
-        $this->id    = (int) $id;
+        $this->id    = (string) $id;
         $this->code  = (string) $code;
         $this->title = (string) $title;
         $this->icon  = (string) $icon;
         $this->sort  = (int) $sort;
     }
 
-    public int $id;
+    public string $id;
     public string $code;
     public string $title;
     public ?string $icon;

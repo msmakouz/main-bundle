@@ -28,12 +28,12 @@ class DataTableRepository extends ServiceEntityRepository
         parent::__construct($registry, DataTable::class);
     }
 
-    public function getConfig(string $dataTable, int $userId)
+    public function getConfig(string $dataTable, $userId)
     {
         return $this->findOneBy(['datatable' => $dataTable, 'user' => $userId]);
     }
 
-    public function findByUserId(int $userId)
+    public function findByUserId($userId)
     {
         return $this->findBy(['user' => $userId]);
     }

@@ -18,6 +18,8 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 
 class Command implements CommandInterface
 {
+    public $id;
+
     /** @Constraints\NotBlank() */
     public ?string $title = null;
 

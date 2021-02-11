@@ -34,7 +34,7 @@ class SiteView
         $template_sort
     )
     {
-        $this->id               = (int) $id;
+        $this->id               = (string) $id;
         $this->title            = (string) $title;
         $this->url              = (string) $url;
         $this->meta_title       = $meta['title'] ?? null;
@@ -45,7 +45,7 @@ class SiteView
         $this->sort             = (int) $sort;
     }
 
-    public int $id;
+    public string $id;
     public string $title;
     public string $url;
     public ?string $meta_title;

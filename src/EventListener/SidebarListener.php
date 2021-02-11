@@ -14,17 +14,9 @@ namespace Zentlix\MainBundle\EventListener;
 
 use Zentlix\MainBundle\Domain\AdminSidebar\Event\BeforeBuild;
 use Zentlix\MainBundle\Domain\AdminSidebar\Service\MenuItemInterface;
-use Zentlix\MainBundle\Domain\Site\Repository\SiteRepository;
 
 class SidebarListener
 {
-    private array $sites;
-
-    public function __construct(SiteRepository $sites)
-    {
-        $this->sites = $sites->findAll();
-    }
-
     public function __invoke(BeforeBuild $beforeBuild): void
     {
         $sidebar = $beforeBuild->getSidebar();

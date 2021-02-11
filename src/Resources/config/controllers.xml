@@ -26,8 +26,6 @@
 
         <service id="zentlix_main.admin.attribute_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -36,8 +34,6 @@
 
         <service id="zentlix_main.admin.bundle_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -46,8 +42,6 @@
 
         <service id="zentlix_main.admin.composer_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\ComposerController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -56,8 +50,6 @@
 
         <service id="zentlix_main.admin.migration_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MigrationController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -66,8 +58,6 @@
 
         <service id="zentlix_main.admin.editor_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -76,8 +66,6 @@
 
         <service id="zentlix_main.admin.file_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\FileController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -86,8 +74,6 @@
 
         <service id="zentlix_main.admin.index_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\IndexController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -96,8 +82,6 @@
 
         <service id="zentlix_main.admin.locale_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\LocaleController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -107,8 +91,6 @@
         <service id="zentlix_main.admin.platform_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\PlatformController"
                  public="true">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -117,8 +99,6 @@
 
         <service id="zentlix_main.admin.site_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -127,8 +107,6 @@
 
         <service id="zentlix_main.admin.template_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\TemplateController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
@@ -137,8 +115,6 @@
 
         <service id="zentlix_main.admin.marketplace_controller"
                  class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MarketplaceController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="Symfony\Component\Security\Csrf\CsrfTokenManagerInterface"/>
             <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>

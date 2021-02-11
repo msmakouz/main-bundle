@@ -24,7 +24,6 @@
         </service>
 
         <service id="Zentlix\MainBundle\EventListener\SidebarListener">
-            <argument type="service" id="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository"/>
             <tag name="kernel.event_listener"/>
         </service>
     </services>

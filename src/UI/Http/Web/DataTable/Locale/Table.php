@@ -27,7 +27,7 @@ class Table extends AbstractDataTableType
         $dataTable->setName('locales-datatable');
 
         $dataTable
-            ->add('id', TextColumn::class, ['label' => 'ID', 'visible' => true,])
+            ->add('id', TextColumn::class, ['label' => 'ID', 'visible' => false])
             ->add('title', TwigColumn::class,
                 [
                     'template' => '@MainBundle/admin/locales/datatable/title.html.twig',

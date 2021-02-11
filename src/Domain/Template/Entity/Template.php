@@ -14,12 +14,13 @@ namespace Zentlix\MainBundle\Domain\Template\Entity;
 
 use Doctrine\ORM\Mapping;
 use Symfony\Component\Yaml\Yaml;
+use Zentlix\MainBundle\Application\Command\Template\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Template\UpdateCommand;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Helper\ArrayHelper;
-use Zentlix\MainBundle\Application\Command\Template\CreateCommand;
+use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository")
@@ -31,9 +32,9 @@ class Template implements Eventable, SupportAttributeInterface
     use SortTrait;
 
     /**
-     * @Mapping\Id()
-     * @Mapping\GeneratedValue()
-     * @Mapping\Column(type="integer")
+     * @var UuidInterface
+     * @Mapping\Id
+     * @Mapping\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -45,9 +46,10 @@ class Template implements Eventable, SupportAttributeInterface
 
     public function __construct(CreateCommand $command)
     {
-        $this->title = $command->title;
+        $this->id     = $command->id;
+        $this->title  = $command->title;
         $this->folder = $command->folder;
-        $this->sort = $command->sort;
+        $this->sort   = $command->sort;
     }
 
     public function update(UpdateCommand $command): void
@@ -56,7 +58,7 @@ class Template implements Eventable, SupportAttributeInterface
         $this->sort = $command->sort;
     }
 
-    public function getId(): ?int
+    public function getId()
     {
         return $this->id;
     }

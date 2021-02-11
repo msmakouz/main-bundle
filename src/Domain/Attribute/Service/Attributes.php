@@ -106,7 +106,7 @@ class Attributes
         return $normalizedValue;
     }
 
-    public function getTemplateAttribute(int $templateId, string $code)
+    public function getTemplateAttribute(string $templateId, string $code)
     {
         $attribute = $this->findCachedAttributeByCode($code);
 
@@ -134,7 +134,7 @@ class Attributes
         return $attribute;
     }
 
-    private function findCachedTemplateValue(Attribute $attribute, int $templateId)
+    private function findCachedTemplateValue(Attribute $attribute, string $templateId)
     {
         $cached = Cache::findTemplateAttributeValues($attribute->getCode());
 

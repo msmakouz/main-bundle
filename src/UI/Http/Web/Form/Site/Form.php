@@ -61,11 +61,11 @@ class Form extends AbstractForm
                 'prepend' => 'https://'
             ])
             ->add('locale', Type\ChoiceType::class, [
-                'choices'  => $this->localeRepository->assoc(),
+                'choices'  => array_flip($this->localeRepository->assoc()),
                 'label'    => 'zentlix_main.site.locale'
             ])
             ->add('template', Type\ChoiceType::class, [
-                'choices'  => $this->templateRepository->assoc(),
+                'choices'  => array_flip($this->templateRepository->assoc()),
                 'label'    => 'zentlix_main.template.template'
             ])
             ->add('meta', MetaType::class, ['inherit_data' => true, 'label' => false])

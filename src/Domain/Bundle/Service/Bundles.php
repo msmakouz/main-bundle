@@ -98,11 +98,6 @@ class Bundles
         return false;
     }
 
-    public function getEntityIdByPackage(string $package): int
-    {
-        return $this->bundleRepository->getOneByClass(get_class($this->getByPackageName($package)))->getId();
-    }
-
     public static function isZentlixBundle($package): bool
     {
         $composerJson = sprintf('%s/%s/composer.json', dirname(__DIR__, 6) , $package);

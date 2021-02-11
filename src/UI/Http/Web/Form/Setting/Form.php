@@ -30,7 +30,7 @@ class Form extends DefaultForm
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('default_locale', ChoiceType::class, [
-            'choices'  => $this->localeRepository->assoc(),
+            'choices'  => array_flip($this->localeRepository->assoc()),
             'label'    => 'zentlix_main.default_locale'
         ]);
     }

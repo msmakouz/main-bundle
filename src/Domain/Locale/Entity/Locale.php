@@ -18,6 +18,7 @@ use Zentlix\MainBundle\Application\Command\Locale\UpdateCommand;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository")
@@ -30,9 +31,9 @@ class Locale implements Eventable, SupportAttributeInterface
     use SortTrait;
 
     /**
-     * @Mapping\Id()
-     * @Mapping\GeneratedValue()
-     * @Mapping\Column(type="integer")
+     * @var UuidInterface
+     * @Mapping\Id
+     * @Mapping\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -47,10 +48,11 @@ class Locale implements Eventable, SupportAttributeInterface
 
     public function __construct(CreateCommand $command)
     {
+        $this->id    = $command->id;
         $this->title = $command->title;
-        $this->code = $command->code;
-        $this->sort = $command->sort;
-        $this->icon = $command->icon;
+        $this->code  = $command->code;
+        $this->sort  = $command->sort;
+        $this->icon  = $command->icon;
     }
 
     public function update(UpdateCommand $command)
@@ -59,7 +61,7 @@ class Locale implements Eventable, SupportAttributeInterface
         $this->sort = $command->sort;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

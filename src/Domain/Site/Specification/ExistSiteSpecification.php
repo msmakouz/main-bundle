@@ -28,14 +28,14 @@ final class ExistSiteSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $siteId): void
+    public function isExist($siteId): void
     {
         if(is_null($this->siteRepository->find($siteId))) {
             throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.site.not_exist'), $siteId));
         }
     }
 
-    public function __invoke(int $siteId): void
+    public function __invoke($siteId): void
     {
         $this->isExist($siteId);
     }

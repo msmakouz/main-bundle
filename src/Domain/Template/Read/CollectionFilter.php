@@ -17,7 +17,7 @@ class CollectionFilter
     public function __construct(array $parameters = [])
     {
         if(isset($parameters['id'])) {
-            $this->id = array_map(fn($id) => (int) $id, (array) $parameters['id']);
+            $this->id = array_map(fn($id) => (string) $id, (array) $parameters['id']);
         }
     }
 

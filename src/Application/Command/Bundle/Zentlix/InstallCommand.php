@@ -13,19 +13,22 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Application\Command\Bundle\Zentlix;
 
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
 use Zentlix\MainBundle\ZentlixBundleInterface;
 
 class InstallCommand implements CommandInterface
 {
+    public $id;
     public \DateTimeImmutable $updated_at;
     public \DateTimeImmutable $installed_at;
     private ZentlixBundleInterface $bundle;
 
     public function __construct(ZentlixBundleInterface $bundle)
     {
-        $this->updated_at = new \DateTimeImmutable();
+        $this->id           = Uuid::uuid4();
+        $this->updated_at   = new \DateTimeImmutable();
         $this->installed_at = new \DateTimeImmutable();
-        $this->bundle = $bundle;
+        $this->bundle       = $bundle;
     }
 
     public function getBundle(): ZentlixBundleInterface

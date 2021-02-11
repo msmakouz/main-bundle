@@ -49,7 +49,7 @@ class ResourceController extends AbstractAdminController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
-                $this->addFlash('success', $this->translator->trans(static::$createSuccessMessage));
+                $this->addFlash('success', static::$createSuccessMessage);
                 return $this->redirectToRoute(
                     $this->getRedirectRoute(static::$redirectAfterCreate), $this->getRedirectRouteParam(static::$redirectAfterCreate)
                 );
@@ -69,7 +69,7 @@ class ResourceController extends AbstractAdminController
             $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
-                $this->addFlash('success', $this->translator->trans(static::$updateSuccessMessage));
+                $this->addFlash('success', static::$updateSuccessMessage);
                 return $this->redirectToRoute(
                     $this->getRedirectRoute(static::$redirectAfterUpdate), $this->getRedirectRouteParam(static::$redirectAfterUpdate)
                 );
@@ -85,7 +85,7 @@ class ResourceController extends AbstractAdminController
     {
         try {
             $this->exec($command);
-            $this->addFlash('success', $this->translator->trans(static::$deleteSuccessMessage));
+            $this->addFlash('success', static::$deleteSuccessMessage);
             return $this->redirectToRoute(
                 $this->getRedirectRoute(static::$redirectAfterDelete), $this->getRedirectRouteParam(static::$redirectAfterDelete));
         } catch (\Exception $e) {

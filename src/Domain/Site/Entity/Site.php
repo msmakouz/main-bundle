@@ -21,6 +21,7 @@ use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Template\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository")
@@ -33,9 +34,9 @@ class Site implements Eventable, SupportAttributeInterface
     use MetaTrait, SortTrait;
 
     /**
-     * @Mapping\Id()
-     * @Mapping\GeneratedValue()
-     * @Mapping\Column(type="integer")
+     * @var UuidInterface
+     * @Mapping\Id
+     * @Mapping\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -61,6 +62,8 @@ class Site implements Eventable, SupportAttributeInterface
 
     public function __construct(CreateCommand $command)
     {
+        $this->id = $command->id;
+
         $this->setValuesFromCommands($command);
     }
 
@@ -69,7 +72,7 @@ class Site implements Eventable, SupportAttributeInterface
         $this->setValuesFromCommands($command);
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

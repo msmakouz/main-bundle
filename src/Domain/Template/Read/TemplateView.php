@@ -16,13 +16,13 @@ class TemplateView
 {
     public function __construct($id, $title, $folder, $sort)
     {
-        $this->id     = (int) $id;
+        $this->id     = (string) $id;
         $this->title  = (string) $title;
         $this->folder = (string) $folder;
         $this->sort   = (int) $sort;
     }
 
-    public int $id;
+    public string $id;
     public string $title;
     public string $folder;
     public int $sort;

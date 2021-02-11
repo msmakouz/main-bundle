@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\Domain\Bundle\Entity;
 
 use Doctrine\ORM\Mapping;
 use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand;
+use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 use function get_class;
 
 /**
@@ -25,9 +26,9 @@ use function get_class;
 class Bundle
 {
     /**
-     * @Mapping\Id()
-     * @Mapping\GeneratedValue()
-     * @Mapping\Column(type="integer")
+     * @var UuidInterface
+     * @Mapping\Id
+     * @Mapping\Column(type="uuid", unique=true)
      */
     private $id;
 
@@ -66,6 +67,7 @@ class Bundle
 
     public function __construct(InstallCommand $command)
     {
+        $this->id              = $command->id;
         $this->title           = $command->getBundle()->getTitle();
         $this->class           = get_class($command->getBundle());
         $this->description     = $command->getBundle()->getDescription();
@@ -77,7 +79,7 @@ class Bundle
         $this->installed_at    = $command->installed_at;
     }
 
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

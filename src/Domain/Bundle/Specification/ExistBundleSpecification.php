@@ -28,14 +28,14 @@ final class ExistBundleSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $bundleId): void
+    public function isExist($bundleId): void
     {
         if(is_null($this->bundleRepository->find($bundleId))) {
             throw new NotFoundException(sprintf($this->translator->trans('zentlix_main.bundle.not_exist'), $bundleId));
         }
     }
 
-    public function __invoke(int $bundleId): void
+    public function __invoke($bundleId): void
     {
         $this->isExist($bundleId);
     }

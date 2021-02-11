@@ -120,14 +120,14 @@
                     {% for message in app.flashes('success') %}
                         <script>
                             $(document).ready(function () {
-                                toastr.success('{{ message }}');
+                                toastr.success('{{ message | trans }}');
                             });
                         </script>
                     {% endfor %}
                     {% for message in app.flashes('error') %}
                         <script>
                             $(document).ready(function () {
-                                toastr.error('{{ message }}');
+                                toastr.error('{{ message | trans }}');
                             });
                         </script>
                     {% endfor %}

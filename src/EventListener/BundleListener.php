@@ -61,7 +61,6 @@ class BundleListener
         $command->title = 'Русский';
         $command->code = 'ru';
         $command->icon = 'flag-icon-ru';
-        $command->sort = 500;
 
         $this->commandBus->handle($command);
 
@@ -69,7 +68,6 @@ class BundleListener
         $command->title = 'Українська';
         $command->code = 'ua';
         $command->icon = 'flag-icon-ua';
-        $command->sort = 500;
 
         $this->commandBus->handle($command);
     }

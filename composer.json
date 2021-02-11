@@ -16,7 +16,6 @@
     "symfony/messenger": "4.4.*",
     "symfony/http-client": "4.4.*",
     "omines/datatables-bundle": "^0.4.2",
-    "limenius/liform-bundle": "^0.15.0",
     "tightenco/collect": "^7.9",
     "gedmo/doctrine-extensions": "^2.4",
     "ramsey/uuid": "^4.0",

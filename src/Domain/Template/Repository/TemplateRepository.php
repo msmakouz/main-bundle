@@ -35,12 +35,17 @@ class TemplateRepository extends ServiceEntityRepository
 
     public function assoc(): array
     {
-        return array_column(
-            $this->createQueryBuilder('a')
-                ->select('a.id', 'a.title')
-                ->orderBy('a.sort')
-                ->getQuery()
-                ->execute(), 'id', 'title'
-        );
+        $templates = $this->createQueryBuilder('a')
+            ->select('a.id', 'a.title')
+            ->orderBy('a.sort')
+            ->getQuery()
+            ->execute();
+
+        $result = [];
+        foreach ($templates as $template) {
+            $result[$template['id']->toString()] = $template['title'];
+        }
+
+        return $result;
     }
 }

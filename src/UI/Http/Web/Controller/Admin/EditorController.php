@@ -14,6 +14,7 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Command\VisualEditor\DisableCommand;
 use Zentlix\MainBundle\Application\Command\VisualEditor\EnableCommand;
 use Zentlix\MainBundle\Application\Query\VisualEditor\EditorCommandQuery;
@@ -56,13 +57,14 @@ class EditorController extends AbstractAdminController
         }
     }
 
-    public function visualEdit(Request $request): JsonResponse
+    public function visualEdit(Request $request, TranslatorInterface $translator): JsonResponse
     {
         try {
             $form = $this->createVisualEditorForm(
                 $request->request->get('form'),
                 $request->request->get('entity'),
-                $request->request->get('code')
+                $request->request->get('code'),
+                $translator
             );
 
             if(isset($request->request->get('visual_edit_form')['_token'])) {
@@ -84,7 +86,7 @@ class EditorController extends AbstractAdminController
         }
     }
 
-    private function createVisualEditorForm(string $formClass, string $entityClass, string $code): array
+    private function createVisualEditorForm(string $formClass, string $entityClass, string $code, TranslatorInterface $translator): array
     {
         if(!class_exists($formClass)) {
             throw new \Exception(sprintf('Класс %s не найден.', $formClass));
@@ -99,9 +101,9 @@ class EditorController extends AbstractAdminController
 
         $translationDomain = $form['form']->getConfig()->getOption('translation_domain');
         if ($label = $form['form']->getConfig()->getOption('label')) {
-            $form['title'] = $this->translator->trans($label, [], $translationDomain);
+            $form['title'] = $translator->trans($label, [], $translationDomain);
         } else {
-            $form['title'] = $this->translator->trans($form['form']->getName(), [], $translationDomain);
+            $form['title'] = $translator->trans($form['form']->getName(), [], $translationDomain);
         }
 
         return $form;

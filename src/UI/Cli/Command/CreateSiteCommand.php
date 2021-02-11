@@ -49,8 +49,8 @@ class CreateSiteCommand extends ConsoleCommand
     {
         $io = new SymfonyStyle($input, $output);
 
-        $templates = array_flip($this->templateRepository->assoc());
-        $locales = array_flip($this->localeRepository->assoc());
+        $templates = $this->templateRepository->assoc();
+        $locales = $this->localeRepository->assoc();
 
         $command = new CreateCommand();
 
@@ -66,8 +66,8 @@ class CreateSiteCommand extends ConsoleCommand
         $template = $io->choice('Please, select template', $templates);
         $locale = $io->choice('Please, select language', $locales);
 
-        $command->template = array_flip($templates)[$template];
-        $command->locale = array_flip($locales)[$locale];
+        $command->template = $template;
+        $command->locale = $locale;
         $metaTitle = (string) $io->ask('Meta title');
         $metaDescription = (string) $io->ask('Meta description');
         $metaKeywords = (string) $io->ask('Meta keywords');

@@ -28,14 +28,14 @@ final class ExistLocaleSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $localeId): void
+    public function isExist($localeId): void
     {
         if(is_null($this->localeRepository->find($localeId))) {
             throw new NotFoundException(\sprintf($this->translator->trans('zentlix_main.locale.not_exist'), $localeId));
         }
     }
 
-    public function __invoke(int $localeId): void
+    public function __invoke($localeId): void
     {
         $this->isExist($localeId);
     }

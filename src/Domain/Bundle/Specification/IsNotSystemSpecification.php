@@ -26,14 +26,14 @@ final class IsNotSystemSpecification
         $this->bundleRepository = $bundleRepository;
     }
 
-    public function isNotSystem(int $id): void
+    public function isNotSystem($id): void
     {
         if($this->bundleRepository->get($id)->isSystem()) {
             throw new \DomainException($this->translator->trans('zentlix_main.bundle.system_bundle'));
         }
     }
 
-    public function __invoke(int $id): void
+    public function __invoke($id): void
     {
         $this->isNotSystem($id);
     }

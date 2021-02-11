@@ -19,5 +19,5 @@ class Filter
         $this->id = isset($parameters['id']) ? (int) $parameters['id'] : null;
     }
 
-    public ?int $id;
+    public ?string $id;
 }

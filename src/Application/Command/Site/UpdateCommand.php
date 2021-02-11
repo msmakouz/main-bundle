@@ -22,8 +22,8 @@ class UpdateCommand extends Command implements UpdateCommandInterface
         $this->entity   = $site;
         $this->title    = $site->getTitle();
         $this->url      = $site->getUrl();
-        $this->locale   = $site->getLocale()->getId();
-        $this->template = $site->getTemplate()->getId();
+        $this->locale   = $site->getLocale()->getId()->toString();
+        $this->template = $site->getTemplate()->getId()->toString();
         $this->sort     = $site->getSort();
         $this->setMeta($site->getMetaTitle(), $site->getMetaDescription(), $site->getMetaKeywords());
     }
