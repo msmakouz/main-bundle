@@ -77,7 +77,12 @@ class Bundles
 
     public function isBundle(string $class): bool
     {
-        return isset($this->bundles[$class]);
+        $bundleName = self::findBundleNameFromNamespace($class);
+        if(is_null($bundleName)) {
+            return false;
+        }
+
+        return isset($this->bundles['Zentlix\\' . $bundleName . '\\' . $bundleName]);
     }
 
     public static function getBundleNameFromNamespace(string $namespace): string
@@ -85,6 +90,13 @@ class Bundles
         $pieces = explode('\\', $namespace);
 
         return $pieces[1];
+    }
+
+    public static function findBundleNameFromNamespace(string $namespace): ?string
+    {
+        $pieces = explode('\\', $namespace);
+
+        return is_array($pieces) && isset($pieces[1]) ? $pieces[1] : null;
     }
 
     public function isInstalled(string $package): bool
