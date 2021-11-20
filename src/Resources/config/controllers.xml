@@ -6,118 +6,227 @@
 
     <services>
         <defaults public="true"/>
-        <service id="zentlix_main.file_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\FileController">
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\FileController">
             <argument type="service" id="zentlix_main.sites"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
             <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.index_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\IndexController">
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\IndexController">
             <argument type="service" id="zentlix_main.sites"/>
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
             <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.attribute_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.bundle_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.composer_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\ComposerController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\ComposerController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.migration_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MigrationController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MigrationController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.editor_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.file_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\FileController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\FileController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.index_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\IndexController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\IndexController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.locale_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\LocaleController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\LocaleController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.platform_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\PlatformController"
-                 public="true">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\PlatformController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.site_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.template_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\TemplateController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\TemplateController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_main.admin.marketplace_controller"
-                 class="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MarketplaceController">
-            <argument type="service" id="zentlix_main.bundles" />
+        <service id="Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MarketplaceController">
+            <argument type="service" id="request_stack"/>
+            <argument type="service" id="serializer"/>
+            <argument type="service" id="security.authorization_checker"/>
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="parameter_bag"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="translator"/>
+            <argument type="service" id="twig"/>
+            <argument type="service" id="security.token_storage"/>
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
+            <argument type="service" id="zentlix_main.bundles"/>
             <tag name="controller.service_arguments"/>
         </service>
     </services>

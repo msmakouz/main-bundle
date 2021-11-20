@@ -116,6 +116,7 @@
             <argument type="collection">%datatables.config%</argument>
             <argument type="service" id="Omines\DataTablesBundle\Twig\TwigRenderer"/>
             <argument type="service" id="Omines\DataTablesBundle\DependencyInjection\Instantiator"/>
+            <argument type="service" id="Omines\DataTablesBundle\Exporter\DataTableExporterManager"/>
             <argument type="service" id="event_dispatcher"/>
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="security.token_storage"/>
@@ -153,7 +154,7 @@
         <service id="Zentlix\MainBundle\Domain\Site\Service\Sites" alias="zentlix_main.sites" public="true"/>
 
         <service id="zentlix_main.visual_editor" class="Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor">
-            <argument type="service" id="session"/>
+            <argument type="service" id="request_stack"/>
         </service>
         <service id="Zentlix\MainBundle\Domain\VisualEditor\Service\VisualEditor" alias="zentlix_main.visual_editor"/>
 

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Cli\Command;
@@ -21,15 +13,11 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class CreateHtaccessCommand extends ConsoleCommand {
 
-    private Filesystem $filesystem;
-    private KernelInterface $kernel;
-
-    public function __construct(Filesystem $filesystem, KernelInterface $kernel)
-    {
+    public function __construct(
+        private Filesystem $filesystem,
+        private KernelInterface $kernel
+    ) {
         parent::__construct();
-
-        $this->filesystem = $filesystem;
-        $this->kernel = $kernel;
     }
 
     protected function configure(): void
@@ -49,5 +37,7 @@ class CreateHtaccessCommand extends ConsoleCommand {
         );
 
         $io->success('Htaccess file created successfully!');
+
+        return self::SUCCESS;
     }
 }

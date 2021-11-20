@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
@@ -15,7 +7,6 @@ namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryInterface;
-use function is_null;
 
 class ResourceController extends AbstractAdminController
 {
@@ -30,7 +21,7 @@ class ResourceController extends AbstractAdminController
     public function listResource(QueryInterface $query, string $template, array $parameters = []): Response
     {
         try {
-            $table = $this->ask($query)->handleRequest($this->container->get('request_stack')->getCurrentRequest());
+            $table = $this->ask($query)->handleRequest($this->requestStack->getCurrentRequest());
             if ($table->isCallback()) {
                 return $table->getResponse();
             }
@@ -41,17 +32,23 @@ class ResourceController extends AbstractAdminController
         }
     }
 
-    public function createResource(CommandInterface $command, string $formClass, string $template, array $parameters = []): Response
-    {
+    public function createResource(
+        CommandInterface $command,
+        string $formClass,
+        string $template,
+        array $parameters = []
+    ): Response {
         try {
-            $form = $this->createForm($formClass, $command);
-            $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
+            $form = $this->formFactory->create($formClass, $command);
+            $form->handleRequest($this->requestStack->getCurrentRequest());
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
                 $this->addFlash('success', static::$createSuccessMessage);
+
                 return $this->redirectToRoute(
-                    $this->getRedirectRoute(static::$redirectAfterCreate), $this->getRedirectRouteParam(static::$redirectAfterCreate)
+                    $this->getRedirectRoute(static::$redirectAfterCreate),
+                    $this->getRedirectRouteParam(static::$redirectAfterCreate)
                 );
             }
         } catch (\Exception $e) {
@@ -61,17 +58,22 @@ class ResourceController extends AbstractAdminController
         return $this->render($template, array_merge(['form' => $form->createView()], $parameters));
     }
 
-    public function updateResource(CommandInterface $command, string $formClass, string $template, array $parameters = []): Response
-    {
-        $form = $this->createForm($formClass, $command);
+    public function updateResource(
+        CommandInterface $command,
+        string $formClass,
+        string $template, array $parameters = []
+    ): Response {
+        $form = $this->formFactory->create($formClass, $command);
 
         try {
-            $form->handleRequest($this->container->get('request_stack')->getCurrentRequest());
+            $form->handleRequest($this->requestStack->getCurrentRequest());
             if ($form->isSubmitted() && $form->isValid()) {
                 $this->exec($command);
                 $this->addFlash('success', static::$updateSuccessMessage);
+
                 return $this->redirectToRoute(
-                    $this->getRedirectRoute(static::$redirectAfterUpdate), $this->getRedirectRouteParam(static::$redirectAfterUpdate)
+                    $this->getRedirectRoute(static::$redirectAfterUpdate),
+                    $this->getRedirectRouteParam(static::$redirectAfterUpdate)
                 );
             }
         } catch (\Exception $e) {
@@ -86,25 +88,28 @@ class ResourceController extends AbstractAdminController
         try {
             $this->exec($command);
             $this->addFlash('success', static::$deleteSuccessMessage);
+
             return $this->redirectToRoute(
-                $this->getRedirectRoute(static::$redirectAfterDelete), $this->getRedirectRouteParam(static::$redirectAfterDelete));
+                $this->getRedirectRoute(static::$redirectAfterDelete),
+                $this->getRedirectRouteParam(static::$redirectAfterDelete)
+            );
         } catch (\Exception $e) {
             return $this->redirectError($e->getMessage());
         }
     }
 
-    private function getRedirectRoute(array $route = null)
+    private function getRedirectRoute(array $route = null): string
     {
-       if(is_null($route)) {
+       if(\is_null($route)) {
            return static::$redirectAfterAction;
        }
 
         return $route[0];
     }
 
-    private function getRedirectRouteParam(array $route = null)
+    private function getRedirectRouteParam(array $route = null): array
     {
-        if(is_null($route)) {
+        if(\is_null($route)) {
             return [];
         }
 

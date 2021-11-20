@@ -14,7 +14,7 @@ namespace Zentlix\MainBundle\Domain\Bundle\Entity;
 
 use Doctrine\ORM\Mapping;
 use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
+
 use function get_class;
 
 /**
@@ -26,7 +26,6 @@ use function get_class;
 class Bundle
 {
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */

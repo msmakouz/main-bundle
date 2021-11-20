@@ -21,7 +21,6 @@ use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Template\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Site\Repository\SiteRepository")
@@ -34,7 +33,6 @@ class Site implements Eventable, SupportAttributeInterface
     use MetaTrait, SortTrait;
 
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Cli\Command;
@@ -24,17 +16,12 @@ use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 
 class CreateSiteCommand extends ConsoleCommand
 {
-    private CommandBus $commandBus;
-    private LocaleRepository $localeRepository;
-    private TemplateRepository $templateRepository;
-
-    public function __construct(CommandBus $commandBus, TemplateRepository $templateRepository, LocaleRepository $localeRepository)
-    {
+    public function __construct(
+        private CommandBus $commandBus,
+        private TemplateRepository $templateRepository,
+        private LocaleRepository $localeRepository
+    ) {
         parent::__construct();
-
-        $this->commandBus = $commandBus;
-        $this->localeRepository = $localeRepository;
-        $this->templateRepository = $templateRepository;
     }
 
     protected function configure(): void
@@ -76,7 +63,7 @@ class CreateSiteCommand extends ConsoleCommand
         $command->setMetaDescription($metaDescription);
         $command->setMetaKeywords($metaKeywords);
 
-        $command->sort = (int) $io->ask('Sort', 1);
+        $command->sort = (int) $io->ask('Sort', '1');
 
         try {
             $this->commandBus->handle($command);
@@ -99,6 +86,6 @@ class CreateSiteCommand extends ConsoleCommand
             "Sort: $command->sort",
         ]);
 
-        return 0;
+        return self::SUCCESS;
     }
 }

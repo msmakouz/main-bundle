@@ -13,11 +13,12 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Attribute\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Uuid;
 use Zentlix\MainBundle\Domain\Attribute\Entity\Attribute;
 use Zentlix\MainBundle\Domain\Attribute\Entity\Value;
 use Zentlix\MainBundle\Domain\Cache\Service\Cache;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
+
 use function count;
 use function in_array;
 use function is_null;
@@ -62,7 +63,7 @@ class Attributes
 
                 foreach ((array) $attributeValues[$attribute->getCode()] as $val) {
                     $val = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeSavedValue($val);
-                    $this->entityManager->persist(new Value(Uuid::uuid4(), $val, $entity->getId(), $attribute));
+                    $this->entityManager->persist(new Value(Uuid::v4(), $val, $entity->getId(), $attribute));
                 }
             }
         }

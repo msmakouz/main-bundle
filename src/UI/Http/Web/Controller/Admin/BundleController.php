@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
@@ -39,14 +31,19 @@ class BundleController extends ResourceController
     {
         if($bundle->getSettingsEntity() && $bundle->getSettingsForm()) {
             $settingRepository = $entityManager->getRepository($bundle->getSettingsEntity());
-            $command = $this->createForm($bundle->getSettingsForm())->getConfig()->getDataClass();
+            $command = $this->formFactory->create($bundle->getSettingsForm())->getConfig()->getDataClass();
 
             return $this->updateResource(
-                new $command($settingRepository->findOneBy([])), $bundle->getSettingsForm(), '@MainBundle/admin/bundles/settings.html.twig'
+                new $command($settingRepository->findOneBy([])),
+                $bundle->getSettingsForm(), '@MainBundle/admin/bundles/settings.html.twig'
             );
         }
 
-        return $this->updateResource(new DefaultSettingCommand(), DefaultForm::class, '@MainBundle/admin/bundles/default.html.twig');
+        return $this->updateResource(
+            new DefaultSettingCommand(),
+            DefaultForm::class,
+            '@MainBundle/admin/bundles/default.html.twig'
+        );
     }
 
     public function install(Request $request): Response

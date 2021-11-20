@@ -13,8 +13,7 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\File\Entity;
 
 use Doctrine\ORM\Mapping;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\File\Repository\FileRepository")
@@ -23,7 +22,6 @@ use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 class File
 {
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */
@@ -51,7 +49,7 @@ class File
 
         $path = str_replace('\\', '/', $path);
 
-        $this->id = Uuid::uuid4();
+        $this->id = Uuid::v4();
         $this->path = $path;
         $this->alt = $alt;
         $this->title = $title;

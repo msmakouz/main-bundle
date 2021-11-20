@@ -12,13 +12,13 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Command\Locale;
 
+use Symfony\Component\Uid\Uuid;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CreateCommandInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
 
 class CreateCommand extends Command implements CreateCommandInterface
 {
     public function __construct()
     {
-        $this->id = Uuid::uuid4();
+        $this->id = Uuid::v4();
     }
 }

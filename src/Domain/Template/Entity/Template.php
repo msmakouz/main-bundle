@@ -20,7 +20,6 @@ use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Helper\ArrayHelper;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository")
@@ -32,7 +31,6 @@ class Template implements Eventable, SupportAttributeInterface
     use SortTrait;
 
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */

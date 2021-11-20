@@ -5,132 +5,132 @@
         https://symfony.com/schema/routing/routing-1.0.xsd">
 
     <route id="admin.index" path="/backend">
-        <default key="_controller">zentlix_main.admin.index_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\IndexController::index</default>
     </route>
     <route id="admin.file.upload" path="/backend/file/upload">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.file_controller::upload</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\FileController::upload</default>
     </route>
     <route id="admin.platform.about" path="/backend/platform/about">
-        <default key="_controller">zentlix_main.admin.platform_controller::about</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\PlatformController::about</default>
     </route>
 
     <!-- sites -->
     <route id="admin.site.list" path="/backend/sites/list">
-        <default key="_controller">zentlix_main.admin.site_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController::index</default>
     </route>
     <route id="admin.site.create" path="/backend/sites/create">
-        <default key="_controller">zentlix_main.admin.site_controller::create</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController::create</default>
     </route>
     <route id="admin.site.update" path="/backend/sites/{id}/edit">
-        <default key="_controller">zentlix_main.admin.site_controller::update</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController::update</default>
     </route>
     <route id="admin.site.delete" path="/backend/sites/{id}/delete">
-        <default key="_controller">zentlix_main.admin.site_controller::delete</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\SiteController::delete</default>
     </route>
     <!-- end sites -->
 
     <!-- templates -->
     <route id="admin.template.list" path="/backend/templates/list">
-        <default key="_controller">zentlix_main.admin.template_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\TemplateController::index</default>
     </route>
     <route id="admin.template.update" path="/backend/templates/{id}/edit">
-        <default key="_controller">zentlix_main.admin.template_controller::update</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\TemplateController::update</default>
     </route>
     <!-- end templates -->
 
     <!-- attributes -->
     <route id="admin.attribute.index" path="/backend/settings/attributes">
-        <default key="_controller">zentlix_main.admin.attribute_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController::index</default>
     </route>
     <route id="admin.attribute.manage" path="/backend/settings/attributes/{entity}">
-        <default key="_controller">zentlix_main.admin.attribute_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController::index</default>
     </route>
     <route id="admin.attribute.create" path="/backend/settings/attributes/{entity}/create" methods="POST">
-        <default key="_controller">zentlix_main.admin.attribute_controller::create</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController::create</default>
     </route>
     <route id="admin.attribute.update" path="/backend/settings/attributes/{id}/edit">
-        <default key="_controller">zentlix_main.admin.attribute_controller::update</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController::update</default>
     </route>
     <route id="admin.attribute.delete" path="/backend/settings/attributes/{id}/delete">
-        <default key="_controller">zentlix_main.admin.attribute_controller::delete</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\AttributeController::delete</default>
     </route>
     <!-- end attributes -->
 
     <!-- locales -->
     <route id="admin.locale.list" path="/backend/settings/locales/list">
-        <default key="_controller">zentlix_main.admin.locale_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\LocaleController::index</default>
     </route>
     <route id="admin.locale.update" path="/backend/settings/locales/{id}/edit">
-        <default key="_controller">zentlix_main.admin.locale_controller::update</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\LocaleController::update</default>
     </route>
     <!-- end locales -->
 
     <!-- bundles -->
     <route id="admin.bundle.list" path="/backend/settings/bundles/list">
-        <default key="_controller">zentlix_main.admin.bundle_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController::index</default>
     </route>
     <route id="admin.bundle.update" path="/backend/settings/bundles/{id}/edit">
-        <default key="_controller">zentlix_main.admin.bundle_controller::changeSettings</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController::changeSettings</default>
     </route>
     <!-- end bundles-->
 
     <!-- composer -->
     <route id="admin.bundle.composer_require" path="/backend/settings/bundles/composer/require">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.composer_controller::require</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\ComposerController::require</default>
     </route>
     <route id="admin.bundle.composer_remove" path="/backend/settings/bundles/composer/remove">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.composer_controller::remove</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\ComposerController::remove</default>
     </route>
     <!-- end composer -->
 
     <route id="admin.bundle.migrations" path="/backend/settings/bundles/migrations">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.migration_controller::run</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MigrationController::run</default>
     </route>
 
     <!-- install and remove bundles -->
     <route id="admin.bundle.install" path="/backend/settings/bundles/install">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.bundle_controller::install</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController::install</default>
     </route>
     <route id="admin.bundle.remove" path="/backend/settings/bundles/remove">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.bundle_controller::remove</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\BundleController::remove</default>
     </route>
     <!-- end install and remove bundles -->
 
     <route id="admin.marketplace.applications" path="/backend/marketplace/applications">
-        <default key="_controller">zentlix_main.admin.marketplace_controller::applications</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\MarketplaceController::applications</default>
     </route>
 
     <!-- visual editor -->
     <route id="admin.editor.enable" path="/backend/editor/enable">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.editor_controller::enable</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController::enable</default>
     </route>
     <route id="admin.editor.disable" path="/backend/editor/disable">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.editor_controller::disable</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController::disable</default>
     </route>
     <route id="admin.editor.edit" path="/backend/editor/edit">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.editor_controller::visualEdit</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController::visualEdit</default>
     </route>
     <route id="admin.editor.fast_edit" path="/backend/editor/fast-edit">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.admin.editor_controller::fastEdit</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\Admin\EditorController::fastEdit</default>
     </route>
     <!-- end visual editor -->
 
     <route id="file.upload" path="/file/upload">
         <condition>request.isXmlHttpRequest()</condition>
-        <default key="_controller">zentlix_main.file_controller::upload</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\FileController::upload</default>
     </route>
 
     <route id="index" path="/">
-        <default key="_controller">zentlix_main.index_controller::index</default>
+        <default key="_controller">Zentlix\MainBundle\UI\Http\Web\Controller\IndexController::index</default>
     </route>
 </routes>

@@ -19,7 +19,6 @@ use Zentlix\MainBundle\Application\Command\Attribute\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Attribute\UpdateCommand;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Attribute\Repository\AttributeRepository")
@@ -28,7 +27,6 @@ use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 class Attribute implements Eventable
 {
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */

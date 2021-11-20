@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\DataTable\Service;
@@ -20,32 +12,32 @@ use Omines\DataTablesBundle\Column\AbstractColumn;
 use Omines\DataTablesBundle\DataTableRendererInterface;
 use Omines\DataTablesBundle\DependencyInjection\Instantiator;
 use Omines\DataTablesBundle\DataTableFactory as BaseDataTableFactory;
+use Omines\DataTablesBundle\Exporter\DataTableExporterManager;
 use Zentlix\MainBundle\Domain\DataTable\Entity\DataTable as DataTableEntity;
 
 class DataTableFactory extends BaseDataTableFactory
 {
-    private EntityManagerInterface $entityManager;
-    private TokenStorageInterface $tokenStorage;
-
-    public function __construct(array $config,
-                                DataTableRendererInterface $renderer,
-                                Instantiator $instantiator,
-                                EventDispatcherInterface $eventDispatcher,
-                                EntityManagerInterface $entityManager,
-                                TokenStorageInterface $tokenStorage)
-    {
-        $this->entityManager = $entityManager;
-        $this->tokenStorage = $tokenStorage;
-
-        parent::__construct($config, $renderer, $instantiator, $eventDispatcher);
+    public function __construct(
+        array $config,
+        DataTableRendererInterface $renderer,
+        Instantiator $instantiator,
+        DataTableExporterManager $dataTableExporter,
+        EventDispatcherInterface $eventDispatcher,
+        private EntityManagerInterface $entityManager,
+        private TokenStorageInterface $tokenStorage
+    ) {
+        parent::__construct($config, $renderer, $instantiator, $eventDispatcher, $dataTableExporter);
     }
 
-    public function create(array $options = [])
+    public function create(array $options = []): DataTable
     {
         $config = $this->config;
 
-        return (new DataTable($this->eventDispatcher, array_merge($config['options'] ?? [], $options),
-            $this->instantiator))
+        return (
+            new DataTable(
+                $this->eventDispatcher,
+                array_merge($config['options'] ?? [], $options), $this->instantiator, $this->exporterManager
+            ))
             ->setRenderer($this->renderer)
             ->setMethod($config['method'] ?? Request::METHOD_POST)
             ->setPersistState($config['persist_state'] ?? 'fragment')
@@ -56,7 +48,7 @@ class DataTableFactory extends BaseDataTableFactory
             );
     }
 
-    public function createFromType($type, array $typeOptions = [], array $options = [])
+    public function createFromType($type, array $typeOptions = [], array $options = []): DataTable
     {
         $dataTable = $this->create($options);
 
