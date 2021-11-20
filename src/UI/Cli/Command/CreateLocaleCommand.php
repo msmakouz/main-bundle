@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Cli\Command;
@@ -22,13 +14,10 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
 class CreateLocaleCommand extends ConsoleCommand {
 
-    private CommandBus $commandBus;
-
-    public function __construct(CommandBus $commandBus)
-    {
+    public function __construct(
+        private CommandBus $commandBus
+    ) {
         parent::__construct();
-
-        $this->commandBus = $commandBus;
     }
 
     protected function configure(): void
@@ -54,7 +43,7 @@ class CreateLocaleCommand extends ConsoleCommand {
 
             return $code;
         });
-        $command->sort = (int) $io->ask('Locale sort', 1, function ($sort) {
+        $command->sort = (int) $io->ask('Locale sort', '1', function ($sort) {
             if ((int) $sort < 1) {
                 throw new \RuntimeException('Locale sort must be a positive int.');
             }
@@ -79,6 +68,6 @@ class CreateLocaleCommand extends ConsoleCommand {
             "Icon class: $command->icon"
         ]);
 
-        return 0;
+        return self::SUCCESS;
     }
 }

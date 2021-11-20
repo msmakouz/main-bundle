@@ -97,7 +97,7 @@ class EditorController extends AbstractAdminController
         }
         $command = $this->ask(new EditorCommandQuery($entityClass, $code));
 
-        $form['form'] = $this->createForm($formClass, $command);
+        $form['form'] = $this->formFactory->create($formClass, $command);
 
         $translationDomain = $form['form']->getConfig()->getOption('translation_domain');
         if ($label = $form['form']->getConfig()->getOption('label')) {

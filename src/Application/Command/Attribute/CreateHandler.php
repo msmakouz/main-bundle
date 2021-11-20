@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Command\Attribute;
@@ -24,23 +16,13 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class CreateHandler implements CommandHandlerInterface
 {
-    private EntityManagerInterface $entityManager;
-    private EventDispatcherInterface $eventDispatcher;
-    private UniqueCodeSpecification $uniqueCodeSpecification;
-    private ExistByClassBundleSpecification $existByClassBundleSpecification;
-    private BundleRepository $bundleRepository;
-
-    public function __construct(EntityManagerInterface $entityManager,
-                                EventDispatcherInterface $eventDispatcher,
-                                UniqueCodeSpecification $uniqueCodeSpecification,
-                                ExistByClassBundleSpecification $existByClassBundleSpecification,
-                                BundleRepository $bundleRepository)
-    {
-        $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->uniqueCodeSpecification = $uniqueCodeSpecification;
-        $this->existByClassBundleSpecification = $existByClassBundleSpecification;
-        $this->bundleRepository = $bundleRepository;
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private EventDispatcherInterface $eventDispatcher,
+        private UniqueCodeSpecification $uniqueCodeSpecification,
+        private ExistByClassBundleSpecification $existByClassBundleSpecification,
+        private BundleRepository $bundleRepository
+    ) {
     }
 
     public function __invoke(CreateCommand $command): void

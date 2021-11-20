@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Cli\Command;
@@ -21,21 +13,17 @@ use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\RemoveCommand as Remov
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
+
 use function get_class;
 
 class RemoveCommand extends ConsoleCommand {
 
-    private CommandBus $commandBus;
-    private Bundles $bundles;
-    private BundleRepository $bundleRepository;
-
-    public function __construct(CommandBus $commandBus, Bundles $bundles, BundleRepository $bundleRepository)
-    {
+    public function __construct(
+        private CommandBus $commandBus,
+        private Bundles $bundles,
+        private BundleRepository $bundleRepository
+    ) {
         parent::__construct();
-
-        $this->bundles = $bundles;
-        $this->bundleRepository = $bundleRepository;
-        $this->commandBus = $commandBus;
     }
 
     protected function configure(): void
@@ -56,12 +44,12 @@ class RemoveCommand extends ConsoleCommand {
         } catch (\Exception $exception) {
             $io->error($exception->getMessage());
 
-            return 1;
+            return self::FAILURE;
         }
 
         $io->success(sprintf('Bundle %s successfully removed!', $package));
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function removeBundle(string $package, SymfonyStyle $io): void

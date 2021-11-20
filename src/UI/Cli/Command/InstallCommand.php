@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Cli\Command;
@@ -23,15 +15,11 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
 class InstallCommand extends ConsoleCommand {
 
-    private CommandBus $commandBus;
-    private Bundles $bundles;
-
-    public function __construct(CommandBus $commandBus, Bundles $bundles)
-    {
+    public function __construct(
+        private CommandBus $commandBus,
+        private Bundles $bundles
+    ) {
         parent::__construct();
-
-        $this->bundles = $bundles;
-        $this->commandBus = $commandBus;
     }
 
     protected function configure(): void
@@ -56,12 +44,12 @@ class InstallCommand extends ConsoleCommand {
         } catch (\Exception $exception) {
             $io->error($exception->getMessage());
 
-            return 1;
+            return self::FAILURE;
         }
 
         $io->success(sprintf('%s successfully installed!', $package ? sprintf('Bundle %s', $package) : 'Zentlix CMS'));
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function installSingleBundle(string $package, SymfonyStyle $io): void

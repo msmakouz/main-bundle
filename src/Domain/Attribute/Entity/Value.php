@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\Attribute\Entity;
 
 use Doctrine\ORM\Mapping;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Attribute\Repository\ValueRepository")
@@ -22,7 +21,6 @@ use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 class Value
 {
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */

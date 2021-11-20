@@ -43,7 +43,7 @@ class TemplateRepository extends ServiceEntityRepository
 
         $result = [];
         foreach ($templates as $template) {
-            $result[$template['id']->toString()] = $template['title'];
+            $result[$template['id']->toRfc4122()] = $template['title'];
         }
 
         return $result;

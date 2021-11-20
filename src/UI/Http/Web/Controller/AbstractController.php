@@ -1,91 +1,97 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as BaseController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Site\Entity\Site;
-use Zentlix\MainBundle\Domain\Site\Service\Sites;
-use Zentlix\MainBundle\Domain\Template\Entity\Template;
-use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
-use Zentlix\MainBundle\Infrastructure\Share\Bus\QueryBus;
-use function array_key_exists;
+use Twig\Environment;
 
-class AbstractController extends BaseController implements AbstractControllerInterface
+abstract class AbstractController implements AbstractControllerInterface
 {
-    /** @var Template current template */
-    protected Template $template;
-
-    /** @var Site current site */
-    protected Site $site;
-
-    protected TranslatorInterface $translator;
-    private CommandBus $commandBus;
-    private QueryBus $queryBus;
-
-    public function __construct(Sites $sites, TranslatorInterface $translator, CommandBus $commandBus, QueryBus $queryBus)
-    {
-        $site = $sites->getCurrentSite();
-
-        $this->site = $site;
-        $this->template = $this->site->getTemplate();
-        $this->translator = $translator;
-        $this->commandBus = $commandBus;
-        $this->queryBus = $queryBus;
+    public function __construct(
+        protected HttpFoundation\RequestStack $requestStack,
+        protected SerializerInterface $serializer,
+        protected AuthorizationCheckerInterface $authorizationChecker,
+        protected FormFactoryInterface $formFactory,
+        protected ParameterBag $parameterBag,
+        protected RouterInterface $router,
+        protected TranslatorInterface $translator,
+        protected Environment $twig,
+        protected TokenStorageInterface $tokenStorage
+    ) {
     }
 
-    public function render(string $view, array $parameters = [], Response $response = null): Response
+    protected function redirect(string $url, int $status = 302): HttpFoundation\RedirectResponse
     {
-        if(array_key_exists('meta_title', $parameters) === false) {
-            $parameters['meta_title'] = '';
-        }
-        if(array_key_exists('meta_description', $parameters) === false) {
-            $parameters['meta_description'] = '';
-        }
-        if(array_key_exists('meta_keywords', $parameters) === false) {
-            $parameters['meta_keywords'] = '';
-        }
-
-        if($view[0] !== '@') {
-            $view = DIRECTORY_SEPARATOR . $this->template->getFolder() . DIRECTORY_SEPARATOR . $view;
-        }
-
-        return parent::render(
-            $view,
-            array_merge($parameters, [
-                'template' => $this->template->getFolder()
-            ]),
-            $response
-        );
+        return new HttpFoundation\RedirectResponse($url, $status);
     }
 
-    /**
-     * @param $command
-     * @throws \Exception
-     */
-    protected function exec($command): void
-    {
-        $this->commandBus->handle($command);
+    protected function redirectToRoute(
+        string $route,
+        array $parameters = [],
+        int $status = 302
+    ): HttpFoundation\RedirectResponse {
+        return $this->redirect($this->router->generate($route, $parameters), $status);
     }
 
-    /**
-     * @param $query
-     * @return mixed
-     * @throws \Exception
-     */
-    protected function ask($query)
+    protected function json(
+        mixed $data,
+        int $status = 200,
+        array $headers = [],
+        array $context = []
+    ): HttpFoundation\JsonResponse {
+        $json = $this->serializer->serialize($data, 'json', array_merge([
+            'json_encode_options' => HttpFoundation\JsonResponse::DEFAULT_ENCODING_OPTIONS,
+        ], $context));
+
+        return new HttpFoundation\JsonResponse($json, $status, $headers, true);
+    }
+
+    protected function addFlash(string $type, mixed $message): void
     {
-        return $this->queryBus->handle($query);
+        try {
+            $this->requestStack->getSession()->getFlashBag()->add($type, $message);
+        } catch (HttpFoundation\Exception\SessionNotFoundException $e) {
+            throw new \LogicException('You cannot use the addFlash method if sessions are disabled.', 0, $e);
+        }
+    }
+
+    protected function renderView(string $view, array $parameters = []): string
+    {
+        return $this->twig->render($view, $parameters);
+    }
+
+    protected function render(
+        string $view,
+        array $parameters = [],
+        HttpFoundation\Response $response = null
+    ): HttpFoundation\Response {
+        $content = $this->renderView($view, $parameters);
+
+        if (null === $response) {
+            $response = new HttpFoundation\Response();
+        }
+
+        $response->setContent($content);
+
+        return $response;
+    }
+
+    protected function getUser(): ?UserInterface
+    {
+        if (null === $token = $this->tokenStorage->getToken()) {
+            return null;
+        }
+
+        return $token->getUser();
     }
 }

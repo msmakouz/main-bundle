@@ -12,15 +12,15 @@ declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Command\Site;
 
+use Symfony\Component\Uid\Uuid;
 use Zentlix\MainBundle\Domain\Shared\ValueObject\Meta;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CreateCommandInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
 
 class CreateCommand extends Command implements CreateCommandInterface
 {
     public function __construct()
     {
-        $this->id   = Uuid::uuid4();
+        $this->id   = Uuid::v4();
         $this->meta = new Meta();
     }
 }

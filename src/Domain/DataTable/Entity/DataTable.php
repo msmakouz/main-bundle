@@ -13,9 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\DataTable\Entity;
 
 use Doctrine\ORM\Mapping;
+use Symfony\Component\Uid\Uuid;
 use Zentlix\UserBundle\Domain\User\Entity\User;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\DataTable\Repository\DataTableRepository")
@@ -24,7 +23,6 @@ use Zentlix\MainBundle\Infrastructure\Share\Doctrine\Uuid;
 class DataTable
 {
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */
@@ -44,7 +42,7 @@ class DataTable
 
     public function __construct(string $dataTable, array $config, User $user)
     {
-        $this->id        = Uuid::uuid4();
+        $this->id        = Uuid::v4();
         $this->datatable = $dataTable;
         $this->config    = $config;
         $this->user      = $user;

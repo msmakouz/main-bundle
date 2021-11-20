@@ -18,7 +18,6 @@ use Zentlix\MainBundle\Application\Command\Locale\UpdateCommand;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
-use Zentlix\MainBundle\Infrastructure\Share\Doctrine\UuidInterface;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository")
@@ -31,7 +30,6 @@ class Locale implements Eventable, SupportAttributeInterface
     use SortTrait;
 
     /**
-     * @var UuidInterface
      * @Mapping\Id
      * @Mapping\Column(type="uuid", unique=true)
      */
