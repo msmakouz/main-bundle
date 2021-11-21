@@ -19,6 +19,6 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
       - name: Install Dependencies
-        run: composer install --no-interaction --prefer-dist
+        run: COMPOSER_ROOT_VERSION=2.0.x-dev composer install --no-interaction --prefer-dist
       - name: Check CS
         run: vendor/bin/spiral-cs check src/Application src/DependencyInjection src/Domain src/EventListener src/Infrastructure src/UI
