@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\AdminSidebar\Service;
@@ -16,12 +8,11 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class Sidebar implements SidebarInterface
 {
-    private UrlGeneratorInterface $router;
     private array $sidebar = [];
 
-    public function __construct(UrlGeneratorInterface $router)
-    {
-        $this->router = $router;
+    public function __construct(
+        private UrlGeneratorInterface $router
+    ) {
     }
 
     public function getSidebar(): array
@@ -33,7 +24,7 @@ class Sidebar implements SidebarInterface
     {
         $identifier = md5($name);
 
-        if(isset($this->sidebar[$identifier])) {
+        if (isset($this->sidebar[$identifier])) {
             $identifier = md5($name . uniqid('', true));
         }
 
@@ -51,12 +42,12 @@ class Sidebar implements SidebarInterface
 
     public function getMenuItem(string $identifier): MenuItemInterface
     {
-        if(isset($this->sidebar[$identifier])) {
+        if (isset($this->sidebar[$identifier])) {
             return $this->sidebar[$identifier];
         }
         $identifier = md5($identifier);
 
-        if(!isset($this->sidebar[$identifier])) {
+        if (!isset($this->sidebar[$identifier])) {
             throw new \Exception(sprintf('Menu item %s not found.', $identifier));
         }
 
@@ -65,12 +56,12 @@ class Sidebar implements SidebarInterface
 
     public function findMenuItem(string $identifier): ?MenuItemInterface
     {
-        if(isset($this->sidebar[$identifier])) {
+        if (isset($this->sidebar[$identifier])) {
             return $this->sidebar[$identifier];
         }
         $identifier = md5($identifier);
 
-        if(isset($this->sidebar[$identifier])) {
+        if (isset($this->sidebar[$identifier])) {
             return $this->sidebar[$identifier];
         }
 
@@ -81,8 +72,8 @@ class Sidebar implements SidebarInterface
     {
         $sidebar = $this->sidebar;
 
-        uasort($sidebar, function(MenuItemInterface $a, MenuItemInterface $b) {
-            return ($a->getSort() - $b->getSort());
+        uasort($sidebar, function (MenuItemInterface $a, MenuItemInterface $b) {
+            return $a->getSort() - $b->getSort();
         });
 
         /** @var MenuItemInterface $menuItem */

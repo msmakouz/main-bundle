@@ -24,7 +24,7 @@ final class AttributeExtension extends AbstractExtension
                 $templateId = $this->sites->getCurrentSite()->getTemplate()->getId()->toRfc4122();
 
                 return $this->attributes->getTemplateAttribute($templateId, $code);
-            }, ['needs_environment' => false])
+            }, ['needs_environment' => false]),
         ];
     }
 }

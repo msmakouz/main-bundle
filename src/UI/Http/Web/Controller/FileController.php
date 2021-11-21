@@ -24,8 +24,8 @@ class FileController extends AbstractSiteController
         } catch (\Exception $e) {
             return $this->json([
                 'error' => [
-                    'message' => $e->getMessage()
-                ]
+                    'message' => $e->getMessage(),
+                ],
             ]);
         }
     }

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Type;
@@ -24,7 +16,6 @@ use Zentlix\MainBundle\Infrastructure\Attribute\Type\AbstractEditorType;
 use Zentlix\MainBundle\UI\Http\Web\Form\Attribute\EditorType\CreateForm;
 use Zentlix\MainBundle\UI\Http\Web\Form\Attribute\EditorType\UpdateForm;
 use Zentlix\MainBundle\UI\Http\Web\Type;
-use function is_null;
 
 final class EditorType extends AbstractEditorType implements AttributeTypeInterface
 {
@@ -52,31 +43,36 @@ final class EditorType extends AbstractEditorType implements AttributeTypeInterf
     public function getCreateForm(array $options = []): string
     {
         return $this->twig->render('@MainBundle/admin/attributes/types/create.html.twig', [
-            'form'   => $this->formFactory->create(CreateForm::class, new CreateCommand($options['entity']))->createView(),
-            'entity' => $options['entity']
+            'form' => $this->formFactory->create(CreateForm::class, new CreateCommand($options['entity']))
+                ->createView(),
+            'entity' => $options['entity'],
         ]);
     }
 
     public function getUpdateForm($attribute, array $options = []): string
     {
         return $this->twig->render('@MainBundle/admin/attributes/types/update.html.twig', [
-            'form'      => $this->formFactory->create(UpdateForm::class, new UpdateCommand($attribute))->createView(),
-            'attribute' => $attribute
+            'form' => $this->formFactory->create(UpdateForm::class, new UpdateCommand($attribute))->createView(),
+            'attribute' => $attribute,
         ]);
     }
 
-    public function buildField(FormBuilderInterface $builder, array $options, Attribute $attribute, SupportAttributeInterface $entity = null): void
-    {
+    public function buildField(
+        FormBuilderInterface $builder,
+        array $options,
+        Attribute $attribute,
+        SupportAttributeInterface $entity = null
+    ): void {
         $config = $attribute->getConfig();
 
         $value = null;
-        if($entity) {
+        if ($entity) {
             $value = $this->repository->findOneByAttributeAndEntity($attribute->getId(), $entity->getId());
         }
 
         $builder->add($attribute->getCode(), Type\EditorType::class, [
             'label' => $attribute->getTitle(),
-            'data'  => !is_null($value) ? (string) $value->getValue() : (string) $config['default']
+            'data' => !\is_null($value) ? (string) $value->getValue() : (string) $config['default'],
         ]);
     }
 }

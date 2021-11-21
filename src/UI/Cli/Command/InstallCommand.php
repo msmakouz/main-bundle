@@ -13,8 +13,8 @@ use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand as Inst
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
-class InstallCommand extends ConsoleCommand {
-
+class InstallCommand extends ConsoleCommand
+{
     public function __construct(
         private CommandBus $commandBus,
         private Bundles $bundles
@@ -36,7 +36,7 @@ class InstallCommand extends ConsoleCommand {
         $io = new SymfonyStyle($input, $output);
 
         try {
-            if($package) {
+            if ($package) {
                 $this->installSingleBundle($package, $io);
             } else {
                 $this->installCMS($io);

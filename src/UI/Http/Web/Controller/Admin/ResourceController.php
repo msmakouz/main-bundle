@@ -61,7 +61,8 @@ class ResourceController extends AbstractAdminController
     public function updateResource(
         CommandInterface $command,
         string $formClass,
-        string $template, array $parameters = []
+        string $template,
+        array $parameters = []
     ): Response {
         $form = $this->formFactory->create($formClass, $command);
 
@@ -100,16 +101,16 @@ class ResourceController extends AbstractAdminController
 
     private function getRedirectRoute(array $route = null): string
     {
-       if(\is_null($route)) {
-           return static::$redirectAfterAction;
-       }
+        if (\is_null($route)) {
+            return static::$redirectAfterAction;
+        }
 
         return $route[0];
     }
 
     private function getRedirectRouteParam(array $route = null): array
     {
-        if(\is_null($route)) {
+        if (\is_null($route)) {
             return [];
         }
 

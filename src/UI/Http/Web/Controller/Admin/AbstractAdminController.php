@@ -76,7 +76,7 @@ abstract class AbstractAdminController extends AbstractController
 
         $route = static::$redirectErrorPath;
         $parameters = [];
-        if(is_array(static::$redirectErrorPath)) {
+        if (is_array(static::$redirectErrorPath)) {
             $route = static::$redirectErrorPath[0];
             $parameters = static::$redirectErrorPath[1];
         }
@@ -89,15 +89,15 @@ abstract class AbstractAdminController extends AbstractController
         return $this->json(['success' => false, 'message' => $message]);
     }
 
-    private function checkAccess(Bus\CommandInterface|Bus\QueryInterface $command)
+    private function checkAccess(Bus\CommandInterface|Bus\QueryInterface $command): void
     {
-        if(!$this->bundles->isBundle($command::class)) {
+        if (!$this->bundles->isBundle($command::class)) {
             return;
         }
 
         $rights = $this->bundles->getBundleByNamespace($command::class)->configureRights();
 
-        if(isset($rights[$command::class]) && !$this->getUser()->isAccessGranted($command::class)) {
+        if (isset($rights[$command::class]) && !$this->getUser()->isAccessGranted($command::class)) {
             throw new \Exception('zentlix_main.access_denied');
         }
     }

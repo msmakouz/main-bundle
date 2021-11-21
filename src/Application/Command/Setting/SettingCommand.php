@@ -20,7 +20,7 @@ class SettingCommand extends DynamicPropertyCommand implements CommandInterface,
 
     public function __construct(Setting $setting)
     {
-        $this->setting        = $setting;
+        $this->setting = $setting;
         $this->default_locale = $setting->getDefaultLocale()->getId()->toRfc4122();
     }
 

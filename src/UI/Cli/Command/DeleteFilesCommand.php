@@ -29,7 +29,7 @@ class DeleteFilesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->files->CleaningGarbage();
+        $this->files->cleaningGarbage();
 
         $io->success('Unused files successfully deleted.');
 

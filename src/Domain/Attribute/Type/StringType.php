@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Type;
@@ -29,7 +21,6 @@ use Zentlix\MainBundle\UI\Http\Web\Type\PasswordType;
 use Zentlix\MainBundle\UI\Http\Web\Type\TextareaType;
 use Zentlix\MainBundle\UI\Http\Web\Type\TextType;
 use Zentlix\UserBundle\Domain\User\ValueObject\Email;
-use function is_null;
 
 final class StringType extends AbstractStringType implements AttributeTypeInterface
 {
@@ -47,7 +38,7 @@ final class StringType extends AbstractStringType implements AttributeTypeInterf
     public function normalizeValue($value, Attribute $attribute)
     {
         $config = $attribute->getConfig();
-        if($config['type'] === 'email') {
+        if ('email' === $config['type']) {
             return new Email($value->getValue());
         }
 
@@ -62,31 +53,36 @@ final class StringType extends AbstractStringType implements AttributeTypeInterf
     public function getCreateForm(array $options = []): string
     {
         return $this->twig->render('@MainBundle/admin/attributes/types/create.html.twig', [
-            'form'   => $this->formFactory->create(CreateForm::class, new CreateCommand($options['entity']))->createView(),
-            'entity' => $options['entity']
+            'form' => $this->formFactory->create(CreateForm::class, new CreateCommand($options['entity']))
+                ->createView(),
+            'entity' => $options['entity'],
         ]);
     }
 
     public function getUpdateForm($attribute, array $options = []): string
     {
         return $this->twig->render('@MainBundle/admin/attributes/types/update.html.twig', [
-            'form'      => $this->formFactory->create(UpdateForm::class, new UpdateCommand($attribute))->createView(),
-            'attribute' => $attribute
+            'form' => $this->formFactory->create(UpdateForm::class, new UpdateCommand($attribute))->createView(),
+            'attribute' => $attribute,
         ]);
     }
 
-    public function buildField(FormBuilderInterface $builder, array $options, Attribute $attribute, SupportAttributeInterface $entity = null): void
-    {
+    public function buildField(
+        FormBuilderInterface $builder,
+        array $options,
+        Attribute $attribute,
+        SupportAttributeInterface $entity = null
+    ): void {
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
-            'type'     => 'text',
+            'type' => 'text',
             'required' => false,
-            'default'  => null
+            'default' => null,
         ]);
         $config = $resolver->resolve($attribute->getConfig());
 
         $value = null;
-        if($entity) {
+        if ($entity) {
             $value = $this->repository->findOneByAttributeAndEntity($attribute->getId(), $entity->getId());
         }
 
@@ -105,9 +101,9 @@ final class StringType extends AbstractStringType implements AttributeTypeInterf
         }
 
         $params = [
-            'label'    => $attribute->getTitle(),
+            'label' => $attribute->getTitle(),
             'required' => (bool) $config['required'],
-            'data'     => !is_null($value) ? (string) $value->getValue() : (string) $config['default']
+            'data' => !\is_null($value) ? (string) $value->getValue() : (string) $config['default'],
         ];
 
         $builder->add($attribute->getCode(), $type, $params);

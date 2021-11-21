@@ -6,9 +6,9 @@ namespace Zentlix\MainBundle\Application\Command\Attribute;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Zentlix\MainBundle\Domain\Attribute\Entity\Attribute;
 use Zentlix\MainBundle\Domain\Attribute\Event\AfterCreate;
 use Zentlix\MainBundle\Domain\Attribute\Event\BeforeCreate;
-use Zentlix\MainBundle\Domain\Attribute\Entity\Attribute;
 use Zentlix\MainBundle\Domain\Attribute\Specification\UniqueCodeSpecification;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 use Zentlix\MainBundle\Domain\Bundle\Specification\ExistByClassBundleSpecification;
@@ -27,7 +27,7 @@ class CreateHandler implements CommandHandlerInterface
 
     public function __invoke(CreateCommand $command): void
     {
-        if($command->code) {
+        if ($command->code) {
             $this->uniqueCodeSpecification->isUnique($command->code, $command->attributeEntity);
         }
         $this->existByClassBundleSpecification->isExist($command->bundle);

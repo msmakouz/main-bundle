@@ -13,7 +13,7 @@ class IndexController extends AbstractSiteController
         return $this->render('index.html.twig', [
             'meta_title' => $this->site->getMetaTitle(),
             'meta_description' => $this->site->getMetaDescription(),
-            'meta_keywords' => $this->site->getMetaKeywords()
+            'meta_keywords' => $this->site->getMetaKeywords(),
         ]);
     }
 }

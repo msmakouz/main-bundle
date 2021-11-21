@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Entity;
@@ -71,17 +63,17 @@ class Attribute implements Eventable
 
     public function __construct(CreateCommand $command)
     {
-        $this->id             = $command->id;
-        $this->entity         = $command->attributeEntity;
-        $this->bundle         = $command->bundle;
-        $this->editable       = $command->editable;
+        $this->id = $command->id;
+        $this->entity = $command->attributeEntity;
+        $this->bundle = $command->bundle;
+        $this->editable = $command->editable;
         $this->attribute_type = $command->attribute_type;
-        $this->values         = new ArrayCollection();
+        $this->values = new ArrayCollection();
 
         $this->setValuesFromCommands($command);
     }
 
-    public function update(UpdateCommand $command)
+    public function update(UpdateCommand $command): void
     {
         $this->setValuesFromCommands($command);
     }
@@ -144,9 +136,9 @@ class Attribute implements Eventable
     /** @param CreateCommand|UpdateCommand $command */
     private function setValuesFromCommands($command): void
     {
-        $this->title  = $command->title;
-        $this->code   = $command->code;
-        $this->sort   = $command->sort;
+        $this->title = $command->title;
+        $this->code = $command->code;
+        $this->sort = $command->sort;
         $this->active = $command->active;
         $this->config = $command->config;
     }

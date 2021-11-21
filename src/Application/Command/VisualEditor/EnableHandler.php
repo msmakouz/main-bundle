@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Command\VisualEditor;
@@ -20,13 +12,10 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 
 class EnableHandler implements CommandHandlerInterface
 {
-    private VisualEditor $visualEditor;
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(VisualEditor $editor, EventDispatcherInterface $eventDispatcher)
-    {
-        $this->visualEditor = $editor;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(
+        private VisualEditor $visualEditor,
+        private EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
     public function __invoke(EnableCommand $command): void

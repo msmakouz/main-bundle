@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Shared\Repository;
@@ -20,7 +12,7 @@ trait GetTrait
     {
         $object = $this->find($id, $lockMode, $lockVersion);
 
-        if(!$object) {
+        if (!$object) {
             throw new NotFoundException('Entity not found.');
         }
 
@@ -31,7 +23,7 @@ trait GetTrait
     {
         $object = $this->findOneBy($criteria, $orderBy);
 
-        if(!$object) {
+        if (!$object) {
             throw new NotFoundException('Entity not found.');
         }
 

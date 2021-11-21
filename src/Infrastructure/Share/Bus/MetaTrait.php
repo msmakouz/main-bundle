@@ -1,21 +1,13 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Infrastructure\Share\Bus;
 
 use Zentlix\MainBundle\Domain\Shared\ValueObject\Meta;
 
-trait MetaTrait {
-
+trait MetaTrait
+{
     protected ?Meta $meta = null;
 
     public function setMetaTitle(string $title = null): void
@@ -68,9 +60,9 @@ trait MetaTrait {
         $this->meta->keywords = $keywords;
     }
 
-    private function initialize()
+    private function initialize(): void
     {
-        if(!$this->meta instanceof Meta) {
+        if (!$this->meta instanceof Meta) {
             $this->meta = new Meta();
         }
     }

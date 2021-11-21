@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\DataTable\Entity;
@@ -42,19 +34,21 @@ class DataTable
 
     public function __construct(string $dataTable, array $config, User $user)
     {
-        $this->id        = Uuid::v4();
+        $this->id = Uuid::v4();
         $this->datatable = $dataTable;
-        $this->config    = $config;
-        $this->user      = $user;
+        $this->config = $config;
+        $this->user = $user;
     }
 
-    public function update(array $config)
+    public function update(array $config): void
     {
         $this->config = $config;
     }
 
     public function isVisible(string $field): bool
     {
-        return isset($this->config['visible']) && is_array($this->config['visible']) && in_array($field, $this->config['visible']);
+        return isset($this->config['visible']) &&
+            is_array($this->config['visible']) &&
+            in_array($field, $this->config['visible'], true);
     }
 }

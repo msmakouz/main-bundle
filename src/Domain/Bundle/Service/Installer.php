@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Service;
@@ -50,11 +42,14 @@ class Installer
         $routesDir = $this->getBundleResourceDir($class) . 'global/routes';
 
         $finder = new Finder();
-        if(is_dir($routesDir)) {
+        if (is_dir($routesDir)) {
             $routes = $finder->files()->in($routesDir);
-            if($routes->hasResults()) {
+            if ($routes->hasResults()) {
                 foreach ($finder as $file) {
-                    $this->filesystem->copy($file->getRealPath(), $this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename());
+                    $this->filesystem->copy(
+                        $file->getRealPath(),
+                        $this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename()
+                    );
                 }
             }
         }
@@ -65,12 +60,14 @@ class Installer
         $routesDir = $this->getBundleResourceDir($class) . 'global/routes';
 
         $finder = new Finder();
-        if(is_dir($routesDir)) {
+        if (is_dir($routesDir)) {
             $routes = $finder->files()->in($routesDir);
-            if($routes->hasResults()) {
+            if ($routes->hasResults()) {
                 foreach ($finder as $file) {
-                    if(is_file($this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename())) {
-                        $this->filesystem->remove($this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename());
+                    if (is_file($this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename())) {
+                        $this->filesystem->remove(
+                            $this->kernel->getProjectDir() . '/config/routes/' . $file->getFilename()
+                        );
                     }
                 }
             }
@@ -81,7 +78,7 @@ class Installer
     {
         $publicDir = $this->getBundleResourceDir($class) . 'global/public';
 
-        if(is_dir($publicDir)) {
+        if (is_dir($publicDir)) {
             $this->filesystem->mirror($publicDir, $this->kernel->getProjectDir() . '/public/zentlix/');
         }
     }
@@ -90,12 +87,14 @@ class Installer
     {
         $publicDir = $this->getBundleResourceDir($class) . 'global/public';
 
-        if(is_dir($publicDir)) {
+        if (is_dir($publicDir)) {
             $finder = new Finder();
             $public = $finder->in($publicDir);
-            if($public->hasResults()) {
+            if ($public->hasResults()) {
                 foreach ($public as $element) {
-                    $this->filesystem->remove($this->kernel->getProjectDir() . '/public/zentlix/' . $element->getFilename());
+                    $this->filesystem->remove(
+                        $this->kernel->getProjectDir() . '/public/zentlix/' . $element->getFilename()
+                    );
                 }
             }
         }
@@ -105,7 +104,7 @@ class Installer
     {
         $templatesDir = $this->getBundleResourceDir($class) . 'global/templates';
 
-        if(is_dir($templatesDir)) {
+        if (is_dir($templatesDir)) {
             $this->filesystem->mirror($templatesDir, $this->kernel->getProjectDir() . '/templates/');
         }
     }
@@ -114,10 +113,10 @@ class Installer
     {
         $templatesDir = $this->getBundleResourceDir($class) . 'global/templates';
 
-        if(is_dir($templatesDir)) {
+        if (is_dir($templatesDir)) {
             $finder = new Finder();
             $templates = $finder->in($templatesDir);
-            if($templates->hasResults()) {
+            if ($templates->hasResults()) {
                 foreach ($templates as $element) {
                     $this->filesystem->remove($this->kernel->getProjectDir() . '/templates/' . $element->getFilename());
                 }

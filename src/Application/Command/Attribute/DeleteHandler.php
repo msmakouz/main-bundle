@@ -6,8 +6,8 @@ namespace Zentlix\MainBundle\Application\Command\Attribute;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Domain\Attribute\Event\BeforeDelete;
 use Zentlix\MainBundle\Domain\Attribute\Event\AfterDelete;
+use Zentlix\MainBundle\Domain\Attribute\Event\BeforeDelete;
 use Zentlix\MainBundle\Domain\Cache\Service\Cache;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 

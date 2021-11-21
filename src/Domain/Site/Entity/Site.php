@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Site\Entity;
@@ -15,10 +7,10 @@ namespace Zentlix\MainBundle\Domain\Site\Entity;
 use Doctrine\ORM\Mapping;
 use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Site\UpdateCommand;
+use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MainBundle\Domain\Shared\Entity\MetaTrait;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
-use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
 use Zentlix\MainBundle\Domain\Template\Entity\Template;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
 
@@ -30,7 +22,8 @@ use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface
  */
 class Site implements Eventable, SupportAttributeInterface
 {
-    use MetaTrait, SortTrait;
+    use MetaTrait;
+    use SortTrait;
 
     /**
      * @Mapping\Id

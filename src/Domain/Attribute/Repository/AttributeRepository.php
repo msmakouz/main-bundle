@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Repository;
@@ -28,7 +20,8 @@ use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
  */
 class AttributeRepository extends ServiceEntityRepository
 {
-    use GetTrait, CodeTrait;
+    use GetTrait;
+    use CodeTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -40,13 +33,21 @@ class AttributeRepository extends ServiceEntityRepository
         return $this->findBy([], ['sort' => 'ASC']);
     }
 
-    public function findEditableByEntity(string $entity, array $orderBy = ['sort' => 'ASC'], $limit = null, $offset = null): array
-    {
+    public function findEditableByEntity(
+        string $entity,
+        array $orderBy = ['sort' => 'ASC'],
+        $limit = null,
+        $offset = null
+    ): array {
         return $this->findBy(['entity' => $entity, 'editable' => 1], $orderBy, $limit, $offset);
     }
 
-    public function findActiveByEntity(string $entity, array $orderBy = ['sort' => 'ASC'], $limit = null, $offset = null): array
-    {
+    public function findActiveByEntity(
+        string $entity,
+        array $orderBy = ['sort' => 'ASC'],
+        $limit = null,
+        $offset = null
+    ): array {
         return $this->findBy(['entity' => $entity, 'active' => 1], $orderBy, $limit, $offset);
     }
 

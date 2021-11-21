@@ -7,13 +7,13 @@ namespace Zentlix\MainBundle\UI\Cli\Command;
 use Symfony\Component\Console\Command\Command as ConsoleCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Zentlix\MainBundle\Application\Command\Locale\CreateCommand;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
-class CreateLocaleCommand extends ConsoleCommand {
-
+class CreateLocaleCommand extends ConsoleCommand
+{
     public function __construct(
         private CommandBus $commandBus
     ) {
@@ -65,7 +65,7 @@ class CreateLocaleCommand extends ConsoleCommand {
             "Title: $command->title",
             "Code: $command->code",
             "Sort: $command->sort",
-            "Icon class: $command->icon"
+            "Icon class: $command->icon",
         ]);
 
         return self::SUCCESS;

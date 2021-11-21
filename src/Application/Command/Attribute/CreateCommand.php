@@ -12,8 +12,8 @@ class CreateCommand extends Command implements CreateCommandInterface
 {
     public function __construct(string $entity)
     {
-        $this->id              = Uuid::v4();
+        $this->id = Uuid::v4();
         $this->attributeEntity = $entity;
-        $this->bundle          = MainBundle::class;
+        $this->bundle = MainBundle::class;
     }
 }

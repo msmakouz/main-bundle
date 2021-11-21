@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Dashboard\Service;
@@ -25,7 +17,7 @@ class Widgets
         }
     }
 
-    public function addWidget(WidgetInterface $widget)
+    public function addWidget(WidgetInterface $widget): void
     {
         $this->widgets[get_class($widget)] = $widget;
     }
@@ -37,7 +29,7 @@ class Widgets
 
     public function get(string $class): WidgetInterface
     {
-        if(isset($this->widgets[$class])) {
+        if (isset($this->widgets[$class])) {
             return $this->widgets[$class];
         }
 
@@ -46,7 +38,7 @@ class Widgets
 
     public function find(string $class): ?WidgetInterface
     {
-        if(isset($this->widgets[$class])) {
+        if (isset($this->widgets[$class])) {
             return $this->widgets[$class];
         }
 
