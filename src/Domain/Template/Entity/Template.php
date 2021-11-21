@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Template\Entity;
@@ -44,10 +36,10 @@ class Template implements Eventable, SupportAttributeInterface
 
     public function __construct(CreateCommand $command)
     {
-        $this->id     = $command->id;
-        $this->title  = $command->title;
+        $this->id = $command->id;
+        $this->title = $command->title;
         $this->folder = $command->folder;
-        $this->sort   = $command->sort;
+        $this->sort = $command->sort;
     }
 
     public function update(UpdateCommand $command): void
@@ -78,10 +70,12 @@ class Template implements Eventable, SupportAttributeInterface
 
     public function getConfigParam(string $param, $default = null)
     {
-        $config = Yaml::parseFile(dirname(__DIR__, 7) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->folder .
-            DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'config.yaml');
+        $config = Yaml::parseFile(
+            dirname(__DIR__, 7) . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . $this->folder .
+            DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'config.yaml'
+        );
 
-        if(!is_array($config)) {
+        if (!is_array($config)) {
             return $default;
         }
 

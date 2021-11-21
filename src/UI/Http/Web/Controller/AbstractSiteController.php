@@ -39,8 +39,7 @@ abstract class AbstractSiteController extends AbstractController
         protected TokenStorageInterface $tokenStorage,
         private Bus\CommandBus $commandBus,
         private Bus\QueryBus $queryBus
-    )
-    {
+    ) {
         $site = $sites->getCurrentSite();
 
         $this->site = $site;
@@ -68,7 +67,7 @@ abstract class AbstractSiteController extends AbstractController
         $parameters['meta_description'] ??= '';
         $parameters['meta_keywords'] ??= '';
 
-        if($view[0] !== '@') {
+        if ('@' !== $view[0]) {
             $view = DIRECTORY_SEPARATOR . $this->template->getFolder() . DIRECTORY_SEPARATOR . $view;
         }
 
@@ -78,7 +77,7 @@ abstract class AbstractSiteController extends AbstractController
             $response
         );
     }
-    
+
     protected function exec(Bus\CommandInterface $command): void
     {
         $this->commandBus->handle($command);

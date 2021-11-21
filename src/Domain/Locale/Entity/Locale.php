@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Locale\Entity;
@@ -46,14 +38,14 @@ class Locale implements Eventable, SupportAttributeInterface
 
     public function __construct(CreateCommand $command)
     {
-        $this->id    = $command->id;
+        $this->id = $command->id;
         $this->title = $command->title;
-        $this->code  = $command->code;
-        $this->sort  = $command->sort;
-        $this->icon  = $command->icon;
+        $this->code = $command->code;
+        $this->sort = $command->sort;
+        $this->icon = $command->icon;
     }
 
-    public function update(UpdateCommand $command)
+    public function update(UpdateCommand $command): void
     {
         $this->title = $command->title;
         $this->sort = $command->sort;

@@ -17,7 +17,8 @@ use Zentlix\MainBundle\Domain\Site\Entity\Site;
  */
 class SiteRepository extends ServiceEntityRepository
 {
-    use GetTrait, MaxSortTrait;
+    use GetTrait;
+    use MaxSortTrait;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -31,11 +32,11 @@ class SiteRepository extends ServiceEntityRepository
 
     public function isSingle(): bool
     {
-        return $this->createQueryBuilder('s')
+        return 1 === $this->createQueryBuilder('s')
             ->select('count(site.id)')
-            ->from(Site::class,'site')
+            ->from(Site::class, 'site')
             ->getQuery()
-            ->getSingleScalarResult() == 1 ?: false;
+            ->getSingleScalarResult() ?: false;
     }
 
     public function hasByUrl($url): bool

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Application\Command\Attribute;
@@ -19,8 +11,6 @@ use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
 
 class Command implements CommandInterface
 {
-    protected Attribute $entity;
-
     public $id;
     public array $config = [];
     public ?string $title = null;
@@ -33,16 +23,11 @@ class Command implements CommandInterface
     /** @Constraints\NotBlank() */
     public int $sort = 0;
     public ?string $attribute_type = null;
-
-
-    public function getEntity(): Attribute
-    {
-        return $this->entity;
-    }
+    protected Attribute $entity;
 
     public function __get($param)
     {
-        if($this->__isset($param)) {
+        if ($this->__isset($param)) {
             return $this->config[$param];
         }
 
@@ -57,5 +42,10 @@ class Command implements CommandInterface
     public function __isset($param): bool
     {
         return isset($this->config[$param]);
+    }
+
+    public function getEntity(): Attribute
+    {
+        return $this->entity;
     }
 }

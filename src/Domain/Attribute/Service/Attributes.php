@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Service;
@@ -18,10 +10,6 @@ use Zentlix\MainBundle\Domain\Attribute\Entity\Attribute;
 use Zentlix\MainBundle\Domain\Attribute\Entity\Value;
 use Zentlix\MainBundle\Domain\Cache\Service\Cache;
 use Zentlix\MainBundle\Infrastructure\Attribute\Entity\SupportAttributeInterface;
-
-use function count;
-use function in_array;
-use function is_null;
 
 class Attributes
 {
@@ -39,7 +27,7 @@ class Attributes
         $classes = [];
         $metas = $this->entityManager->getMetadataFactory()->getAllMetadata();
         foreach ($metas as $meta) {
-            if(in_array(SupportAttributeInterface::class, class_implements($meta->getName()))) {
+            if (\in_array(SupportAttributeInterface::class, class_implements($meta->getName()), true)) {
                 $classes[] = $meta->getName();
             }
         }
@@ -49,11 +37,13 @@ class Attributes
 
     public function saveValues(SupportAttributeInterface $entity, array $attributeValues): void
     {
-        $attributes = $this->entityManager->getRepository(Attribute::class)->findActiveByEntity($entity::getEntityCode());
+        $attributes = $this->entityManager
+            ->getRepository(Attribute::class)
+            ->findActiveByEntity($entity::getEntityCode());
 
         /** @var Attribute $attribute */
         foreach ($attributes as $attribute) {
-            if(isset($attributeValues[$attribute->getCode()])) {
+            if (isset($attributeValues[$attribute->getCode()])) {
                 $oldValues = $this->entityManager
                     ->getRepository(Value::class)
                     ->findByAttributeAndEntity($attribute->getId(), $entity->getId());
@@ -85,7 +75,7 @@ class Attributes
     {
         $attribute = $this->findCachedAttributeByCode($attributeCode);
 
-        if(is_null($attribute)) {
+        if (\is_null($attribute)) {
             return $default;
         }
 
@@ -93,16 +83,18 @@ class Attributes
             ->getRepository(Value::class)
             ->findByAttributeAndEntity($attribute->getId(), $entityId);
 
-        if(count($values) === 0) {
+        if (0 === \count($values)) {
             return $default;
         }
 
         $config = $attribute->getConfig();
-        if(!isset($config['multiple']) || !$config['multiple']) {
+        if (!isset($config['multiple']) || !$config['multiple']) {
             $values = array_shift($values);
         }
 
-        $normalizedValue = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeValue($values, $attribute);
+        $normalizedValue = $this->attributeTypes
+            ->getByCode($attribute->getAttributeType())
+            ->normalizeValue($values, $attribute);
 
         return $normalizedValue;
     }
@@ -111,7 +103,7 @@ class Attributes
     {
         $attribute = $this->findCachedAttributeByCode($code);
 
-        if(is_null($attribute)) {
+        if (\is_null($attribute)) {
             return null;
         }
 
@@ -122,13 +114,13 @@ class Attributes
     {
         $attribute = Cache::findAttribute($code);
 
-        if(!is_null($attribute)) {
+        if (!\is_null($attribute)) {
             return $attribute;
         }
 
         $attribute = $this->entityManager->getRepository(Attribute::class)->findOneByCode($code);
 
-        if($attribute) {
+        if ($attribute) {
             Cache::setAttribute($attribute);
         }
 
@@ -139,7 +131,7 @@ class Attributes
     {
         $cached = Cache::findTemplateAttributeValues($attribute->getCode());
 
-        if(!is_null($cached) && isset($cached[$attribute->getCode()])) {
+        if (!\is_null($cached) && isset($cached[$attribute->getCode()])) {
             return $cached[$attribute->getCode()];
         }
 
@@ -147,16 +139,18 @@ class Attributes
             ->getRepository(Value::class)
             ->findByAttributeAndEntity($attribute->getId(), $templateId);
 
-        if(count($values) === 0) {
+        if (0 === \count($values)) {
             return null;
         }
 
         $config = $attribute->getConfig();
-        if(!isset($config['multiple']) || !$config['multiple']) {
+        if (!isset($config['multiple']) || !$config['multiple']) {
             $values = array_shift($values);
         }
 
-        $normalizedValue = $this->attributeTypes->getByCode($attribute->getAttributeType())->normalizeValue($values, $attribute);
+        $normalizedValue = $this->attributeTypes
+            ->getByCode($attribute->getAttributeType())
+            ->normalizeValue($values, $attribute);
 
         Cache::setTemplateAttributeValues($attribute->getCode(), $normalizedValue);
 

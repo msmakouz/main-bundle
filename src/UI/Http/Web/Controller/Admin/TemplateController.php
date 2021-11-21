@@ -14,17 +14,22 @@ use Zentlix\MainBundle\UI\Http\Web\Form\Template\UpdateForm;
 class TemplateController extends ResourceController
 {
     public static $updateSuccessMessage = 'zentlix_main.template.update.success';
-    public static $redirectAfterAction  = 'admin.template.list';
+    public static $redirectAfterAction = 'admin.template.list';
 
     public function index(): Response
     {
-        return $this->listResource(new DataTableQuery(Table::class),'@MainBundle/admin/templates/templates.html.twig');
+        return $this->listResource(new DataTableQuery(Table::class), '@MainBundle/admin/templates/templates.html.twig');
     }
 
     public function update(Template $template): Response
     {
         $command = new UpdateCommand($template);
 
-        return $this->updateResource($command,UpdateForm::class,'@MainBundle/admin/templates/update.html.twig', ['template' => $template]);
+        return $this->updateResource(
+            $command,
+            UpdateForm::class,
+            '@MainBundle/admin/templates/update.html.twig',
+            ['template' => $template]
+        );
     }
 }

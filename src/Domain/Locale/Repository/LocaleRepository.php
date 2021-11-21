@@ -7,8 +7,8 @@ namespace Zentlix\MainBundle\Domain\Locale\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Zentlix\MainBundle\Domain\Locale\Entity\Locale;
-use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
 use Zentlix\MainBundle\Domain\Shared\Repository\CodeTrait;
+use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
 
 /**
  * @method Locale      get($id, $lockMode = null, $lockVersion = null)

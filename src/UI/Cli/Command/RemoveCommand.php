@@ -14,10 +14,8 @@ use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 use Zentlix\MainBundle\Domain\Bundle\Service\Bundles;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
 
-use function get_class;
-
-class RemoveCommand extends ConsoleCommand {
-
+class RemoveCommand extends ConsoleCommand
+{
     public function __construct(
         private CommandBus $commandBus,
         private Bundles $bundles,
@@ -55,7 +53,7 @@ class RemoveCommand extends ConsoleCommand {
     private function removeBundle(string $package, SymfonyStyle $io): void
     {
         $bundle = $this->bundles->getByPackageName($package);
-        $entity = $this->bundleRepository->getOneByClass(get_class($bundle));
+        $entity = $this->bundleRepository->getOneByClass($bundle::class);
 
         $io->comment(sprintf('Removing <info>%s</info>', $bundle->getBundleName()));
 

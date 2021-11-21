@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\AdminSidebar\Service;
@@ -35,13 +27,6 @@ class MenuItem implements MenuItemInterface
         $self = new self($title, $router);
 
         return $self->sort($sort)->setTitle(true);
-    }
-
-    private function setTitle(bool $title): self
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function isTitle(): bool
@@ -80,7 +65,7 @@ class MenuItem implements MenuItemInterface
     public function addChildren(string $name): self
     {
         $identifier = md5($name);
-        if(isset($this->children[$identifier])) {
+        if (isset($this->children[$identifier])) {
             $identifier = md5($name . uniqid('', true));
         }
 
@@ -111,7 +96,7 @@ class MenuItem implements MenuItemInterface
 
     public function getChildren(): ?array
     {
-        if(count($this->children) > 0) {
+        if (count($this->children) > 0) {
             return array_values($this->children);
         }
 
@@ -120,7 +105,7 @@ class MenuItem implements MenuItemInterface
 
     public function getMenuItem(string $identifier): self
     {
-        if(!isset($this->children[$identifier])) {
+        if (!isset($this->children[$identifier])) {
             throw new \Exception(sprintf('Menu item %s not found.', $identifier));
         }
 
@@ -132,11 +117,18 @@ class MenuItem implements MenuItemInterface
         uasort($this->children, [$this, 'sortChilds']);
     }
 
+    private function setTitle(bool $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
     private function sortChilds(MenuItemInterface $a, MenuItemInterface $b)
     {
         $a->sortChildrens();
         $b->sortChildrens();
 
-        return ($a->getSort() - $b->getSort());
+        return $a->getSort() - $b->getSort();
     }
 }

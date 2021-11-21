@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Service;
@@ -15,9 +7,6 @@ namespace Zentlix\MainBundle\Domain\Bundle\Service;
 use Composer\Json\JsonFile;
 use Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository;
 use Zentlix\MainBundle\ZentlixBundleInterface;
-use function get_class;
-use function is_null;
-use function dirname;
 
 class Bundles
 {
@@ -43,7 +32,7 @@ class Bundles
     {
         $bundle = $this->findByPackageName($package);
 
-        if(is_null($bundle)) {
+        if (\is_null($bundle)) {
             throw new \Exception(sprintf('Bundle %s not found or not implement ZentlixBundleInterface.', $package));
         }
 
@@ -53,7 +42,7 @@ class Bundles
     public function findByPackageName(string $package): ?ZentlixBundleInterface
     {
         foreach ($this->bundles as $bundle) {
-            if($bundle->getBundleName() === $package) {
+            if ($bundle->getBundleName() === $package) {
                 return $bundle;
             }
         }
@@ -63,22 +52,25 @@ class Bundles
 
     public function getByClass(string $class): ZentlixBundleInterface
     {
-       if(isset($this->bundles[$class])) {
-           return $this->bundles[$class];
-       }
+        if (isset($this->bundles[$class])) {
+            return $this->bundles[$class];
+        }
 
-       throw new \Exception('Bundle class not found or not implement ZentlixBundleInterface');
+        throw new \Exception('Bundle class not found or not implement ZentlixBundleInterface');
     }
 
     public function getBundleByNamespace(string $namespace): ZentlixBundleInterface
     {
-        return $this->getByClass('Zentlix\\' . self::getBundleNameFromNamespace($namespace) . '\\' . self::getBundleNameFromNamespace($namespace));
+        return $this->getByClass(
+            'Zentlix\\' . self::getBundleNameFromNamespace($namespace) . '\\' .
+            self::getBundleNameFromNamespace($namespace)
+        );
     }
 
     public function isBundle(string $class): bool
     {
         $bundleName = self::findBundleNameFromNamespace($class);
-        if(is_null($bundleName)) {
+        if (\is_null($bundleName)) {
             return false;
         }
 
@@ -102,7 +94,7 @@ class Bundles
     public function isInstalled(string $package): bool
     {
         foreach ($this->bundles as $bundle) {
-            if($bundle->getBundleName() === $package) {
+            if ($bundle->getBundleName() === $package) {
                 return true;
             }
         }
@@ -112,21 +104,21 @@ class Bundles
 
     public static function isZentlixBundle($package): bool
     {
-        $composerJson = sprintf('%s/%s/composer.json', dirname(__DIR__, 6) , $package);
+        $composerJson = sprintf('%s/%s/composer.json', \dirname(__DIR__, 6), $package);
 
-        if(!file_exists($composerJson)) {
+        if (!file_exists($composerJson)) {
             return false;
         }
         $composerJson = (new JsonFile($composerJson))->read();
 
-        if(!isset($composerJson['autoload']['psr-4'])) {
+        if (!isset($composerJson['autoload']['psr-4'])) {
             return false;
         }
 
         $namespace = array_diff(explode('\\', array_key_first($composerJson['autoload']['psr-4'])), ['']);
         $class = array_key_first($composerJson['autoload']['psr-4']) . end($namespace);
 
-        if(!class_exists($class)) {
+        if (!class_exists($class)) {
             return false;
         }
 
@@ -137,6 +129,6 @@ class Bundles
 
     private function addBundle(ZentlixBundleInterface $bundle): void
     {
-        $this->bundles[get_class($bundle)] = $bundle;
+        $this->bundles[$bundle::class] = $bundle;
     }
 }

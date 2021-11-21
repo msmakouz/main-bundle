@@ -13,14 +13,13 @@ class InstallCommand implements CommandInterface
     public $id;
     public \DateTimeImmutable $updated_at;
     public \DateTimeImmutable $installed_at;
-    private ZentlixBundleInterface $bundle;
 
-    public function __construct(ZentlixBundleInterface $bundle)
-    {
-        $this->id           = Uuid::v4();
-        $this->updated_at   = new \DateTimeImmutable();
+    public function __construct(
+        private ZentlixBundleInterface $bundle
+    ) {
+        $this->id = Uuid::v4();
+        $this->updated_at = new \DateTimeImmutable();
         $this->installed_at = new \DateTimeImmutable();
-        $this->bundle       = $bundle;
     }
 
     public function getBundle(): ZentlixBundleInterface

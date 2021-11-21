@@ -63,7 +63,7 @@ class CreateTemplateCommand extends ConsoleCommand
         $io->text([
             "Title: $command->title",
             "Folder: $command->folder",
-            "Sort: $command->sort"
+            "Sort: $command->sort",
         ]);
 
         return self::SUCCESS;

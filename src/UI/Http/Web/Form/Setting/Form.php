@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Form\Setting;
@@ -30,8 +22,8 @@ class Form extends DefaultForm
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('default_locale', ChoiceType::class, [
-            'choices'  => array_flip($this->localeRepository->assoc()),
-            'label'    => 'zentlix_main.default_locale'
+            'choices' => array_flip($this->localeRepository->assoc()),
+            'label' => 'zentlix_main.default_locale',
         ]);
     }
 

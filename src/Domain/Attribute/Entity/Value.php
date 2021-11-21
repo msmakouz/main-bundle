@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Entity;
@@ -41,8 +33,8 @@ class Value
 
     public function __construct($id, $value, $entityId, Attribute $attribute)
     {
-        $this->id        = $id;
-        $this->value     = $value;
+        $this->id = $id;
+        $this->value = $value;
         $this->entity_id = $entityId;
         $this->attribute = $attribute;
     }

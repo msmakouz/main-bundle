@@ -1,21 +1,11 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Entity;
 
 use Doctrine\ORM\Mapping;
 use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand;
-
-use function get_class;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MainBundle\Domain\Bundle\Repository\BundleRepository")
@@ -66,16 +56,16 @@ class Bundle
 
     public function __construct(InstallCommand $command)
     {
-        $this->id              = $command->id;
-        $this->title           = $command->getBundle()->getTitle();
-        $this->class           = get_class($command->getBundle());
-        $this->description     = $command->getBundle()->getDescription();
-        $this->version         = $command->getBundle()->getVersion();
-        $this->system_bundle   = $command->getBundle()->isSystem();
-        $this->settings_form   = $command->getBundle()->getSettingsForm();
+        $this->id = $command->id;
+        $this->title = $command->getBundle()->getTitle();
+        $this->class = $command->getBundle()::class;
+        $this->description = $command->getBundle()->getDescription();
+        $this->version = $command->getBundle()->getVersion();
+        $this->system_bundle = $command->getBundle()->isSystem();
+        $this->settings_form = $command->getBundle()->getSettingsForm();
         $this->settings_entity = $command->getBundle()->getSettingsClass();
-        $this->updated_at      = $command->updated_at;
-        $this->installed_at    = $command->installed_at;
+        $this->updated_at = $command->updated_at;
+        $this->installed_at = $command->installed_at;
     }
 
     public function getId()
@@ -115,7 +105,7 @@ class Bundle
 
     public function isSystem(): bool
     {
-       return $this->system_bundle;
+        return $this->system_bundle;
     }
 
     public function getSettingsForm(): ?string
@@ -125,6 +115,6 @@ class Bundle
 
     public function getSettingsEntity(): ?string
     {
-        return  $this->settings_entity;
+        return $this->settings_entity;
     }
 }

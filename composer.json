@@ -25,6 +25,7 @@
     "zentlix/user-bundle": "2.0.x-dev"
   },
   "require-dev": {
+    "spiral/code-style": "^1.0"
   },
   "config": {
     "sort-packages": true

@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Attribute\Repository;
@@ -32,8 +24,13 @@ class ValueRepository extends ServiceEntityRepository
         parent::__construct($registry, Value::class);
     }
 
-    public function findByAttributeAndEntity($attributeId, $entityId, array $orderBy = null, $limit = null, $offset = null): array
-    {
+    public function findByAttributeAndEntity(
+        $attributeId,
+        $entityId,
+        array $orderBy = null,
+        $limit = null,
+        $offset = null
+    ): array {
         return $this->findBy(['attribute' => $attributeId, 'entity_id' => $entityId], $orderBy, $limit, $offset);
     }
 

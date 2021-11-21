@@ -11,31 +11,32 @@ use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\InstallCommand;
 use Zentlix\MainBundle\Application\Command\Bundle\Zentlix\RemoveCommand;
 use Zentlix\MainBundle\Application\Command\Setting\DefaultSettingCommand;
 use Zentlix\MainBundle\Application\Query\Bundle\DataTableQuery;
-use Zentlix\MainBundle\Application\Query\Bundle\GetNotInstalledBundlesQuery;
 use Zentlix\MainBundle\Application\Query\Bundle\GetBundleEntityByPackageNameQuery;
+use Zentlix\MainBundle\Application\Query\Bundle\GetNotInstalledBundlesQuery;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
 use Zentlix\MainBundle\UI\Http\Web\DataTable\Bundle\Table;
 use Zentlix\MainBundle\UI\Http\Web\Form\Setting\DefaultForm;
 
 class BundleController extends ResourceController
 {
-    static $updateSuccessMessage = 'zentlix_main.bundle.update.success';
-    static $redirectAfterAction = 'admin.bundle.list';
+    public static $updateSuccessMessage = 'zentlix_main.bundle.update.success';
+    public static $redirectAfterAction = 'admin.bundle.list';
 
     public function index(): Response
     {
-       return $this->listResource(new DataTableQuery(Table::class),'@MainBundle/admin/bundles/bundles.html.twig');
+        return $this->listResource(new DataTableQuery(Table::class), '@MainBundle/admin/bundles/bundles.html.twig');
     }
 
     public function changeSettings(Bundle $bundle, EntityManagerInterface $entityManager): Response
     {
-        if($bundle->getSettingsEntity() && $bundle->getSettingsForm()) {
+        if ($bundle->getSettingsEntity() && $bundle->getSettingsForm()) {
             $settingRepository = $entityManager->getRepository($bundle->getSettingsEntity());
             $command = $this->formFactory->create($bundle->getSettingsForm())->getConfig()->getDataClass();
 
             return $this->updateResource(
                 new $command($settingRepository->findOneBy([])),
-                $bundle->getSettingsForm(), '@MainBundle/admin/bundles/settings.html.twig'
+                $bundle->getSettingsForm(),
+                '@MainBundle/admin/bundles/settings.html.twig'
             );
         }
 

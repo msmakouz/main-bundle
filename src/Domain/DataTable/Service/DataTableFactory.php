@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Zentlix\MainBundle\Domain\DataTable\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Omines\DataTablesBundle\Column\AbstractColumn;
+use Omines\DataTablesBundle\DataTableFactory as BaseDataTableFactory;
+use Omines\DataTablesBundle\DataTableRendererInterface;
+use Omines\DataTablesBundle\DependencyInjection\Instantiator;
+use Omines\DataTablesBundle\Exporter\DataTableExporterManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Omines\DataTablesBundle\Column\AbstractColumn;
-use Omines\DataTablesBundle\DataTableRendererInterface;
-use Omines\DataTablesBundle\DependencyInjection\Instantiator;
-use Omines\DataTablesBundle\DataTableFactory as BaseDataTableFactory;
-use Omines\DataTablesBundle\Exporter\DataTableExporterManager;
 use Zentlix\MainBundle\Domain\DataTable\Entity\DataTable as DataTableEntity;
 
 class DataTableFactory extends BaseDataTableFactory
@@ -36,14 +36,17 @@ class DataTableFactory extends BaseDataTableFactory
         return (
             new DataTable(
                 $this->eventDispatcher,
-                array_merge($config['options'] ?? [], $options), $this->instantiator, $this->exporterManager
+                array_merge($config['options'] ?? [], $options),
+                $this->instantiator,
+                $this->exporterManager
             ))
             ->setRenderer($this->renderer)
             ->setMethod($config['method'] ?? Request::METHOD_POST)
             ->setPersistState($config['persist_state'] ?? 'fragment')
             ->setTranslationDomain($config['translation_domain'] ?? 'messages')
             ->setLanguageFromCDN($config['language_from_cdn'] ?? true)
-            ->setTemplate($config['template'] ?? DataTable::DEFAULT_TEMPLATE,
+            ->setTemplate(
+                $config['template'] ?? DataTable::DEFAULT_TEMPLATE,
                 $config['template_parameters'] ?? ['className' => 'table table-hover']
             );
     }
@@ -75,7 +78,7 @@ class DataTableFactory extends BaseDataTableFactory
         $dataTableRepository = $this->entityManager->getRepository(DataTableEntity::class);
         $config = $dataTableRepository->getConfig($class, $this->tokenStorage->getToken()->getUser()->getId());
 
-        if(!$config instanceof DataTableEntity) {
+        if (!$config instanceof DataTableEntity) {
             $config = $this->createConfig($class, $datatable);
         }
 
@@ -84,7 +87,13 @@ class DataTableFactory extends BaseDataTableFactory
 
     private function createConfig(string $class, DataTable $dataTable): DataTableEntity
     {
-        $visible = array_diff(array_map(fn (AbstractColumn $column) => $column->isVisible() ? $column->getName() : null, $dataTable->getColumns()), [null]);
+        $visible = array_diff(
+            array_map(
+                fn (AbstractColumn $column) => $column->isVisible() ? $column->getName() : null,
+                $dataTable->getColumns()
+            ),
+            [null]
+        );
 
         $config = new DataTableEntity($class, ['visible' => $visible], $this->tokenStorage->getToken()->getUser());
 

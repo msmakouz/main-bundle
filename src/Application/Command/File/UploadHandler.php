@@ -6,8 +6,8 @@ namespace Zentlix\MainBundle\Application\Command\File;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Uid\Uuid;
-use Zentlix\MainBundle\Domain\File\Event\BeforeUpload;
 use Zentlix\MainBundle\Domain\File\Event\AfterUpload;
+use Zentlix\MainBundle\Domain\File\Event\BeforeUpload;
 use Zentlix\MainBundle\Domain\File\Service\FileUploaderInterface;
 use Zentlix\MainBundle\Domain\File\Specification\UniquePathSpecification;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
@@ -24,11 +24,11 @@ class UploadHandler implements CommandHandlerInterface
     public function __invoke(UploadCommand $command): void
     {
         $path = $this->fileUploader->getUploadDirectory() . '/' . $command->savePath;
-        if($path[0] !== '/') {
+        if ('/' !== $path[0]) {
             $path = '/' . $path;
         }
 
-        if($this->uniquePathSpecification->isUnique($path . '/' . $command->filename) === false) {
+        if (false === $this->uniquePathSpecification->isUnique($path . '/' . $command->filename)) {
             $command->filename = Uuid::v4() . '.' . $command->uploadedFile->getClientOriginalExtension();
         }
 

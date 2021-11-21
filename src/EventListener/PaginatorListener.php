@@ -1,20 +1,11 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\EventListener;
 
-use Symfony\Component\HttpFoundation\RequestStack;
 use Knp\Component\Pager\Event\ItemsEvent;
-use Zentlix\MainBundle\Application\Command;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Zentlix\MainBundle\Domain\Marketplace\Service\Applications;
 
 class PaginatorListener
@@ -26,7 +17,7 @@ class PaginatorListener
         $this->requestStack = $requestStack;
     }
 
-    public function __invoke(ItemsEvent $event)
+    public function __invoke(ItemsEvent $event): void
     {
         if ($event->target instanceof Applications) {
             $request = $this->requestStack->getCurrentRequest();

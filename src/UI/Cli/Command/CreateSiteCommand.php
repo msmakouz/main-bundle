@@ -9,10 +9,10 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 use Zentlix\MainBundle\Domain\Locale\Repository\LocaleRepository;
 use Zentlix\MainBundle\Domain\Template\Repository\TemplateRepository;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandBus;
-use Zentlix\MainBundle\Application\Command\Site\CreateCommand;
 
 class CreateSiteCommand extends ConsoleCommand
 {
@@ -78,11 +78,11 @@ class CreateSiteCommand extends ConsoleCommand
         $io->text([
             "URL: $command->url",
             "Title: $command->title",
-            sprintf("Template: %s", $command->template->getTitle()),
-            sprintf("Language: %s", $command->locale->getTitle()),
-            sprintf("Meta title: %s", $command->getMetaTitle()),
-            sprintf("Meta description: %s", $command->getMetaDescription()),
-            sprintf("Meta keywords: %s", $command->getMetaKeywords()),
+            sprintf('Template: %s', $command->template->getTitle()),
+            sprintf('Language: %s', $command->locale->getTitle()),
+            sprintf('Meta title: %s', $command->getMetaTitle()),
+            sprintf('Meta description: %s', $command->getMetaDescription()),
+            sprintf('Meta keywords: %s', $command->getMetaKeywords()),
             "Sort: $command->sort",
         ]);
 

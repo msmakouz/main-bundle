@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Twig\Extension\Admin;
@@ -33,7 +25,11 @@ final class DashboardWidgetsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('admin_dashboard_widgets', [$this, 'getWidgets'], ['needs_environment' => true, 'is_safe' => ['html']])
+            new TwigFunction(
+                'admin_dashboard_widgets',
+                [$this, 'getWidgets'],
+                ['needs_environment' => true, 'is_safe' => ['html']]
+            ),
         ];
     }
 
@@ -44,7 +40,7 @@ final class DashboardWidgetsExtension extends AbstractExtension
             /** @var WidgetInterface $widgetObj */
             foreach ($this->widgets->getWidgets() as $widgetObj) {
                 $reflection = new \ReflectionClass($widgetObj);
-                if($widget === $reflection->getName() && $visible) {
+                if ($widget === $reflection->getName() && $visible) {
                     $widgets .= $twig->render($widgetObj->getTemplate(), ['widget' => $widgetObj]);
                 }
             }

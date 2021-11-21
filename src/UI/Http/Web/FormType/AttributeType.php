@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\FormType;
@@ -20,7 +12,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Domain\Attribute\Repository\AttributeRepository;
 use Zentlix\MainBundle\Domain\Attribute\Service\AttributeTypes;
 use Zentlix\MainBundle\UI\Http\Web\Type\AlertType;
-use function count;
 
 class AttributeType extends AbstractType
 {
@@ -29,36 +20,39 @@ class AttributeType extends AbstractType
     private TranslatorInterface $translator;
     private AttributeTypes $types;
 
-    public function __construct(AttributeRepository $repository,
-                                AttributeTypes $types,
-                                UrlGeneratorInterface $router,
-                                TranslatorInterface $translator)
-    {
+    public function __construct(
+        AttributeRepository $repository,
+        AttributeTypes $types,
+        UrlGeneratorInterface $router,
+        TranslatorInterface $translator
+    ) {
         $this->repository = $repository;
         $this->types = $types;
         $this->router = $router;
         $this->translator = $translator;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $attributes = $this->repository->findActiveByEntity($options['code']);
 
-        if(count($attributes) === 0) {
+        if (0 === \count($attributes)) {
             $builder->add('create_attribute', AlertType::class, [
                 'data' => sprintf(
                     $this->translator->trans('zentlix_main.attribute.create_attr'),
                     $this->router->generate('admin.attribute.manage', ['entity' => $options['code']])
-                )
+                ),
             ]);
         }
 
         foreach ($attributes as $attribute) {
-            $this->types->getByCode($attribute->getAttributeType())->buildField($builder, $options, $attribute, $options['entity']);
+            $this->types
+                ->getByCode($attribute->getAttributeType())
+                ->buildField($builder, $options, $attribute, $options['entity']);
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

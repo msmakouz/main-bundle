@@ -1,13 +1,5 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\Domain\Bundle\Repository;
@@ -15,8 +7,8 @@ namespace Zentlix\MainBundle\Domain\Bundle\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Zentlix\MainBundle\Domain\Bundle\Entity\Bundle;
-use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 
 /**
  * @method Bundle|null find($id, $lockMode = null, $lockVersion = null)
@@ -55,7 +47,7 @@ class BundleRepository extends ServiceEntityRepository
     {
         $bundle = $this->findOneByClass($class);
 
-        if(!$bundle) {
+        if (!$bundle) {
             throw new NotFoundException('Bundle not found.');
         }
 

@@ -11,8 +11,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-class CreateHtaccessCommand extends ConsoleCommand {
-
+class CreateHtaccessCommand extends ConsoleCommand
+{
     public function __construct(
         private Filesystem $filesystem,
         private KernelInterface $kernel

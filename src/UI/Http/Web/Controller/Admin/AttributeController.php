@@ -1,19 +1,11 @@
 <?php
 
-/**
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade Zentlix to newer
- * versions in the future. If you wish to customize Zentlix for your
- * needs please refer to https://docs.zentlix.io for more information.
- */
-
 declare(strict_types=1);
 
 namespace Zentlix\MainBundle\UI\Http\Web\Controller\Admin;
 
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Zentlix\MainBundle\Application\Command\Attribute\CreateCommand;
 use Zentlix\MainBundle\Application\Command\Attribute\DeleteCommand;
 use Zentlix\MainBundle\Application\Command\Attribute\UpdateCommand;
@@ -28,14 +20,14 @@ class AttributeController extends ResourceController
 
     public function index(string $entity = null): Response
     {
-        $entities = array_map(fn(string $class) => [
-            'code'  => $class::getEntityCode(),
-            'title' => $class::getEntityTitle()
+        $entities = array_map(fn (string $class) => [
+            'code' => $class::getEntityCode(),
+            'title' => $class::getEntityTitle(),
         ], $this->ask(new GetEntitiesQuery()));
 
         return $this->render('@MainBundle/admin/attributes/index.html.twig', [
             'entities' => $entities,
-            'entity'   => $entity
+            'entity' => $entity,
         ]);
     }
 

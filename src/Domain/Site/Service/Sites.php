@@ -6,8 +6,8 @@ namespace Zentlix\MainBundle\Domain\Site\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Zentlix\MainBundle\Domain\Site\Entity\Site;
 use Zentlix\MainBundle\Domain\Cache\Service\Cache;
+use Zentlix\MainBundle\Domain\Site\Entity\Site;
 
 class Sites
 {
@@ -19,7 +19,7 @@ class Sites
 
     public function getSites()
     {
-        if(Cache::get(Cache::SITES)) {
+        if (Cache::get(Cache::SITES)) {
             return Cache::get(Cache::SITES);
         }
 
@@ -40,11 +40,11 @@ class Sites
     {
         $host = $this->getHost();
 
-        if(\is_null($host)) {
+        if (\is_null($host)) {
             throw new \DomainException('Host is null.');
         }
 
-        if(!isset($this->getSites()[$host])) {
+        if (!isset($this->getSites()[$host])) {
             throw new \DomainException('Site for current URL not found.');
         }
 
@@ -60,7 +60,7 @@ class Sites
     {
         $host = $this->getHost();
 
-        return \is_null($host) === false && isset($this->getSites()[$host]);
+        return false === \is_null($host) && isset($this->getSites()[$host]);
     }
 
     public static function clearCache(): void
@@ -70,7 +70,7 @@ class Sites
 
     private function getHost(): ?string
     {
-        if($this->request->getCurrentRequest()) {
+        if ($this->request->getCurrentRequest()) {
             return $this->request->getCurrentRequest()->server->get('SERVER_NAME');
         }
 
